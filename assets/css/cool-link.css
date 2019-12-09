@@ -1,0 +1,14 @@
+.cool-link::after{
+  content:'';
+  display:block;
+  width:0;
+  height:2px;
+  background:#fff;
+  transition:width .3s;
+}
+
+.cool-link:hover::after{
+  width:100%;
+  transition:width .3s;
+}
+
