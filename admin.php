@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("connection.php");
+include('function2.php');
 
      $userprofile=$_SESSION['user_name'];
 
@@ -8,6 +9,7 @@ require_once("connection.php");
          $query="SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
          $data=mysqli_query($con, $query);
          $result=mysqli_fetch_assoc($data);
+         $id=$result['accountid'];
      }
 
      if($result['usertype']==='user'){
@@ -175,7 +177,7 @@ require_once("connection.php");
                                                 <a href="adminmessages.php">
                                                     <span><i class="fa fa-envelope"></i></span>
                                                     <span>Messages</span>
-                                                    <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;">2</div>
+                                                    <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;"><?php echo countmessage($id); ?></div>
                                                 </a>
                                                 </div>
 

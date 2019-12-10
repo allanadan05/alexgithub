@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("connection.php");
+include('function2.php');
 	 
 	 $userprofile=$_SESSION['user_name'];
 	 
@@ -8,7 +9,7 @@ require_once("connection.php");
 		 $query="SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
 		 $data=mysqli_query($con, $query);
 		 $result=mysqli_fetch_assoc($data);
-		 
+		 $id=$result['accountid'];
 		 }
 	 else{
 		 header('location:login.php');
@@ -76,7 +77,31 @@ require_once("connection.php");
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+		<![endif]-->
+		
+		<script>
+            function sendmsg(id){
+                document.getElementById("msgto").value=id;
+            }
+
+            function sendmsgnow(){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) { 
+                    document.getElementById("messageresult").innerHTML=this.responseText;
+                    }
+                    
+            };
+
+                    var messageto=document.getElementById("msgto").value;
+                    var messagefrom=document.getElementById("msgfrom").value;
+                    var messagehere=document.getElementById("msghere").value;                   
+                    var palatandaan = "sendmessage";
+                    xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&messageto="+messageto+"&messagefrom="+messagefrom+"&messagehere="+messagehere, true);
+                    xhttp.send(); 
+            
+            }
+        </script>
     </head>
 	<body>
 		<!-- Header Fold -->
@@ -166,7 +191,7 @@ require_once("connection.php");
                                                 <a href="adminmessages.php">
                                                     <span><i class="fa fa-envelope"></i></span>
                                                     <span>Messages</span>
-                                                    <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;">2</div>
+                                                    <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;"><?php echo countmessage($id); ?></div>
                                                 </a>
                                                 </div>
 
@@ -233,7 +258,8 @@ require_once("connection.php");
 
 				                     <!--first panel-->
 				                      <div id="myaccount-details" class="col-md-8">
-				                      	   <!-- panel-info -->
+											 <!-- panel-info -->
+											 <div id="messageresult"></div>
 				                             <div class="panel panel-info">
 				                                    <div class="panel-heading" id="personal">
 
@@ -255,57 +281,35 @@ require_once("connection.php");
 
 										 <!-- collapse -->
 	                                      <div >
-                                            <tr data-toggle="collapse" data-target="#request1" style="background-color: whitesmoke; text-align: left;"> 
-											<td>Apr 02, 2019 08:00 AM</td>
-											<td><p class="notifications-message" ><b>Dan Astillero</b> messaged you.</p></td>
+										  <?php 
+										
+										$sql="SELECT messagedate, msgtoaccountid, (SELECT concat(firstname, ', ', lastname) as name FROM myaccounttbl where accountid=messagingtbl.msgfromaccountid ) as fullname, (SELECT accountid FROM myaccounttbl where accountid=messagingtbl.msgfromaccountid ) as acctid, messagetext from messagingtbl WHERE msgtoaccountid='$id'";
+										$result=mysqli_query($con, $sql);
+										$count=1;
+										while($row=mysqli_fetch_array($result)){
+										{  
+										 
+										
+										?>
+                                            <tr data-toggle="collapse" data-target="#request<?php echo $count; ?>" style="background-color: whitesmoke; text-align: left;"> 
+											<td><?php echo $row['messagedate']; ?></td>
+											<td><p class="notifications-message" ><b><?php echo $row['fullname'];?></b> messaged you.</p></td>
 											<td></td>
 											</tr>
-  										  </div>
+  										  
 
-										<tr id="request1" class="collapse">
+										<tr id="request<?php echo $count++; ?>" class="collapse">
 											<td></td>
-											<td><p class="notifications-message">Your order request sent last 25 April 2019 is now on process! <br> Use this accesscode: 123ecd3 to track your order</p></td>
-											<td><center><button class="btn btn-primary" style="height:auto; width: auto; border-radius: 25px;">Reply</button></center></td>
+											<td><p class="notifications-message"><?php echo $row['messagetext']; ?><br> Use this accesscode: 123ecd3 to track your order</p></td>
+											<td><center><button style="height:auto; width: auto; border-radius: 25px;" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#sendmessage" onclick="sendmsg(<?php echo $row['acctid']; ?>)"> <span><i class="fa fa-envelope"></i></span> Reply </button></center></td>
 											
 										</tr>
+										<?php }
+										
+									}?>
+									</div>
 
-										<!-- /collapse -->		
-
-										 <!-- collapse -->
-	                                      <div >
-                                            <tr data-toggle="collapse" data-target="#request2" style="background-color: whitesmoke; text-align: left;"> 
-											<td>Apr 03, 2019 08:00 AM</td>
-											<td><p class="notifications-message"><b>Steven Francisco</b> messaged you.</p></td>
-											<td></td>
-											</tr>
-  										  </div>
-
-										<tr id="request2" class="collapse">
-											<td></td>
-											<td><p class="notifications-message">Your order request sent last 20 December 2018 is now on process! <br> Use this accesscode: 123ecd3 to track your order</p></td>
-											<td><center><button class="btn btn-primary" style="height:auto; width: auto; border-radius: 25px;">Reply</button></center></td>
-											
-										</tr>
-
-										<!-- /collapse -->	
-
-										 <!-- collapse -->
-	                                      <div >
-                                            <tr data-toggle="collapse" data-target="#request3" style="background-color: whitesmoke; text-align: left;"> 
-											<td>Apr 04, 2019 08:00 AM</td>
-											<td><p class="notifications-message"><b>Jari Cruz</b> messaged you.</p></td>
-											<td></td>
-											</tr>
-  										  </div>
-
-										<tr id="request3" class="collapse">
-											<td></td>
-											<td><p class="notifications-message">Your order request sent last 25 April 2019 is now on process! <br> Use this accesscode: 123ecd3 to track your order</p></td>
-											<td><center><button class="btn btn-primary" style="height:auto; width: auto; border-radius: 25px;">Reply</button></center></td>
-											
-										</tr>
-
-										<!-- /collapse -->							
+																
 							 </table> 
 
                                                              
@@ -337,6 +341,33 @@ require_once("connection.php");
 			<!-- /MAIN HEADER -->
 		</header>
 		<!-- /HEADER -->
+
+		<!-- Modal -->
+        <div class="modal fade" id="sendmessage" role="dialog">
+            <div class="modal-dialog modal-md">
+
+            
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 style="font-size: 16px; font-weight: bold;">Message</h6>
+                    <input type="hidden" id="date">
+                    <input type="hidden" id="msgfrom" value="<?php echo $_SESSION['userid']; ?>">
+                    <input type="hidden" id="msgto">
+                </div>
+                <div class="modal-body">
+                <textarea rows="4" cols="78" id="msghere" name="messagetext"style="border:none;" placeholder="Message goes here!.."></textarea>
+                </div>
+                <div class="modal-footer">
+                <button  class="btn btn-primary btn-sm " onclick="sendmsgnow()" data-dismiss="modal"> <span><i class="fa fa-envelope"></i></span> SEND </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              
+            </div>
+            </div>
+        </div>
+        <!--/modal  -->
 
 		<!-- NAVIGATION -->
 		<nav id="navigation">

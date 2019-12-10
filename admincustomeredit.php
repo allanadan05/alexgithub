@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("connection.php");
+include('function2.php');
      
      $userprofile=$_SESSION['user_name'];
      

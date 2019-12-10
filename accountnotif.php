@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once("connection.php");
+include('function2.php');
 	 
 	 $userprofile=$_SESSION['user_name'];
 	 
@@ -8,7 +9,7 @@ require_once("connection.php");
 		 $query="SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
 		 $data=mysqli_query($con, $query);
 		 $result=mysqli_fetch_assoc($data);
-		 
+		 $id=$result['accountid'];
 		 }
 	 else{
 		 header('location:login.php');
@@ -143,7 +144,7 @@ require_once("connection.php");
 				                                <div class="panel-body" style="background-color: #cce6ff;"><a href="accountnotif.php"> <span><i class="fa fa-bell"></i></span> Notifications</a> <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;">3</div>
 				                          	    </div>
 
-				                          	    <div class="panel-body"><a href="messages.php"> <span><i class="fa fa-envelope"></i></span> Messages</a> <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;">3</div>
+				                          	    <div class="panel-body"><a href="messages.php"> <span><i class="fa fa-envelope"></i></span> Messages</a> <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;"><?php echo countmessage($id); ?></div>
 				                          	    </div>
 
 				                                <div class="panel-body"><a href="accounthistory.php"> <span><i class="fa fa-history"></i></span> History of purchases</a></div>
