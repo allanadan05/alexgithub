@@ -86,13 +86,39 @@ require_once("connection.php");
         <link rel="stylesheet" href="../../maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="../../maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <script>
+            function sendmsg(id){
+                document.getElementById("msgto").value=id;
+            }
+
+            function sendmsgnow(){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) { 
+                    document.getElementById("messageresult").innerHTML=this.responseText;
+                    }
+                    
+            };
+
+                    var messageto=document.getElementById("msgto").value;
+                    var messagefrom=document.getElementById("msgfrom").value;
+                    var messagehere=document.getElementById("msghere").value;                   
+                    var palatandaan = "sendmessage";
+                    xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&messageto="+messageto+"&messagefrom="+messagefrom+"&messagehere="+messagehere, true);
+                    xhttp.send(); 
+            
+            }
+        </script>
 
     </head>
     <body>
@@ -265,6 +291,10 @@ require_once("connection.php");
                                                  ?>
 
                                                 <div class="col-md-12">
+                                                    
+                                                <div id="messageresult"></div>
+
+
                                                      <a href="adminnewcustomer.php">
                                                         <button class="btn btn-success"> <span><i class="fa  fa-plus"></i></span> New Customer</button>
                                                      </a>
@@ -324,9 +354,9 @@ require_once("connection.php");
                                                          <td> <?php echo $userresult['accountid'] ?> </td>
                                                          <td> <?php echo $userresult['firstname'] ."  " .$userresult['lastname'] ?> </td>
                                                          <td> 
-                                                            <a href="admincustomeredit.php?id=<?php echo $userresult['ID'] ?>">
-                                                            <button class="btn btn-primary"> <span><i class="fa fa-edit"></i></span> EDIT </button> 
-                                                            </a>
+                                                            <a href="admincustomeredit.php?id=<?php echo $userresult['accountid'] ?>">
+                                                            <button class="btn btn-primary btn-sm " > <span><i class="fa fa-edit"></i></span> EDIT </button></a> 
+                                                           <button class="btn btn-primary btn-sm " data-toggle="modal" data-target="#sendmessage" onclick="sendmsg(<?php echo $userresult['accountid']; ?>)"> <span><i class="fa fa-envelope"></i></span> SEND </button>
                                                         </td>
                                                        </tr>
 
@@ -395,6 +425,35 @@ require_once("connection.php");
             <!-- /container -->
         </nav>
         <!-- /NAVIGATION -->
+
+
+         <!-- Modal -->
+        <div class="modal fade" id="sendmessage" role="dialog">
+            <div class="modal-dialog modal-md">
+
+            
+            <div class="modal-content">
+                <div class="modal-header">
+                    
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 style="font-size: 16px; font-weight: bold;">Message</h6>
+                    <input type="hidden" id="date">
+                    <input type="hidden" id="msgfrom" value="<?php echo $_SESSION['userid']; ?>">
+                    <input type="hidden" id="msgto">
+                </div>
+                <div class="modal-body">
+                <textarea rows="4" cols="78" id="msghere" name="messagetext"style="border:none;" placeholder="Message goes here!.."></textarea>
+                </div>
+                <div class="modal-footer">
+                <button  class="btn btn-primary btn-sm " onclick="sendmsgnow()" data-dismiss="modal"> <span><i class="fa fa-envelope"></i></span> SEND </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              
+            </div>
+            </div>
+        </div>
+        <!--/modal  -->
+               
 
     </body>
 </html>

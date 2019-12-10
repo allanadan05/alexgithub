@@ -8,12 +8,12 @@ require_once("connection.php");
 		 $query="SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
 		 $data=mysqli_query($con, $query);
 		 $result=mysqli_fetch_assoc($data);
-		 
+		 $id=$result['accountid'];
 		 }
 	 else{
 		 header('location:login.php');
 	 }
-
+	 
 
 ?>
 
@@ -178,57 +178,40 @@ require_once("connection.php");
 
 										 <!-- collapse -->
 	                                      <div >
-                                            <tr data-toggle="collapse" data-target="#request1" style="background-color: whitesmoke; text-align: left;"> 
-											<td>Apr 02, 2019 08:00 AM</td>
-											<td><p class="notifications-message" ><b>Dan Astillero</b> messaged you.</p></td>
+										<?php 
+										
+										$sql="SELECT messagedate, msgtoaccountid, (SELECT concat(firstname, ', ', lastname) as name  FROM myaccounttbl where accountid=messagingtbl.msgfromaccountid ) as fullname, messagetext from messagingtbl WHERE msgtoaccountid='$id'";
+										$result=mysqli_query($con, $sql);
+										$count=1;
+										while($row=mysqli_fetch_array($result)){
+										{  
+										 
+										
+										?>
+                                           <tr data-toggle="collapse" data-target="#request<?php echo $count; ?>" style="background-color: whitesmoke; text-align: left;">
+											<td><?php echo $row['messagedate']; ?></td>
+											<td><p class="notifications-message" ><b><?php echo $row['fullname'];?></b> messaged you.</p></td>
 											<td></td>
-											</tr>
-  										  </div>
-
-										<tr id="request1" class="collapse">
+											
+										
+									
+										</tr>
+										<tr id="request<?php echo $count++; ?>" class="collapse">
 											<td></td>
-											<td><p class="notifications-message">Your order request sent last 25 April 2019 is now on process! <br> Use this accesscode: 123ecd3 to track your order</p></td>
+											<td><p class="notifications-message"><?php echo $row['messagetext']; ?><br> Use this accesscode: 123ecd3 to track your order</p></td>
 											<td><center><button class="btn btn-primary" style="height:auto; width: auto; border-radius: 25px;">Reply</button></center></td>
 											
 										</tr>
+										<?php }
+										
+									}?>
+  										  </div>
+
+										
 
 										<!-- /collapse -->		
 
-										 <!-- collapse -->
-	                                      <div >
-                                            <tr data-toggle="collapse" data-target="#request2" style="background-color: whitesmoke; text-align: left;"> 
-											<td>Apr 03, 2019 08:00 AM</td>
-											<td><p class="notifications-message"><b>Steven Francisco</b> messaged you.</p></td>
-											<td></td>
-											</tr>
-  										  </div>
-
-										<tr id="request2" class="collapse">
-											<td></td>
-											<td><p class="notifications-message">Your order request sent last 20 December 2018 is now on process! <br> Use this accesscode: 123ecd3 to track your order</p></td>
-											<td><center><button class="btn btn-primary" style="height:auto; width: auto; border-radius: 25px;">Reply</button></center></td>
-											
-										</tr>
-
-										<!-- /collapse -->	
-
-										 <!-- collapse -->
-	                                      <div >
-                                            <tr data-toggle="collapse" data-target="#request3" style="background-color: whitesmoke; text-align: left;"> 
-											<td>Apr 04, 2019 08:00 AM</td>
-											<td><p class="notifications-message"><b>Jari Cruz</b> messaged you.</p></td>
-											<td></td>
-											</tr>
-  										  </div>
-
-										<tr id="request3" class="collapse">
-											<td></td>
-											<td><p class="notifications-message">Your order request sent last 25 April 2019 is now on process! <br> Use this accesscode: 123ecd3 to track your order</p></td>
-											<td><center><button class="btn btn-primary" style="height:auto; width: auto; border-radius: 25px;">Reply</button></center></td>
-											
-										</tr>
-
-										<!-- /collapse -->							
+																
 							 </table> 
 
                                                              
