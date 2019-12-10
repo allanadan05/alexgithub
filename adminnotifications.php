@@ -76,7 +76,8 @@ require_once("connection.php");
  		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
  		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
  		<![endif]-->
-
+ 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 	
     </head>
 	<body>
 		<!-- Header Fold -->
@@ -244,25 +245,35 @@ require_once("connection.php");
                                  <div class="panel-body">
 
                                  	
+                                 	<?php
+											$sql =$con->query("select * from myaccounttbl Order by accountid DESC");
+											while($data=$sql->fetch_array())
+											{
+											?>
                                     <!--insert data-->
                                     <table class="table" border=0>
 									  <tr><b>Apr 02, 2019</b></tr>
 										<tr style=" background-color: whitesmoke;">
-											<td><p style="color: blue;">8 mins</p>
-												<a href="#" style="color:black">
-												<p class="notifications-message">Your order request sent last 25 April 2019 was approved!. Use this accesscode: 123ecd3 to track your order</p>
-											    </a>
-											</td>										
-										</tr>
-										<tr style=" background-color: whitesmoke;">
-											<td><p style="color: blue;">10 mins</p>
-												<a href="#" style="color:black">	
-												<p class="notifications-message">Your order request sent last 25 April 2019 was approved!. Use this accesscode: 123ecd3 to track your order</p>
-											    </a>
-											</td>										
-										</tr>
-															
+											
+											<td style="border: 1px solid black;"><p style="color: blue;"></p>
+												<p style="color:black">
+												<p class="notifications-message" id="info">New <?php echo $data['usertype']  ?></p>
+												
+												<?php echo "firstname:".$data['firstname']?>
+												<?php echo "<br>Lastname:".$data['lastname']?>
+												<?php echo "<br>province:".$data['province']?>
+												<?php echo "<br>Email:".$data['email']?>
+												
+											    </p>
+											</td>
+											
+																			
+										</tr>				
 							         </table>
+							         	<?php
+										}
+											?>	
+							         
 							          <!--/insert data-->	
 							           <!--insert data-->
                                     <table class="table" border=0>

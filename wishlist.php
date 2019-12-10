@@ -4,19 +4,19 @@ require_once("connection.php");
 
      $logacc="Log In";
      @$userprofile=@$_SESSION['user_name'];
-     
+
      if($userprofile==true){
          $query="SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
          $data=mysqli_query($con, $query);
          $result=mysqli_fetch_assoc($data);
-         
+
 		 $logacc=$result['firstname'];
          }
      else{
          header('location:login.php');
      }
-	 
-	 
+
+
 
 
 ?>
@@ -127,117 +127,115 @@ require_once("connection.php");
 
                                 <!-- Wishlist -->
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="fa fa-heart-o"></i>
-                                        <span>Your Wishlist</span>
-                                        <div class="qty"> 2 </div>
-                                    </a>
-                                    
-                                    <div class="cart-dropdown">
-                                        
-                                        <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.jpg" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty"> 1x </span> ₱ 980.00 </h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
+                									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                										<i class="fa fa-heart-o"></i>
+                										<span>Your Wishlist</span>
+                                    <?php
+                                    $sql = "SELECT count(ID) as 'id' FROM wishlisttbl";
+                                    $result = mysqli_query($con, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    $qty = 0;
+                                     ?>
+                										<div class="qty"> <?php echo $qty+$row['id'] ?> </div>
+                									</a>
 
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.jpg" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">3x</span>₱ 980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
+                									<div class="cart-dropdown">
 
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product03.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">2x</span>₱ 980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-                                        
+                										<div class="cart-list">
 
-                                        </div>
-                                        
-                                        <div class="cart-summary">
-                                            <small>3 Item(s) on wishlist</small>
-                
-                                        </div>
-                                        
-                                        <div class="cart-btns">
-                                            <a href="wishlist.php">View Wishlist</a>
-                                            <a href="addtocart.php">Add to Cart  <i class="fa fa-shopping-cart"></i></a>
-                                        </div>
-                                    
+                                      <?php
+                                      $sql = "SELECT * FROM wishlisttbl inner join productstbl on wishlisttbl.productID = productstbl.productID";
+                                      $result = mysqli_query($con, $sql);
+
+                                      if (mysqli_num_rows($result) > 0) {
+                                        while($row = mysqli_fetch_assoc($result)) {
+                        							?>
+                											<div class="product-widget">
+                												<div class="product-img">
+                													<img src="<?php echo $row['image'] ?>" alt="">
+                												</div>
+                												<div class="product-body">
+                													<h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
+                													<h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
+                												</div>
+                												<button class="delete"><i class="fa fa-close"></i></button>
+                											</div>
+                                    <?php }
+                                  } ?>
+
                                     </div>
-                                </div>
+
+                										<div class="cart-summary">
+                                      <?php
+                                      $sql = "SELECT sum(quantity) as 'qty' FROM wishlisttbl";
+                                      $result = mysqli_query($con, $sql);
+                                      $row = mysqli_fetch_assoc($result);
+                                      $qty = 0;
+                                       ?>
+                											<small><?php echo $qty+$row['qty'] ?> Item(s) on wishlist</small>
+                										</div>
+                                  <center>
+                										<div class="cart-btns">
+                											<a href="wishlist.php">View Wishlist</a>
+                										</div>
+                                  </center>
+
+                									</div>
+
+                								</div>
                                 <!-- /Wishlist -->
 
                                 <!-- Cart -->
                                 <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span>Your Cart</span>
-                                        <div class="qty"> 3 </div>
-                                    </a>
-                                    <div class="cart-dropdown">
-                                        <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.jpg" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty"> 1x </span> ₱ 980.00 </h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
+                									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                										<i class="fa fa-shopping-cart"></i>
+                										<span>Your Cart</span>
+                                    <?php
+                                    $sql = "SELECT count(ID) as 'id' FROM carttbl";
+                                    $result = mysqli_query($con, $sql);
+                                    $row = mysqli_fetch_assoc($result);
+                                    $qty = 0;
+                                     ?>
+                										<div class="qty"> <?php echo $qty+$row['id'] ?> </div>
+                									</a>
+                									<div class="cart-dropdown">
+                										<div class="cart-list">
+                                      <?php
+                                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID";
+                                      $result = mysqli_query($con, $sql);
 
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.jpg" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">3x</span>₱ 980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product03.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">2x</span>₱ 980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="cart-summary">
-                                            <small>3 Item(s) selected</small>
-                                            <h5>SUBTOTAL: ₱ 2940.00</h5>
-                                        </div>
-                                        <div class="cart-btns">
-                                            <a href="cart.php">View Cart</a>
-                                            <a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
+                                      if (mysqli_num_rows($result) > 0) {
+                                        while($row = mysqli_fetch_assoc($result)) {
+                        							?>
+                                      <div class="product-widget">
+                												<div class="product-img">
+                													<img src="<?php echo $row['image'] ?>" alt="">
+                												</div>
+                												<div class="product-body">
+                													<h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
+                													<h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
+                												</div>
+                												<button class="delete"><i class="fa fa-close"></i></button>
+                											</div>
+                                    <?php }
+                                  } ?>
+                										</div>
+                										<div class="cart-summary">
+                                      <?php
+                                      $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl";
+                                      $result = mysqli_query($con, $sql);
+                                      $row = mysqli_fetch_assoc($result);
+                                      $qty = 0;
+                                       ?>
+                											<small><?php echo $qty+$row['qty'] ?> Item(s) selected</small>
+                											<h5>SUBTOTAL: ₱ <?php echo $qty+$row['total'] ?></h5>
+                										</div>
+                										<div class="cart-btns">
+                											<a href="cart.php">View Cart</a>
+                											<a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                										</div>
+                									</div>
+                								</div>
                                 <!-- /Cart -->
 
                                 <!-- Menu Toogle -->
@@ -273,7 +271,7 @@ require_once("connection.php");
                         <li><a href="trackorder.php">Track My Order</a></li>
                         <li><a href="about.php">About Us</a></li>
                         <li><a href="contact.php">Contact Us</a></li>
-                        
+
                     </ul>
                     <!-- /NAV -->
                 </div>
@@ -303,52 +301,59 @@ require_once("connection.php");
                         <div class="row">
 
                           <input type="checkbox" class="checkbox-btn" name="SELECITEM" value="ITEM" style="float:left; margin-left: 20px; width: 15px; height: 20px;"><b> &nbsp Select All</b>
-                          
+
                           <button class="btn btn-danger" style="float:right; margin-right: 20px;"> <i class="fa fa-trash"></i> Delete</button>
 
                          </div>
                      </div>
-                           
-                           
+
+
                      <!--panel body-->
                      <div class="panel-body">
-                     
+
                              <!-- wishlistbody -->
                              <div class="wishlistbody">
-                                <div class="row"> 
-                                    <div> 
+                                <div class="row">
+                                    <div>
                                         <input type="checkbox" class="checkbox-btn" name="SELECTITEM" value="ITEM" style="float:left; margin-left: 20px; width: 15px; height: 20px;">
                                      </div>
-                             
-                            
+
+
                                 <!-- Product details -->
                                 <div class="col-md-4 col-md-push-2">
+                                  <?php
+                                  $sql = "SELECT * FROM wishlisttbl inner join productstbl on wishlisttbl.productID = productstbl.productID";
+                                  $result = mysqli_query($con, $sql);
 
+                                  if (mysqli_num_rows($result) > 0) {
+                                    while($row = mysqli_fetch_assoc($result)) {
+                                   ?>
                                     <div class="product-details">
-                                        <h2 class="product-name">Flat bars</h2>
-                                        
-                                        <div>
-                                            <h3 class="product-price">₱ 980.00 <del class="product-old-price">₱ 990.00</del></h3>
-                                            <span class="product-available">10 Remaining Stock</span>
-                                        </div>
-                                        <p>Available in 10MM, 12MM, 16MM, 20MM</p>
-                                        <p>SIZE 13mm wide up to 400mm and 3mm thick to 25mm </p>
+                                        <h2 class="product-name"><?php echo $row['productname'] ?></h2>
 
-                                        
+                                        <div>
+                                            <h3 class="product-price">₱ <?php echo $row['sellingprice'] ?> <del class="product-old-price">₱ <?php echo $row['principalprice'] ?></del></h3>
+                                            <span class="product-available"><?php echo $row['instock'] ?> Remaining Stock</span>
+                                        </div>
+                                        <p><?php echo $row['additionalinfo'] ?></p>
+
+
 
                                         <div class="add-to-cart">
                                             <div class="qty-label">
                                                 Qty
                                                 <div class="input-number">
-                                                    <input type="number" value="1">
+                                                    <input type="number" value="<?php echo $row['quantity'] ?>">
                                                     <span class="qty-up">+</span>
                                                     <span class="qty-down">-</span>
                                                 </div>
                                             </div>
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                                            <button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>add to cart</button>
                                         </div>
 
                                     </div>
+                                  <?php }
+                                } ?>
                                 </div>
                                 <!-- /Product details -->
 
@@ -356,7 +361,16 @@ require_once("connection.php");
                                 <div class="col-md-2  col-md-pull-4">
                                     <div id="product-imgs">
                                         <div class="product-preview">
-                                            <img src="./img/product01.jpg" alt="">
+                                          <?php
+                                          $sql = "SELECT * FROM wishlisttbl inner join productstbl on wishlisttbl.productID = productstbl.productID";
+                                          $result = mysqli_query($con, $sql);
+
+                                          if (mysqli_num_rows($result) > 0) {
+                                            while($row = mysqli_fetch_assoc($result)) {
+                                           ?>
+                                            <img src="<?php echo $row['image'] ?>" alt="">
+                                          <?php }
+                                        } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -364,7 +378,7 @@ require_once("connection.php");
 
                                 <!-- Product tab -->
                                 <div class="col-md-5">
-                                   
+
                                     <div class="col-md-12">
                                         <div id="product-tab">
 
@@ -380,9 +394,18 @@ require_once("connection.php");
                                                 <!-- tab1  -->
                                                 <div id="tab1" class="tab-pane fade in active">
                                                     <div class="row">
+                                                      <?php
+                                                      $sql = "SELECT * FROM wishlisttbl inner join productstbl on wishlisttbl.productID = productstbl.productID";
+                                                      $result = mysqli_query($con, $sql);
+
+                                                      if (mysqli_num_rows($result) > 0) {
+                                                        while($row = mysqli_fetch_assoc($result)) {
+                                                       ?>
                                                         <div class="col-md-12">
-                                                            <p>A flat, rectangular section with square edges varying in sizes. This cost-effective steel product is suitable for a wide variety of applications and is distributed into the construction, engineering, manufacturing, mining, grating, fabrication and many other industries.</p>
+                                                            <p><?php echo $row['description'] ?>.</p>
                                                         </div>
+                                                      <?php }
+                                                    } ?>
                                                     </div>
                                                 </div>
                                                 <!-- /tab1  -->
@@ -390,9 +413,18 @@ require_once("connection.php");
                                                 <!-- tab2  -->
                                                 <div id="tab2" class="tab-pane fade in">
                                                     <div class="row">
+                                                      <?php
+                                                      $sql = "SELECT * FROM wishlisttbl inner join productstbl on wishlisttbl.productID = productstbl.productID";
+                                                      $result = mysqli_query($con, $sql);
+
+                                                      if (mysqli_num_rows($result) > 0) {
+                                                        while($row = mysqli_fetch_assoc($result)) {
+                                                       ?>
                                                         <div class="col-md-12">
-                                                            <p>SIZE 13mm wide up to 400mm and 3mm thick to 25mm. Standard stock lengths are 6000mm or these can be cut to your required length.</p>
+                                                            <p><?php echo $row['details'] ?>.</p>
                                                         </div>
+                                                      <?php }
+                                                    } ?>
                                                     </div>
                                                 </div>
                                                 <!-- /tab2  -->
@@ -401,29 +433,29 @@ require_once("connection.php");
                                             <!-- /product tab content  -->
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <!-- /product tab -->
 
                              </div>
                              <hr>
                          </div>
-                             
-                            <!-- /wishlistbody -->
 
-                
-                             
                             <!-- /wishlistbody -->
 
 
-                  
-                </div>  
+
+                            <!-- /wishlistbody -->
+
+
+
+                </div>
                 <!--/product panel-->
 
-                
-                
 
-                        
+
+
+
 
 				</div>
 				<!-- /row -->
@@ -443,7 +475,7 @@ require_once("connection.php");
                     <div class="col-md-12">
                         <div class="newsletter">
                             <p>Follow us in <strong> Social Media</strong></p>
-                            
+
                             <ul class="newsletter-follow">
                                 <li>
                                     <a href="#"><i class="fa fa-facebook"></i></a>
@@ -478,7 +510,7 @@ require_once("connection.php");
                         <div class="col-md-3 col-xs-6">
                             <div class="footer">
                                 <h3 class="footer-title">About Us</h3>
-                               
+
                                 <ul class="footer-links">
                                     <li><a href="#"><i class="fa fa-phone"></i> 0920-960-0849  </a></li>
                                     <li><a href="#"><i class="fa fa-phone"></i> 0995-954-1926  </a></li>
