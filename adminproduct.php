@@ -720,7 +720,7 @@ require_once("connection.php");
 
                                                                   <?php
 
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Chanels' ");
+                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Channels' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
 
                                                                   ?>

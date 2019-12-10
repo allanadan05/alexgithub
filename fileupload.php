@@ -41,7 +41,7 @@ if (file_exists($target_file)) {
     $uploadOk = 0;
 }
 // Check file size
-if ($_FILES["image"]["size"] > 500000) {
+if ($_FILES["image"]["size"] > 1000000) {
     $a="Sorry, your file is too large." ."<br>";
     $uploadOk = 0;
 }
@@ -70,11 +70,17 @@ if ($uploadOk == 0) {
 
 if($c == 1){
             try{
-                mysqli_query($con," insert into productstbl (productID, productname, category, image, principalprice, sellingprice, instock, description, details, additionalinfo, availablein) values ('$PRODUCTID', '$PRODUCTNAME', '$CATEGORY', '$IMAGE', '$PRINCIPALPRICE', '$SELLINGPRICE', '$INSTOCK', '$DESCRIPTION', '$DETAILS', '$ADDITIONALINFO', '$AVAILABLEIN') ");
-
+              $reres=mysqli_query($con," insert into productstbl (productID, productname, category, image, principalprice, sellingprice, instock, description, details, additionalinfo, availablein) values ('$PRODUCTID', '$PRODUCTNAME', '$CATEGORY', '$IMAGE', '$PRINCIPALPRICE', '$SELLINGPRICE', '$INSTOCK', '$DESCRIPTION', '$DETAILS', '$ADDITIONALINFO', '$AVAILABLEIN') ");
+              if($reres){
                 header("location: adminproduct.php?productsmsgsuccess= $b "); 
+              } else{
+                header("location: adminproduct.php?productsmsgerr= $msg $a $e ");
+              }
+                
             }catch(Exception $e) {
                 $msg='Message: ' .$e->getMessage();
+                $b=$msg;
+                header("location: adminproduct.php?productsmsgsuccess= $b "); 
 
              }
         
