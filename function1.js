@@ -38,4 +38,4 @@ function deleteoncart(ipinasa){
       var token = "delete";
       xhttp.open("GET", "addtocart.php?forIpinasa="+forIpinasa+"&token="+token, true);
       xhttp.send();
-  }
+  } 
