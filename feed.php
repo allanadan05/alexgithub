@@ -7,9 +7,9 @@ require_once("connection.php");
      $ASK=" SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
      $INFO=mysqli_query($con, $ASK);
      $result=mysqli_fetch_assoc($INFO);
-     
+     $myaccoundID = $result['myaccountID'];
      if($userprofile==true){
-        
+
         $logacc=$result['firstname'];
      }
 
@@ -118,99 +118,57 @@ require_once("connection.php");
 						<!-- ACCOUNT -->
 						<div class="col-md-3 clearfix">
 							<div class="header-ctn">
+                <!-- Cart -->
+                <div class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Your Cart</span>
+                    <?php
+                    $sql = "SELECT count(ID) as 'id' FROM carttbl where myaccountID = '$myaccoundID'";
+                    $result = mysqli_query($con, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    $qty = 0;
+                     ?>
+                    <div class="qty"> <?php echo $qty+$row['id'] ?> </div>
+                  </a>
+                  <div class="cart-dropdown">
+                    <div class="cart-list">
+                      <?php
+                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
+                      $result = mysqli_query($con, $sql);
 
-								<!-- Wishlist -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
-										<div class="qty"> 2 </div>
-									</a>
-									
-									<div class="cart-dropdown">
-										
-										<div class="cart-list">
-
-										<?php
-										   $b=1;
-										   for($b=1; $b<=5; $b++) {
-										?>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty"> 1x </span> ₱ 980.00 </h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-										<?php
-										   }
-										 ?>
-											
-										</div>
-										
-										<div class="cart-summary">
-											<small>3 Item(s) on wishlist</small>
-				
-										</div>
-										
-										<div class="cart-btns">
-											<a href="wishlist.php">View Wishlist</a>
-											<a href="addtocart.php">Add to Cart  <i class="fa fa-shopping-cart"></i></a>
-										</div>
-									
-									</div>
-								</div>
-								<!-- /Wishlist -->
-
-								<!-- Cart -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
-										<div class="qty"> 3 </div>
-									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-
-										<?php
-										   $a=1;
-										   for($a=1; $a<=5; $a++) {
-										?>
-										  	
-										  
-												<div class="product-widget">
-													<div class="product-img">
-														<img src="./img/product01.jpg" alt="">
-													</div>
-													<div class="product-body">
-														<h3 class="product-name"><a href="#"> <?php echo'Product Name'; ?> </a></h3>
-														<h4 class="product-price"><span class="qty"> 1x </span> ₱ 980.00 </h4>
-													</div>
-													<button class="delete"><i class="fa fa-close"></i></button>
-												</div>
-										<?php 
-
-										  }
-
-										?>
-
-
-										</div>
-										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: ₱ 2940.00</h5>
-										</div>
-										<div class="cart-btns">
-											<a href="cart.php">View Cart</a>
-											<a href="checkout.php">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
-									</div>
-								</div>
+                      if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_assoc($result)) {
+                      ?>
+                      <div class="product-widget">
+                        <div class="product-img">
+                          <img src="<?php echo $row['image'] ?>" alt="">
+                        </div>
+                        <div class="product-body">
+                          <h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
+                          <h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
+                        </div>
+                        <button class="delete"><i class="fa fa-close"></i></button>
+                      </div>
+                    <?php }
+                  } ?>
+                    </div>
+                    <div class="cart-summary">
+                      <?php
+                      $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
+                      $result = mysqli_query($con, $sql);
+                      $row = mysqli_fetch_assoc($result);
+                      $qty = 0;
+                       ?>
+                      <small><?php echo $qty+$row['qty'] ?> Item(s) selected</small>
+                      <h5>SUBTOTAL: ₱ <?php echo $qty+$row['total'] ?></h5>
+                    </div>
+                    <div class="cart-btns">
+                      <a href="cart.php">View Cart</a>
+                      <a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
 								<!-- /Cart -->
 
 								<!-- Menu Toogle -->
@@ -246,7 +204,7 @@ require_once("connection.php");
 						<li><a href="trackorder.php">Track My Order</a></li>
 						<li><a href="about.php">About Us</a></li>
 						<li><a href="contact.php">Contact Us</a></li>
-						
+
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -264,32 +222,32 @@ require_once("connection.php");
 			<div class="container">
 				<!-- row -->
 				<div class="row">
-					
+
 					<!-- ASIDE -->
 					<div id="aside" class="col-md-3">
-						
+
 						<div>
 							<h6>Advertisements</h6>
 							<hr>
 						</div>
-						
+
 					</div>
 					<!-- /ASIDE --
 
 					<!-- STORE -->
 					<div id="store" class="col-md-6">
-						
+
 						<h1>News Feed</h1>
 
 						<hr>
 
 						<div style="background-color: whitesmoke">
 							<div class="post">
-								
+
 								<div class="userphoto" style="clear: both">
-									<h4><img src="img/dan.jpg" alt="profile picture" width="80px" height="80px" style="border-radius: 50px; border-color: blue; padding: 10px;"> Dan Astillero </h4><p style="color: blue;">01 Jan 2019, 20 mins</p> 
+									<h4><img src="img/dan.jpg" alt="profile picture" width="80px" height="80px" style="border-radius: 50px; border-color: blue; padding: 10px;"> Dan Astillero </h4><p style="color: blue;">01 Jan 2019, 20 mins</p>
 								</div>
-								
+
 								<div class="posttxt">
 									Thank you AlexSteelSupply! high quality products! Nice!<br>
 									Hope that I could give you guys more than 5 stars!
@@ -299,7 +257,7 @@ require_once("connection.php");
 							<div class="image">
 								<img src="img/product09.jpg" width="100%" height="100%">
 							</div>
-							
+
 							<div class="row">
 							<div style="height: 30px;">
 								<button style="padding: 2px; width: 32%;"><i class="fa fa-thumbs-up"> Like </i> <span> 10 </span></button>
@@ -308,19 +266,19 @@ require_once("connection.php");
 								<input type="text" name="comment" placeholder="write your comment here" style="width: 92%"> <button> <i class="fa fa-send"></i> </button>
 							</div>
 						    </div>
-							
+
 							<br><br>
 							<div class="row">
 							<div class="comments" style="background-color: whitesmoke">
-								
+
 								<div class="userphoto col-md-2">
 									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
 								</div>
 								<div class="userphoto col-md-4">
 									<strong>Dan Astillero </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
 									<p>comment here and there...
-									</p> 
-									
+									</p>
+
 								</div>
 							</div>
 							</div>
@@ -328,19 +286,19 @@ require_once("connection.php");
 							<br><br>
 							<div class="row">
 							<div class="comments" style="background-color: whitesmoke">
-								
+
 								<div class="userphoto col-md-2">
 									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
 								</div>
 								<div class="userphoto col-md-4">
 									<strong>Dan Astillero </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
 									<p>comment here and there...
-									</p> 
-									
+									</p>
+
 								</div>
 							</div>
 							</div>
-								
+
 							<center><a href="#"><b>Show more</b> </a></center>
 
 					</div>
@@ -349,11 +307,11 @@ require_once("connection.php");
 
 					<div style="background-color: whitesmoke">
 							<div class="post">
-								
+
 								<div class="userphoto" style="clear: both">
-									<h4><img src="img/dan.jpg" alt="profile picture" width="80px" height="80px" style="border-radius: 50px; border-color: blue; padding: 10px;"> Dan Astillero </h4><p style="color: blue;">01 Jan 2019, 20 mins</p> 
+									<h4><img src="img/dan.jpg" alt="profile picture" width="80px" height="80px" style="border-radius: 50px; border-color: blue; padding: 10px;"> Dan Astillero </h4><p style="color: blue;">01 Jan 2019, 20 mins</p>
 								</div>
-								
+
 								<div class="posttxt">
 									Thank you AlexSteelSupply! high quality products! Nice!<br>
 									Hope that I could give you guys more than 5 stars!
@@ -363,7 +321,7 @@ require_once("connection.php");
 							<div class="image">
 								<img src="img/product09.jpg" width="100%" height="100%">
 							</div>
-							
+
 							<div class="row">
 							<div style="height: 30px;">
 								<button style="padding: 2px; width: 32%;"><i class="fa fa-thumbs-up"> Like </i> <span> 10 </span></button>
@@ -372,19 +330,19 @@ require_once("connection.php");
 								<input type="text" name="comment" placeholder="write your comment here" style="width: 92%"> <button> <i class="fa fa-send"></i> </button>
 							</div>
 						    </div>
-							
+
 							<br><br>
 							<div class="row">
 							<div class="comments" style="background-color: whitesmoke">
-								
+
 								<div class="userphoto col-md-2">
 									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
 								</div>
 								<div class="userphoto col-md-4">
 									<strong>Dan Astillero </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
 									<p>comment here and there...
-									</p> 
-									
+									</p>
+
 								</div>
 							</div>
 							</div>
@@ -392,27 +350,27 @@ require_once("connection.php");
 							<br><br>
 							<div class="row">
 							<div class="comments" style="background-color: whitesmoke">
-								
+
 								<div class="userphoto col-md-2">
 									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
 								</div>
 								<div class="userphoto col-md-4">
 									<strong>Dan Astillero </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
 									<p>comment here and there...
-									</p> 
-									
+									</p>
+
 								</div>
 							</div>
 							</div>
-								
+
 							<center><a href="#"><b>Show more</b> </a></center>
 
 					</div>
-							
 
 
 
-						
+
+
 					<!-- /STORE -->
 				</div>
 				<!-- /row -->
@@ -430,7 +388,7 @@ require_once("connection.php");
 					<div class="col-md-12">
 						<div class="newsletter">
 							<p>Follow us in <strong> Social Media</strong></p>
-							
+
 							<ul class="newsletter-follow">
 								<li>
 									<a href="#"><i class="fa fa-facebook"></i></a>
@@ -465,7 +423,7 @@ require_once("connection.php");
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
 								<h3 class="footer-title">About Us</h3>
-							
+
 								<ul class="footer-links">
 									<li><a href="#"><i class="fa fa-phone"></i> 0920-960-0849  </a></li>
 									<li><a href="#"><i class="fa fa-phone"></i> 0995-954-1926  </a></li>

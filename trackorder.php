@@ -7,9 +7,10 @@ require_once("connection.php");
      $ASK=" SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
      $INFO=mysqli_query($con, $ASK);
      $result=mysqli_fetch_assoc($INFO);
-     
+     $myaccoundID = $result['myaccountID'];
+
      if($userprofile==true){
-        
+
         $logacc=$result['firstname'];
      }
 
@@ -51,13 +52,13 @@ require_once("connection.php");
  		<link type="text/css" rel="stylesheet" href="css/style.css"/>
 
 
-		 
+
   <script src="ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 
- 		<!-- Custom stlylesheet 
+ 		<!-- Custom stlylesheet
  		<link type="text/css" rel="stylesheet" href="css/stevenstyle.css"/>
 		-->
-		
+
  		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
  		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
  		<!--[if lt IE 9]>
@@ -131,129 +132,57 @@ require_once("connection.php");
 						<!-- ACCOUNT -->
 						<div class="col-md-3 clearfix">
 							<div class="header-ctn">
-								
-								
-								<!-- Wishlist -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
-										<div class="qty"> 2 </div>
-									</a>
-									
-									<div class="cart-dropdown">
-										
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty"> 1x </span> $980.00 </h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
+                <!-- Cart -->
+                <div class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Your Cart</span>
+                    <?php
+                    $sql = "SELECT count(ID) as 'id' FROM carttbl where myaccountID = '$myaccoundID'";
+                    $result = mysqli_query($con, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    $qty = 0;
+                     ?>
+                    <div class="qty"> <?php echo $qty+$row['id'] ?> </div>
+                  </a>
+                  <div class="cart-dropdown">
+                    <div class="cart-list">
+                      <?php
+                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
+                      $result = mysqli_query($con, $sql);
 
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">2x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-										
-
-										</div>
-										
-										<div class="cart-summary">
-											<small>3 Item(s) on wishlist</small>
-				
-										</div>
-										
-										<div class="cart-btns">
-											<a href="wishlist.php">View Wishlist</a>
-											<a href="addtocart.php">Add to Cart  <i class="fa fa-shopping-cart"></i></a>
-										</div>
-									
-									</div>
-								</div>
-								<!-- /Wishlist -->
-
-						
-								<!-- Cart -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
-										<div class="qty"> 3 </div>
-									</a>
-
-									<div class="cart-dropdown">
-										
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty"> 1x </span> $980.00 </h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">2x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-										
-
-										</div>
-										
-										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
-										</div>
-										
-										<div class="cart-btns">
-											<a href="cart.php">View Cart</a>
-											<a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
-									
-									</div>
-								</div> 
+                      if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_assoc($result)) {
+                      ?>
+                      <div class="product-widget">
+                        <div class="product-img">
+                          <img src="<?php echo $row['image'] ?>" alt="">
+                        </div>
+                        <div class="product-body">
+                          <h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
+                          <h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
+                        </div>
+                        <button class="delete"><i class="fa fa-close"></i></button>
+                      </div>
+                    <?php }
+                  } ?>
+                    </div>
+                    <div class="cart-summary">
+                      <?php
+                      $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
+                      $result = mysqli_query($con, $sql);
+                      $row = mysqli_fetch_assoc($result);
+                      $qty = 0;
+                       ?>
+                      <small><?php echo $qty+$row['qty'] ?> Item(s) selected</small>
+                      <h5>SUBTOTAL: ₱ <?php echo $qty+$row['total'] ?></h5>
+                    </div>
+                    <div class="cart-btns">
+                      <a href="cart.php">View Cart</a>
+                      <a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
 								<!-- /Cart -->
 
 								<!-- Menu Toogle -->
@@ -278,7 +207,7 @@ require_once("connection.php");
 		<!-- /HEADER -->
 
 		<!-- NAVIGATION -->
-		<nav id="navigation">
+    <nav id="navigation">
 			<!-- container -->
 			<div class="container">
 				<!-- responsive-nav -->
@@ -286,11 +215,11 @@ require_once("connection.php");
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
 						<li><a href="index.php">Home</a></li>
-						<li><a href="product.php">Products</a></li>
+						<li><a href="feed.php">Feed</a></li>
 						<li class="active"><a href="trackorder.php">Track My Order</a></li>
 						<li><a href="about.php">About Us</a></li>
 						<li><a href="contact.php">Contact Us</a></li>
-						
+
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -300,7 +229,7 @@ require_once("connection.php");
 		</nav>
 		<!-- /NAVIGATION -->
 
-		
+
 
 		<!-- SECTION -->
 		<div class="section">
@@ -319,11 +248,11 @@ require_once("connection.php");
 									<input class="input" style="margin-left: 20%; width: 50%;" placeholder="Enter your access code here..." autofocus>
 									<button id="show" style=" height: 40px;width: 100px;background: #ff3300;color: #FFF;font-weight: 700;border: none;border-radius: 0px 40px 40px 0px;">Go</button>
 								</div>
-								
+
 						</div>
 					</div>
 					<!-- /Tracking Search Bar -->
-                                     
+
 
 				</div>
 				<!-- /row -->
@@ -343,60 +272,60 @@ require_once("connection.php");
 
 					<!--track order result-->
 
-					
-					
-								
+
+
+
 								<script>
 								$(document).ready(function()
 								{
-								
-								
+
+
 									$("#show").click(function(){$(".track-table").show();})
 								});
 								</script>
-					
+
 								<div class="track-table" hidden>
-								
+
 								<h3 class="track-number-label">Access Code</h3>
 								<h2 class="track-number">123edc45</h2>
 								<hr>
 								<table class="table" border=0>
-						
-						
+
+
 
 										<tr>
-											<th>Date	</th> 
+											<th>Date	</th>
 											<th>Transaction Status</th>
-											
-										</tr>	
+
+										</tr>
 
 										<!--insert data-->
 										<tr>
 											<td>Apr 02, 2019	08:00 AM</td>
 											<td>DELIVERY TEAM LEFT THE WAREHOUSE</td>
-											
+
 										</tr>
 
 										<tr>
 											<td>Apr 02, 2019	05:00 PM</td>
 											<td>YOUR ORDER HAS BEEN REACHED THE DESTINATION</td>
-											
+
 										</tr>
-												
+
 										<tr>
 											<td>Apr 02, 2019	06:00 PM</td>
 											<td>PRODUCTS RECEIVED AT BARANGAY STO. CRISTO, SJDM</td>
-											
+
 										</tr>
 
-										<!--insert data-->									
+										<!--insert data-->
 							 </table>
-							
+
 							</div>
-							
-							
-							
-					
+
+
+
+
 
 				</div>
 				<!-- /row -->
@@ -404,7 +333,7 @@ require_once("connection.php");
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-		
+
 
 		<!-- NEWSLETTER -->
 		<div id="newsletter" class="section">
@@ -415,7 +344,7 @@ require_once("connection.php");
 					<div class="col-md-12">
 						<div class="newsletter">
 							<p>Follow Us in <strong>Social Media</strong></p>
-							
+
 							<ul class="newsletter-follow">
 								<li>
 									<a href="#"><i class="fa fa-facebook"></i></a>
@@ -450,7 +379,7 @@ require_once("connection.php");
 						<div class="col-md-3 col-xs-6">
 							<div class="footer">
 								<h3 class="footer-title">About Us</h3>
-								
+
 								<ul class="footer-links">
 									<li><a href="#"><i class="fa fa-phone"></i> 0920-960-0849  </a></li>
 									<li><a href="#"><i class="fa fa-phone"></i> 0995-954-1926  </a></li>

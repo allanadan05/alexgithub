@@ -7,9 +7,10 @@ require_once("connection.php");
      $ASK=" SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
      $INFO=mysqli_query($con, $ASK);
      $result=mysqli_fetch_assoc($INFO);
-     
+     $myaccoundID = $result['myaccountID'];
+
      if($userprofile==true){
-        
+
         $logacc=$result['firstname'];
      }
 
@@ -54,10 +55,10 @@ require_once("connection.php");
         <link rel="stylesheet" href="maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
- 		<!-- Custom stlylesheet 
+ 		<!-- Custom stlylesheet
  		<link type="text/css" rel="stylesheet" href="css/stevenstyle.css"/>
 		-->
-		
+
  		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
  		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
  		<!--[if lt IE 9]>
@@ -131,99 +132,57 @@ require_once("connection.php");
 						<!-- ACCOUNT -->
 						<div class="col-md-3 clearfix">
 							<div class="header-ctn">
-
-								<!-- Wishlist -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
-										<div class="qty"> 2 </div>
-									</a>
-									
-									<div class="cart-dropdown">
-										
-										<div class="cart-list">
-
-										<?php
-										   $b=1;
-										   for($b=1; $b<=5; $b++) {
-										?>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.jpg" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty"> 1x </span> ₱ 980.00 </h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-										<?php
-										   }
-										 ?>
-											
-										</div>
-										
-										<div class="cart-summary">
-											<small>3 Item(s) on wishlist</small>
-				
-										</div>
-										
-										<div class="cart-btns">
-											<a href="wishlist.php">View Wishlist</a>
-											<a href="addtocart.php">Add to Cart  <i class="fa fa-shopping-cart"></i></a>
-										</div>
-									
-									</div>
-								</div>
-								<!-- /Wishlist -->
-
 								<!-- Cart -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
-										<div class="qty"> 3 </div>
-									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
+                <div class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Your Cart</span>
+                    <?php
+                    $sql = "SELECT count(ID) as 'id' FROM carttbl where myaccountID = '$myaccoundID'";
+                    $result = mysqli_query($con, $sql);
+                    $row = mysqli_fetch_assoc($result);
+                    $qty = 0;
+                     ?>
+                    <div class="qty"> <?php echo $qty+$row['id'] ?> </div>
+                  </a>
+                  <div class="cart-dropdown">
+                    <div class="cart-list">
+                      <?php
+                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
+                      $result = mysqli_query($con, $sql);
 
-										<?php
-										   $a=1;
-										   for($a=1; $a<=5; $a++) {
-										?>
-										  	
-										  
-												<div class="product-widget">
-													<div class="product-img">
-														<img src="./img/product01.jpg" alt="">
-													</div>
-													<div class="product-body">
-														<h3 class="product-name"><a href="#"> <?php echo'Product Name'; ?> </a></h3>
-														<h4 class="product-price"><span class="qty"> 1x </span> ₱ 980.00 </h4>
-													</div>
-													<button class="delete"><i class="fa fa-close"></i></button>
-												</div>
-										<?php 
-
-										  }
-
-										?>
-
-
-										</div>
-										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: ₱ 2940.00</h5>
-										</div>
-										<div class="cart-btns">
-											<a href="cart.php">View Cart</a>
-											<a href="checkout.php">Checkout <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
-									</div>
-								</div>
+                      if (mysqli_num_rows($result) > 0) {
+                        while($row = mysqli_fetch_assoc($result)) {
+                      ?>
+                      <div class="product-widget">
+                        <div class="product-img">
+                          <img src="<?php echo $row['image'] ?>" alt="">
+                        </div>
+                        <div class="product-body">
+                          <h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
+                          <h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
+                        </div>
+                        <button class="delete"><i class="fa fa-close"></i></button>
+                      </div>
+                    <?php }
+                  } ?>
+                    </div>
+                    <div class="cart-summary">
+                      <?php
+                      $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
+                      $result = mysqli_query($con, $sql);
+                      $row = mysqli_fetch_assoc($result);
+                      $qty = 0;
+                       ?>
+                      <small><?php echo $qty+$row['qty'] ?> Item(s) selected</small>
+                      <h5>SUBTOTAL: ₱ <?php echo $qty+$row['total'] ?></h5>
+                    </div>
+                    <div class="cart-btns">
+                      <a href="cart.php">View Cart</a>
+                      <a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
 								<!-- /Cart -->
 
 								<!-- Menu Toogle -->
@@ -247,19 +206,19 @@ require_once("connection.php");
 		<!-- /HEADER -->
 
 		<!-- NAVIGATION -->
-		<nav id="navigation">
+    <nav id="navigation">
 			<!-- container -->
 			<div class="container">
 				<!-- responsive-nav -->
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li ><a href="index.php">Home</a></li>
-						<li><a href="product.php">Products</a></li>
+						<li><a href="index.php">Home</a></li>
+						<li><a href="feed.php">Feed</a></li>
 						<li><a href="trackorder.php">Track My Order</a></li>
 						<li class="active"><a href="about.php">About Us</a></li>
 						<li><a href="contact.php">Contact Us</a></li>
-						
+
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -269,7 +228,7 @@ require_once("connection.php");
 		</nav>
 		<!-- /NAVIGATION -->
 
-		
+
 
 		<!-- SECTION -->
 		<div class="section">
@@ -281,13 +240,13 @@ require_once("connection.php");
 				<div class="row">
 
 
-                
+
                  <div class="container">
                                                         <ul class="nav nav-tabs">
                                                         <li class="active"><a data-toggle="tab" href="#home">Mission</a></li>
                                                         <li><a data-toggle="tab" href="#menu1">Vision</a></li>
-                                                        
-                                                       
+
+
                                                       </ul>
 
                                                       <div class="tab-content">
@@ -298,7 +257,7 @@ require_once("connection.php");
                                                         <div id="menu1" class="tab-pane fade">
                                                         <br><p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp As it was from the very beginning, the vision of AlexSteel Supply is to provide quality steel products at a competitive price to meet the construction needs of the customers. From households to corporations, we aim to be the top of mind steel supplier in Bulacan.</p>
 																												<p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp AlexSteel Supply is dedicated to deliver a complete package of customer satisfaction. We aim to provide our customers a one-stop shop experience with our complete line of construction materials. That is why we offer personalized service. AlexSteel Supply is a family operated business. Therefore, it remained committed to the values instilled by the forefathers, “Customer is our business partners”.</p>
-                                                        </div>                                                  
+                                                        </div>
                                                         </div>
                                                     </div>
 
@@ -315,7 +274,7 @@ require_once("connection.php");
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-		
+
 
 		<!-- NEWSLETTER -->
 		<div id="newsletter" class="section">
@@ -326,7 +285,7 @@ require_once("connection.php");
 					<div class="col-md-12">
 						<div class="newsletter">
 							<p>Follow Us in <strong>Social Media</strong></p>
-							
+
 							<ul class="newsletter-follow">
 								<li>
 									<a href="#"><i class="fa fa-facebook"></i></a>

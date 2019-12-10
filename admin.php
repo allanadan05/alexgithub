@@ -1,13 +1,13 @@
 <?php
 session_start();
 require_once("connection.php");
-     
+
      $userprofile=$_SESSION['user_name'];
-     
+
      if($userprofile==true){
          $query="SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
          $data=mysqli_query($con, $query);
-         $result=mysqli_fetch_assoc($data);      
+         $result=mysqli_fetch_assoc($data);
      }
 
      if($result['usertype']==='user'){
@@ -15,7 +15,7 @@ require_once("connection.php");
          }
 
      else if($result['usertype']==='admin'){
-            
+
          }
 
      else{
@@ -77,7 +77,7 @@ require_once("connection.php");
         <link rel="stylesheet" href="maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -122,10 +122,10 @@ require_once("connection.php");
                         <!-- /LOGO -->
 
 
-                        
+
             <!-- SECTION -->
                 <div class="col-md-12">
-                <div class="row"> 
+                <div class="row">
 
                     <div class="section">
 
@@ -136,19 +136,19 @@ require_once("connection.php");
                             <div class="row">
 
                                 <!-- my account -->
-                                    
-                                        
+
+
                                  <div id="myaccount-section" class="col-md-3">
-                                  
+
                                      <div class="panel">
-                                            
+
                                            <div class="panel-heading" style="background-color: #ff3300; color: #fff;"><h3><center><b>  Admin </b> </center> </h3>
                                                         <span style="float: right;">
                                                         <a href='accountadminedit.php?adminID=<?php echo $_SESSION['userid']; ?> '>
-                                                        <button type="submit" class="btn-primary" > <i class="fa fa-edit"></i>  Edit </button> 
+                                                        <button type="submit" class="btn-primary" > <i class="fa fa-edit"></i>  Edit </button>
                                                         </a>
                                                         </span>
-                                                       
+
                                                         <table class="table table-responsive ">
                                                             <tr>
                                                                 <th style="text-align: right;">Firstname: </th>
@@ -157,7 +157,7 @@ require_once("connection.php");
                                                             <tr>
                                                                 <th style="text-align: right;">Lastname: </th>
                                                                 <td><?php echo $result['lastname']; ?></td>
-                                                            </tr>               
+                                                            </tr>
                                                         </table>
 
 
@@ -186,7 +186,7 @@ require_once("connection.php");
                                                     <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;">2</div>
                                                 </a>
                                                 </div>
-                                                    
+
                                                 <div class="panel-body">
                                                     <a href="adminproduct.php">
                                                     <span><i class="fa fa-cube"></i></span>
@@ -207,7 +207,7 @@ require_once("connection.php");
                                                     <span>View Daily Sales</span>
                                                     </a>
                                                 </div>
-                                               
+
                                                 <div class="panel-body">
                                                 <a href="admininventory.php">
                                                     <span><i class="fa fa-bar-chart"></i></span>
@@ -227,20 +227,20 @@ require_once("connection.php");
                                                 <a href="admincustomer.php">
                                                     <span><i class="fa fa-edit"></i></span>
                                                     <span>Customer Management</span>
-                                                </a>                                                
+                                                </a>
                                                 </div>
 
                                                 <div class="panel-body">
                                                 <a href="admininvoices.php">
                                                     <span><i class="fa fa-edit"></i></span>
                                                     <span>Invoices</span>
-                                                </a>                                                
+                                                </a>
                                                 </div>
                                             </div>
                                         </div>
                                     <!--/my account-->
 
-                                    
+
 
                                      <!-- panels for quick access / order requests panel -->
                                          <div class="col-md-9">
@@ -250,16 +250,16 @@ require_once("connection.php");
                                                 <span><i class="fa fa-exclamation-circle"></i></span>
                                                 <span> 2 Order Request </span>
                                                 </b>
-                                                   
+
                                             </div>
                                             <div class="panel-body">
-                                                           
+
                                                              <div class="col-md-8">
 
                                                                 <!-- Request1 -->
                                                               <button type="button" class="panel panel-primary" style="width: auto;" data-toggle="collapse" data-target="#request1"><input type="checkbox" name="" value=""> Juan Dela Cruz</button><br>
                                                               <div></div>
-                                                              
+
                                                               <div id="request1" class="collapse">
                                                                 <br>
                                                                 <table class="table table-responsive table-hover">
@@ -279,7 +279,7 @@ require_once("connection.php");
                                                                             </tr>
                                                                             <tr>
                                                                                 <th style="text-align: right;"> Products: </th>
-                                                                                <td> 
+                                                                                <td>
                                                                     <table class="table table-responsive table-hover">
                                                                         <tr style="background-color: #0033cc; color: #fff;">
                                                                             <th>Quantity</th>
@@ -330,7 +330,7 @@ require_once("connection.php");
                                                                             <tr>
                                                                                 <th style="text-align: right;">Note/Message: </th>
                                                                                 <td>
-                                                                                    <textarea>  </textarea> 
+                                                                                    <textarea>  </textarea>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -340,16 +340,16 @@ require_once("connection.php");
                                                                                     <button class="btn btn-primary">
                                                                                           Confirm
                                                                                     </button>
-                                                                                    
+
                                                                                     </span>
                                                                                 </td>
                                                                             </tr>
 
-                                                                
+
                                                             </table>
-                                                                
+
                                                             </div>
-                                                            
+
                                                             <!-- /Request1 -->
                                                               <!-- Request2 -->
                                                               <button type="button" class="panel panel-primary" style="width: auto;" data-toggle="collapse" data-target="#request2"><input type="checkbox" name="" value=""> Juan Vva</button><br>
@@ -373,7 +373,7 @@ require_once("connection.php");
                                                                             </tr>
                                                                             <tr>
                                                                                 <th style="text-align: right;"> Products: </th>
-                                                                                <td> 
+                                                                                <td>
                                         <table class="table table-responsive table-hover">
                                             <tr style="background-color: #0033cc; color: #fff;">
                                                 <th>Quantity</th>
@@ -424,7 +424,7 @@ require_once("connection.php");
                                                                             <tr>
                                                                                 <th style="text-align: right;">Note/Message: </th>
                                                                                 <td>
-                                                                                    <textarea>  </textarea> 
+                                                                                    <textarea>  </textarea>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -434,24 +434,24 @@ require_once("connection.php");
                                                                                     <button class="btn btn-primary">
                                                                                           Confirm
                                                                                     </button>
-                                                                                    
+
                                                                                     </span>
                                                                                 </td>
                                                                             </tr>
 
-                                                                
+
                                                             </table>
-                                                                
+
                                                             </div>
-                                                            
+
                                                             <!-- /Request2 -->
 
-                                                        
-
-                                                              
 
 
-                                                           
+
+
+
+
 
 
 
@@ -462,7 +462,7 @@ require_once("connection.php");
                                       <!-- /panels for quick access / order requests panel -->
 
 
-                                     
+
                                 </div>
                                 <!-- /row -->
 

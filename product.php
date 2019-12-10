@@ -7,6 +7,7 @@ require_once("connection.php");
      $ASK=" SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
      $INFO=mysqli_query($con, $ASK);
      $result=mysqli_fetch_assoc($INFO);
+     $myaccoundID = $result['myaccountID'];
 
      if($userprofile==true){
 
@@ -121,116 +122,116 @@ require_once("connection.php");
 							<div class="header-ctn">
 
 								<!-- Wishlist -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
+                <div class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                    <i class="fa fa-heart-o"></i>
+                    <span>Your Wishlist</span>
                     <?php
-                    $sql = "SELECT count(ID) as 'id' FROM wishlisttbl";
+                    $sql = "SELECT count(ID) as 'id' FROM wishlisttbl where myaccountID = '$myaccoundID'";
                     $result = mysqli_query($con, $sql);
                     $row = mysqli_fetch_assoc($result);
                     $qty = 0;
                      ?>
-										<div class="qty"> <?php echo $qty+$row['id'] ?> </div>
-									</a>
+                    <div class="qty"> <?php echo $qty+$row['id'] ?> </div>
+                  </a>
 
-									<div class="cart-dropdown">
+                  <div class="cart-dropdown">
 
-										<div class="cart-list">
+                    <div class="cart-list">
 
                       <?php
-                      $sql = "SELECT * FROM wishlisttbl inner join productstbl on wishlisttbl.productID = productstbl.productID";
+                      $sql = "SELECT * FROM wishlisttbl inner join productstbl on wishlisttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
                       $result = mysqli_query($con, $sql);
 
                       if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_assoc($result)) {
-        							?>
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="<?php echo $row['image'] ?>" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
-													<h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
+                      ?>
+                      <div class="product-widget">
+                        <div class="product-img">
+                          <img src="<?php echo $row['image'] ?>" alt="">
+                        </div>
+                        <div class="product-body">
+                          <h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
+                          <h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
+                        </div>
+                        <button class="delete"><i class="fa fa-close"></i></button>
+                      </div>
                     <?php }
                   } ?>
 
                     </div>
 
-										<div class="cart-summary">
+                    <div class="cart-summary">
                       <?php
-                      $sql = "SELECT sum(quantity) as 'qty' FROM wishlisttbl";
+                      $sql = "SELECT sum(quantity) as 'qty' FROM wishlisttbl where myaccountID = '$myaccoundID'";
                       $result = mysqli_query($con, $sql);
                       $row = mysqli_fetch_assoc($result);
                       $qty = 0;
                        ?>
-											<small><?php echo $qty+$row['qty'] ?> Item(s) on wishlist</small>
-										</div>
+                      <small><?php echo $qty+$row['qty'] ?> Item(s) on wishlist</small>
+                    </div>
                   <center>
-										<div class="cart-btns">
-											<a href="wishlist.php">View Wishlist</a>
-										</div>
+                    <div class="cart-btns">
+                      <a href="wishlist.php">View Wishlist</a>
+                    </div>
                   </center>
 
-									</div>
+                  </div>
 
-								</div>
+                </div>
 								<!-- /Wishlist -->
 
 								<!-- Cart -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
+                <div class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Your Cart</span>
                     <?php
-                    $sql = "SELECT count(ID) as 'id' FROM carttbl";
+                    $sql = "SELECT count(ID) as 'id' FROM carttbl where myaccountID = '$myaccoundID'";
                     $result = mysqli_query($con, $sql);
                     $row = mysqli_fetch_assoc($result);
                     $qty = 0;
                      ?>
-										<div class="qty"> <?php echo $qty+$row['id'] ?> </div>
-									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
+                    <div class="qty"> <?php echo $qty+$row['id'] ?> </div>
+                  </a>
+                  <div class="cart-dropdown">
+                    <div class="cart-list">
                       <?php
-                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID";
+                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
                       $result = mysqli_query($con, $sql);
 
                       if (mysqli_num_rows($result) > 0) {
                         while($row = mysqli_fetch_assoc($result)) {
-        							?>
+                      ?>
                       <div class="product-widget">
-												<div class="product-img">
-													<img src="<?php echo $row['image'] ?>" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
-													<h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
+                        <div class="product-img">
+                          <img src="<?php echo $row['image'] ?>" alt="">
+                        </div>
+                        <div class="product-body">
+                          <h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
+                          <h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
+                        </div>
+                        <button class="delete"><i class="fa fa-close"></i></button>
+                      </div>
                     <?php }
                   } ?>
-										</div>
-										<div class="cart-summary">
+                    </div>
+                    <div class="cart-summary">
                       <?php
-                      $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl";
+                      $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
                       $result = mysqli_query($con, $sql);
                       $row = mysqli_fetch_assoc($result);
                       $qty = 0;
                        ?>
-											<small><?php echo $qty+$row['qty'] ?> Item(s) selected</small>
-											<h5>SUBTOTAL: ₱ <?php echo $qty+$row['total'] ?></h5>
-										</div>
-										<div class="cart-btns">
-											<a href="cart.php">View Cart</a>
-											<a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
-									</div>
-								</div>
+                      <small><?php echo $qty+$row['qty'] ?> Item(s) selected</small>
+                      <h5>SUBTOTAL: ₱ <?php echo $qty+$row['total'] ?></h5>
+                    </div>
+                    <div class="cart-btns">
+                      <a href="cart.php">View Cart</a>
+                      <a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                  </div>
+                </div>
 								<!-- /Cart -->
 
 								<!-- Menu Toogle -->
