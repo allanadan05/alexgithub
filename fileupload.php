@@ -74,13 +74,12 @@ if($c == 1){
               if($reres){
                 header("location: adminproduct.php?productsmsgsuccess= $b "); 
               } else{
-                header("location: adminproduct.php?productsmsgerr= $msg $a $e ");
+                header("location: adminproduct.php?productsmsgerr=$a $e ");
               }
                 
             }catch(Exception $e) {
                 $msg='Message: ' .$e->getMessage();
-                $b=$msg;
-                header("location: adminproduct.php?productsmsgsuccess= $b "); 
+                header("location: adminproduct.php?productsmsgerr=$msg "); 
 
              }
         

@@ -276,8 +276,95 @@ require_once("connection.php");
                                                       <div class="tab-content">
 
 
+                                                         <!-- Add Product Tab -->
+                                                        <div id="menu1" class="tab-pane fade in active">
+                                                          <table class="table table-responsive table-hover">
+                                                          <form method="POST" action="fileupload.php" enctype="multipart/form-data">
+
+                                                            <tr>
+                                                            <th style="text-align: right;" hidden> ProductID:</th>
+                                                            <td> <input type="text" name="productID" value="<?php echo date("Y.m.d") .date("h:i:sa");  ?>" hidden> </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> Product Name:</th>
+                                                            <td> <input type="text" name="productname" required></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;" required> Choose Category:</th>
+                                                            <td>
+                                                                <select class="input-select" name="category">
+                                                                <option value="B.I. & G.I. Pipes">B.I. & G.I. Pipes <hr></option>
+
+                                                                <option value="B.I. & G.I. Tubulars">B.I. & G.I. Tubulars</option>
+                                                                <option value="Channels">Channels</option>
+                                                                <option value="Flat & Angle Bars">Flat & Angle Bars</option>
+                                                                <option value="Handles & Hinges">Handles & Hinges</option>
+                                                                <option value="Mild Steel Plates">Mild Steel Plates</option>
+                                                                <option value="Plain & Deformed Bar">Plain & Deformed Bar</option>
+                                                                <option value="Plain G.I. Sheets">Plain G.I. Sheets</option>
+                                                                <option value="Roofing">Roofing</option>
+                                                                <option value="Square & Section Bars">Square & Section Bars</option>
+                                                                <option value="Welding Rod">Welding Rod</option>
+                                                                </select>
+                                                            </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> Image:</th>
+                                                            <td> <input type="file" name="image" required></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> Principal Price:</th>
+                                                            <td> <input type="number" name="principalprice" required></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> Selling Price:</th>
+                                                            <td> <input type="number" name="sellingprice" required></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> In-stock:</th>
+                                                            <td> <input type="number" name="instock" required></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> Description:</th>
+                                                            <td> <textarea name="description" rows="5" cols="40" placeholder="Describe your product..."  required></textarea></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> Details:</th>
+                                                            <td> <textarea name="details" rows="5" cols="40" placeholder="Let the user know what's on this product..." required></textarea></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> Additional Info (Optional):</th>
+                                                            <td> <textarea name="additionalinfo" rows="5" cols="40" placeholder="Add additional info if in case you think there is a need of elaboration..."></textarea></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"> Available in:</th>
+                                                            <td> <textarea name="availablein" rows="5" cols="40" placeholder="Cite availabilities of the product (example: color, size, and etc.)" required></textarea></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                            <th style="text-align: right;"></th>
+                                                            <td> <button type="submit" name="newproduct" class="primary-btn">Save</button> </td>
+                                                            </tr>
+
+
+                                                            </form>
+                                                            </table>
+                                                        </div>
+                                                        <!-- /Add Product Tab -->
+
+
                                                         <!-- home tab -->
-                                                        <div id="home" class="tab-pane fade in active">
+                                                        <div id="home" class="tab-pane fade">
 
                                                           <br>
                                                            <input type="text" name=""  placeholder="Enter Customer ID..." style="width: 250px;">
@@ -380,91 +467,7 @@ require_once("connection.php");
                                                         </div>
                                                         <!-- /home tab -->
 
-                                                        <!-- Add Product Tab -->
-                                                        <div id="menu1" class="tab-pane fade">
-                                                          <table class="table table-responsive table-hover">
-                                                          <form method="POST" action="fileupload.php" enctype="multipart/form-data">
-
-                                                            <tr>
-                                                            <th style="text-align: right;" hidden> ProductID:</th>
-                                                            <td> <input type="text" name="productID" value="<?php echo date("Y.m.d") .date("h:i:sa");  ?>" hidden> </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> Product Name:</th>
-                                                            <td> <input type="text" name="productname" required></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;" required> Choose Category:</th>
-                                                            <td>
-                                                                <select class="input-select" name="category">
-                                                                <option value="B.I. & G.I. Pipes">B.I. & G.I. Pipes <hr></option>
-
-                                                                <option value="B.I. & G.I. Tubulars">B.I. & G.I. Tubulars</option>
-                                                                <option value="Channels">Channels</option>
-                                                                <option value="Flat & Angle Bars">Flat & Angle Bars</option>
-                                                                <option value="Handles & Hinges">Handles & Hinges</option>
-                                                                <option value="Mild Steel Plates">Mild Steel Plates</option>
-                                                                <option value="Plain & Deformed Bar">Plain & Deformed Bar</option>
-                                                                <option value="Plain G.I. Sheets">Plain G.I. Sheets</option>
-                                                                <option value="Roofing">Roofing</option>
-                                                                <option value="Square & Section Bars">Square & Section Bars</option>
-                                                                <option value="Welding Rod">Welding Rod</option>
-                                                                </select>
-                                                            </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> Image:</th>
-                                                            <td> <input type="file" name="image" required></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> Principal Price:</th>
-                                                            <td> <input type="number" name="principalprice" required></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> Selling Price:</th>
-                                                            <td> <input type="number" name="sellingprice" required></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> In-stock:</th>
-                                                            <td> <input type="number" name="instock" required></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> Description:</th>
-                                                            <td> <textarea name="description" rows="5" cols="40" placeholder="Describe your product..."  required></textarea></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> Details:</th>
-                                                            <td> <textarea name="details" rows="5" cols="40" placeholder="Let the user know what's on this product..." required></textarea></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> Additional Info (Optional):</th>
-                                                            <td> <textarea name="additionalinfo" rows="5" cols="40" placeholder="Add additional info if in case you think there is a need of elaboration..."></textarea></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"> Available in:</th>
-                                                            <td> <textarea name="availablein" rows="5" cols="40" placeholder="Cite availabilities of the product (example: color, size, and etc.)" required></textarea></td>
-                                                            </tr>
-
-                                                            <tr>
-                                                            <th style="text-align: right;"></th>
-                                                            <td> <button type="submit" name="newproduct" class="primary-btn">Save</button> </td>
-                                                            </tr>
-
-
-                                                            </form>
-                                                            </table>
-                                                        </div>
-                                                        <!-- /Add Product Tab -->
+                                                       
 
                                                         <!-- List of Products -->
                                                         <div id="menu2" class="tab-pane fade">
@@ -591,7 +594,7 @@ require_once("connection.php");
                                                             <!-- /Category3 -->
                                                             <hr>
                                                             <!-- Category4 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category4">Plain GI Sheets</button><br>
+                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category4">Plain G.I. Sheets</button><br>
                                                               <div id="category4" class="collapse">
                                                                 <br>
                                                                 <table class="table table-responsive table-hover">
@@ -603,7 +606,7 @@ require_once("connection.php");
 
                                                                   <?php
 
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Plain GI Sheets' ");
+                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Plain G.I. Sheets' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
 
                                                                   ?>
@@ -735,7 +738,8 @@ require_once("connection.php");
                                                                       </td>
                                                                       <td>
                                                                         <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
-                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                            <button class="btn btn-danger">DELETE</
+                                                                                button>
                                                                         </a>
                                                                       </td>
                                                                   </tr>
@@ -759,7 +763,7 @@ require_once("connection.php");
 
                                                                   <?php
 
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Flat & Anlge Bars' ");
+                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Flat & Angle Bars' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
 
                                                                   ?>
@@ -876,7 +880,7 @@ require_once("connection.php");
 
                                                                   <?php
 
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='BI & GI Tubulars' ");
+                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='B.I. & G.I. Tubulars' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
 
                                                                   ?>
