@@ -298,7 +298,7 @@ require_once("connection.php");
 
                                                        ?>
                                                        <tr>
-                                                         <td> <?php echo $userresult2['ID'] ?> </td>
+                                                         <td> <?php echo $userresult2['accountid'] ?> </td>
                                                          <td> <?php echo $userresult2['firstname'] ."  " .$userresult2['lastname'] ?> </td>
                                                          <td> 
                                                             <a href="admincustomeredit.php?id=<?php echo $userresult2['ID'] ?>">
