@@ -305,8 +305,7 @@ require_once("connection.php");
               if (mysqli_num_rows($result) > 0) {
                 while($row = mysqli_fetch_assoc($result)) {
               ?>
-
-								<!-- product -->
+              <!-- product -->
 								<div class="col-md-4 col-xs-6">
 									<div class="product">
 
