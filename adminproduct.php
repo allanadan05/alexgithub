@@ -1,13 +1,13 @@
 <?php
 session_start();
 require_once("connection.php");
-     
+
      $userprofile=$_SESSION['user_name'];
-     
+
      if($userprofile==true){
          $query="SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
          $data=mysqli_query($con, $query);
-         $result=mysqli_fetch_assoc($data);      
+         $result=mysqli_fetch_assoc($data);
      }
 
      if($result['usertype']==='user'){
@@ -15,7 +15,7 @@ require_once("connection.php");
          }
 
      else if($result['usertype']==='admin'){
-            
+
          }
 
      else{
@@ -77,7 +77,7 @@ require_once("connection.php");
         <link rel="stylesheet" href="maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -122,10 +122,10 @@ require_once("connection.php");
                         <!-- /LOGO -->
 
 
-                        
+
             <!-- SECTION -->
                 <div class="col-md-12">
-                <div class="row"> 
+                <div class="row">
 
                     <div class="section">
 
@@ -136,19 +136,19 @@ require_once("connection.php");
                             <div class="row">
 
                                 <!-- my account -->
-                                    
-                                        
+
+
                                  <div id="myaccount-section" class="col-md-3">
-                                  
+
                                      <div class="panel">
-                                            
+
                                             <div class="panel-heading" style="background-color: #ff3300; color: #fff;"><h3><center><b>  Admin </b> </center> </h3>
                                                         <span style="float: right;">
                                                         <a href='accountadminedit.php?adminID=<?php echo $result['username']; ?> '>
-                                                        <button type="submit" class="btn-primary" > <i class="fa fa-edit"></i>  Edit </button> 
+                                                        <button type="submit" class="btn-primary" > <i class="fa fa-edit"></i>  Edit </button>
                                                         </a>
                                                         </span>
-                                                       
+
                                                         <table class="table table-responsive ">
                                                             <tr>
                                                                 <th style="text-align: right;">Firstname: </th>
@@ -157,7 +157,7 @@ require_once("connection.php");
                                                             <tr>
                                                                 <th style="text-align: right;">Lastname: </th>
                                                                 <td><?php echo $result['lastname']; ?></td>
-                                                            </tr>               
+                                                            </tr>
                                                         </table>
 
 
@@ -184,10 +184,10 @@ require_once("connection.php");
                                                     <span><i class="fa fa-exclamation-circle"></i></span>
                                                     <span>Order Request</span>
                                                    <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;">2</div>
-                                                    
+
                                                 </a>
                                                 </div>
-                                                    
+
                                                 <div class="panel-body" style="background-color: #cce6ff;">
                                                     <a href="adminproduct.php">
                                                     <span><i class="fa fa-cube"></i></span>
@@ -201,7 +201,7 @@ require_once("connection.php");
                                                     <span>Sales Management</span>
                                                     </a>
                                                 </div>
-                                               
+
                                                 <div class="panel-body" >
                                                 <a href="admininventory.php">
                                                     <span><i class="fa fa-bar-chart"></i></span>
@@ -221,20 +221,20 @@ require_once("connection.php");
                                                 <a href="admincustomer.php">
                                                     <span><i class="fa fa-edit"></i></span>
                                                     <span>Customer Management</span>
-                                                </a>                                                
+                                                </a>
                                                 </div>
 
                                                 <div class="panel-body">
                                                 <a href="admininvoices.php">
                                                     <span><i class="fa fa-edit"></i></span>
                                                     <span>Invoices</span>
-                                                </a>                                                
+                                                </a>
                                                 </div>
                                             </div>
                                         </div>
                                     <!--/my account-->
 
-                                    
+
 
                                      <!-- panels for quick access / order requests panel -->
                                          <div class="col-md-9">
@@ -246,8 +246,8 @@ require_once("connection.php");
                                                     <span style="float:right;">
 
                                                     <a href="">
-                                                        
-                                                         
+
+
                                                     </a>
                                                     </span>
                                             </div>
@@ -265,16 +265,16 @@ require_once("connection.php");
 
 
                                                 <div class="col-md-10">
-                                                   
+
                                                       <ul class="nav nav-tabs">
-                                                       
+
                                                         <li class="active"><a data-toggle="tab" href="#menu1">Add New Product</a></li>
                                                         <li><a data-toggle="tab" href="#menu2">List of Products</a></li>
                                                         <li ><a data-toggle="tab" href="#home">New Transaction</a></li>
                                                       </ul>
 
                                                       <div class="tab-content">
-                                                        
+
 
                                                         <!-- home tab -->
                                                         <div id="home" class="tab-pane fade in active">
@@ -288,32 +288,30 @@ require_once("connection.php");
                                                             <select class="input-select" >
                                                                 <option value="0">All Categories</option>
                                                                 <option value="1">B.I. & G.I. Pipes</option>
-                                                                <option value="2">B.I. & G.I. Tubulars</option>
-                                                                <option value="3">Channels</option>
-                                                                <option value="4">Flat & Angle Bars</option>
-                                                                <option value="5">Handles & Hinges</option>
-                                                                <option value="6">Mild Steel Plates</option>
-                                                                <option value="7">Plain & Deformed Bar</option>
-                                                                <option value="8">Plain G.I. Sheets</option>
-                                                                <option value="9">Roofing</option>
-                                                                <option value="10">Square & Section Bars</option>
-                                                                <option value="11">Welding Rod</option>
+                                            										<option value="2">B.I. & G.I. Tubulars</option>
+                                            										<option value="3">Channels</option>
+                                            										<option value="4">Flat & Angle Bars</option>
+                                            										<option value="5">Handles & Hinges</option>
+                                            										<option value="6">Mild Steel Plates</option>
+                                            										<option value="7">Plain & Deformed Bar</option>
+                                            										<option value="8">Plain G.I. Sheets</option>
+                                            										<option value="9">Roofing</option>
+                                            										<option value="10">Square & Section Bars</option>
+                                            										<option value="11">Welding Rod</option>
                                                             </select>
-
                                                             <span>
                                                             <select class="input-select">
-                                                                <option value="0">Product Name</option>
-                                                                <option value="1">Product1</option>
-                                                                <option value="2">Product2</option>
-                                                                <option value="3">Product3</option>
-                                                                <option value="4">Product4</option>
-                                                                <option value="5">Product5</option>
-                                                                <option value="6">Product6</option>
-                                                                <option value="7">Product7</option>
-                                                                <option value="8">Product8</option>
-                                                                <option value="9">Product9</option>
-                                                                <option value="10">Product10</option>
-                                                                <option value="11">Product11</option>
+                                                                <option value="">Product Name</option>
+                                                                <?php
+                                                                $sql = "SELECT * FROM productstbl";
+                                                                $result = mysqli_query($con, $sql);
+
+                                                                if (mysqli_num_rows($result) > 0) {
+                                                                  while($row = mysqli_fetch_assoc($result)) {
+                                                                 ?>
+                                                                <option value="<?php echo $row['productname'] ?>"><?php echo $row['productname'] ?></option>
+                                                              <?php }
+                                                            } ?>
                                                             </select>
                                                             </span>
 
@@ -324,14 +322,14 @@ require_once("connection.php");
                                                             <span>
                                                                 <button class="primary-btn"> ADD </button>
                                                             </span>
-                                                            
+
                                                         </form>
 
                                                         <hr>
 
                                                         <div class="col-md-12">
 
-                            
+
                                                     <table class="table table-responsive table-hover">
                                                        <tr style="background-color: #E4E7ED;">
                                                          <th style="text-align: left;">Product</th>
@@ -340,48 +338,45 @@ require_once("connection.php");
                                                          <th style="text-align: left;"> Total </th>
                                                          <th style="text-align: left;"> Action </th>
                                                        </tr>
+                                                       <?php
+                                                       $sql = "SELECT productname,instock,sellingprice,sellingprice*instock as 'total' FROM productstbl";
+                                                       $result = mysqli_query($con, $sql);
+                                                        if (mysqli_num_rows($result) > 0) {
+                                                         // output data of each row
+                                                         while($row = mysqli_fetch_assoc($result)) { ?>
                                                        <tr>
-                                                         <td> BI $ GI Pipe </td>
-                                                         <td> 4 </td>
-                                                         <td> ₱ 30.00</td>
-                                                         <td> ₱ 120.00</td>
+                                                         <td> <?php echo $row['productname'] ?> </td>
+                                                         <td> <?php echo $row['instock'] ?> </td>
+                                                         <td> <?php echo $row['sellingprice'] ?> </td>
+                                                         <td> <?php echo $row['total'] ?> </td>
                                                          <td> <button type="submit" value="" class="btn btn-danger"> <span><i class="fa fa-trash"></i></span> Delete </button></td>
                                                         </tr>
-                                                        <tr>
-                                                         <td> BI $ GI Pipe </td>
-                                                         <td> 4 </td>
-                                                         <td> ₱ 30.00</td>
-                                                         <td> ₱ 120.00</td>
-                                                         <td> <button type="submit" value="" class="btn btn-danger"> <span><i class="fa fa-trash"></i></span> Delete </button></td>
-                                                        </tr>
-                                                        <tr>
-                                                         <td> BI $ GI Pipe </td>
-                                                         <td> 4 </td>
-                                                         <td> ₱ 30.00</td>
-                                                         <td> ₱ 120.00</td>
-                                                         <td> <button type="submit" value="" class="btn btn-danger"> <span><i class="fa fa-trash"></i></span> Delete </button></td>
-                                                        </tr>
-
+                                                      <?php }
+                                                      } ?>
                                                         <tfooter>
                                                         <tr style="background-color: #E4E7ED;">
                                                          <th style="text-align: left;"></th>
                                                          <th style="text-align: left;">  </th>
                                                          <th style="text-align: right;"> Total Amount Due: </th>
-                                                         <th style="text-align: left;"> ₱ 360.00 </th>
+                                                         <?php
+                                                         $sql = "SELECT sum(sellingprice*instock) as 'total' FROM productstbl";
+                                                         $result = mysqli_query($con, $sql);
+                                                         $row = mysqli_fetch_assoc($result) ?>
+                                                         <th style="text-align: left;"> ₱ <?php echo $row['total'] ?> </th>
                                                          <th style="text-align: left;">
                                                             <a href="admininvoicegenerate.php">
-                                                            <button type="submit" value="" class="btn btn-info" style="width: 80px;"> <span><i class="fa fa-buy"></i></span> GO </button> 
+                                                            <button type="submit" value="" class="btn btn-info" style="width: 80px;"> <span><i class="fa fa-buy"></i></span> GO </button>
                                                             </a>
                                                         </th>
-                                                         
+
                                                        </tr>
                                                        </tfooter>
-                                                       
+
                                                     </table>
 
 
                                                 </div>
-                                                        
+
                                                         </div>
                                                         <!-- /home tab -->
 
@@ -402,7 +397,7 @@ require_once("connection.php");
 
                                                             <tr>
                                                             <th style="text-align: right;" required> Choose Category:</th>
-                                                            <td> 
+                                                            <td>
                                                                 <select class="input-select" name="category">
                                                                 <option value="B.I. & G.I. Pipes">B.I. & G.I. Pipes <hr></option>
 
@@ -465,7 +460,7 @@ require_once("connection.php");
                                                             <td> <button type="submit" name="newproduct" class="primary-btn">Save</button> </td>
                                                             </tr>
 
-                                                            
+
                                                             </form>
                                                             </table>
                                                         </div>
@@ -489,7 +484,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='B.I. & G.I. Pipes' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -499,19 +494,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -528,7 +523,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Plain & Deformed Bar' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -538,19 +533,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -567,7 +562,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Welding Rod' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -577,19 +572,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -606,7 +601,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Plain GI Sheets' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -616,19 +611,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -645,7 +640,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Handles & Hinges' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -655,19 +650,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -684,7 +679,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Square & Section Bars' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -694,19 +689,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -723,7 +718,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Channels' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -733,19 +728,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -762,7 +757,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Flat & Anlge Bars' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -772,19 +767,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -801,7 +796,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Mild Steel Plates' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -811,19 +806,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -840,7 +835,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Roofing' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -850,19 +845,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -879,7 +874,7 @@ require_once("connection.php");
                                                                       <th colspan="2">ACTION</th>
                                                                   </tr>
 
-                                                                  <?php 
+                                                                  <?php
 
                                                                   $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='BI & GI Tubulars' ");
                                                                   while($listf=mysqli_fetch_assoc($listq)){
@@ -889,19 +884,19 @@ require_once("connection.php");
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 
-                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-info">UPDATE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductupdate.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-info">UPDATE</button>
+                                                                        </a>
                                                                       </td>
-                                                                      <td> 
-                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " > 
-                                                                            <button class="btn btn-danger">DELETE</button> 
-                                                                        </a> 
+                                                                      <td>
+                                                                        <a href="adminproductdelete.php?productID='<?php  echo $listf['productID']; ?>' " >
+                                                                            <button class="btn btn-danger">DELETE</button>
+                                                                        </a>
                                                                       </td>
                                                                   </tr>
                                                                   <?php } ?>
-                                                                 
+
 
                                                                 </table>
                                                             </div>
@@ -909,11 +904,11 @@ require_once("connection.php");
 
 
                                                           </div>
-                                                          
+
                                                         </div>
                                                         <!-- /List of Products -->
 
-                                                        <!-- 
+                                                        <!--
                                                         <div id="menu3" class="tab-pane fade">
                                                           <h3>Menu 3</h3>
                                                           <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
@@ -923,7 +918,7 @@ require_once("connection.php");
 
 
                                                 </div>
-                                                 
+
 
                                             </div>
                                         </div>
@@ -932,7 +927,7 @@ require_once("connection.php");
                                       <!-- /panels for quick access / order requests panel -->
 
 
-                                     
+
                                 </div>
                                 <!-- /row -->
 

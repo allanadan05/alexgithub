@@ -8,5 +8,5 @@
     else{
  	die ("Connection failed because " .mysqli_connect_error());
  }
- 
+
 ?>
