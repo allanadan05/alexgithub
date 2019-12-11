@@ -29,6 +29,50 @@ require_once("connection.php");
 <html lang="en">
      <!-- Head folded -->
     <head>
+
+<script type="text/javascript">
+          function statusdeliv(val){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+              if(xhttp.readyState == 4 && xhttp.status == 200){
+                         }
+            };
+            var forIpinasa=document.getElementById("statusid").value;
+            var palatandaan = "statusdeliv";
+            var bval=val;
+            var delstat="";
+
+            if(forIpinasa=1)
+            {
+            delstat="Process";
+            }
+            else if(forIpinasa==2)
+            {
+             delstat="Pending";
+            }
+            else if(forIpinasa==3)
+            {
+             delstat="OTW";
+            }
+             else if(forIpinasa==4)
+            {
+             delstat="Delivered";
+            }
+            else{
+              delstat="Error";
+            }
+
+
+
+            xhttp.open("GET", "deliveryfuntion.php?palatandaan="+palatandaan+"&forIpinasa="+forIpinasa+"&delstat="+delstat+"&bval="+bval, true);
+            xhttp.send();
+
+
+          }
+
+
+        </script>
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,6 +105,7 @@ require_once("connection.php");
 
         <!-- Custom stlylesheet -->
         <link type="text/css" rel="stylesheet" href="css/style.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
         <!-- jesus css -->
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -80,16 +125,22 @@ require_once("connection.php");
         <link rel="stylesheet" href="../../maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="../../ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="../../maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
         <![endif]-->
+  
+        
+    
 
     </head>
     <body>
+
         <!-- Header Fold -->
         <!-- HEADER -->
         <header>
@@ -253,12 +304,13 @@ require_once("connection.php");
                                                     </a>
                                                     </span>
                                             </div>
-                                            <div class="panel-body">
+                                           <div class="panel-body">
 
-                                                <div class="col-md-12">
+                                                <div class="col-md-12" id="deliverytable">
 
                       
                                                     <table class="table table-responsive table-hover">
+
                                                        <tr style="background-color: #B9BABC ">
                                                          <th style="text-align: left;">Date</th>
                                                          <th style="text-align: left;">Location </th>
@@ -266,94 +318,99 @@ require_once("connection.php");
                                                          <th style="text-align: left;">Invoice no. </th>
                                                          <th style="text-align: left;">Status</th>
                                                        </tr>
-                                                       <tr>
-                                                         <td> 4/19/2019 </td>
-                                                         <td> B4 L3 Centerville, Subdivision, City of San Jose Del Monte, Bulacan </td>
-                                                         <td> Juan Dela Cruz</td>
+                                                       <?php
+                                                       $sql=$con ->query("Select * from deliverytbl");
+                                                       while($result=$sql->fetch_array())
+                                                       {
+
+                                                       ?>
+                                                  
+                                                        <tr>
+                                                         <td><?php echo $result['deliveryid']; ?> </td>
+                                                         <td> """</td>
+                                                         <td> wako wako</td>
                                                          <td> A12011853 </td>
-                                                         <td> <div class="dropdown">
-                                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">ACTIONS
-                                                             <span class="caret"></span></button>
-                                                             <ul class="dropdown-menu">
-                                                                         <li><a href="#"><center>Processing</center></a></li>
-                                                                         <li><a href="#"><center>Pending</center></a></li>
-                                                                         <li><a href="#"><center>OTW</center></a></li>
-                                                                         <li><a href="#"><center>Deliverd</center></a></li>
-                                                                         
+                                                      
+                                                         <td> 
+                                                             <select  class="btn btn-primary dropdown-toggle" data-toggle="dropdown" onchange="statusdeliv(<?php echo $result['deliveryid']; ?>)" id="statusid">
 
-                                                             </ul>
-                                                             </div>
-                                                            </button>
-                                                           <span class="label label-primary">Processing</span>
-                                                            </td>
-                                                       </tr>
+                                                               <option disabled type="hidden" hidden><center>Action</center></option>
+                                                              <option value="1" style="cursor:pointer;" id="proc"><center>Processing</center></option>
+                                                              <option value="2" id="pending" style="cursor:pointer;"><center>Pending</center></option>
+                                                              <option value="3" id="otw" style="cursor:pointer;"><center>OTW</center></option>
+                                                              <option value="4" id=del style="cursor:pointer;"><center>Deliverd</center></option>
+                                                           </select>
+                                                           <br>
+                                                         
+                                                <!--   <span class="label label-danger"> Delivered</span>
+                                                  <span class="label label-warning"> Delivered</span>
+                                                 <span class="label label-primary"> Delivered</span>-->
 
-                                                       <tr>
-                                                         <td> 4/19/2019 </td>
-                                                         <td> Manila </td>
-                                                         <td> Juan Dela Cruz</td>
-                                                         <td> A12011853 </td>
-                                                         <td> <div class="dropdown">
-                                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">ACTIONS
-                                                             <span class="caret"></span></button>
-                                                             <ul class="dropdown-menu">
-                                                                         <li><a href="#"><center>Processing</center></a></li>
-                                                                         <li><a href="#"><center>Pending</center></a></li>
-                                                                         <li><a href="#"><center>OTW</center></a></li>
-                                                                         <li><a href="#"><center>Deliverd</center></a></li>
-                                                                         
+                                                
+                                                    <?php
+                                                    if( $result['status']=="OTW")
+                                                    {
+                                                    ?>
+                                                      <span class="label label-warning">
+                                                  
+                                                  <?php
 
-                                                             </ul>
-                                                             </div>
-                                                            </button>
-                                                    
-                                                        <span class="label label-primary"> Processing</span>
-                                                            </td>
-                                                       </tr>
-                                                       <tr>
-                                                         <td> 4/19/2019 </td>
-                                                         <td> Manila </td>
-                                                         <td> Juan Dela Cruz</td>
-                                                         <td> A12011853 </td>
-                                                         <td> <div class="dropdown">
-                                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">ACTIONS
-                                                             <span class="caret"></span></button>
-                                                             <ul class="dropdown-menu">
-                                                                         <li><a href="#"><center>Processing</center></a></li>
-                                                                         <li><a href="#"><center>Pending</center></a></li>
-                                                                         <li><a href="#"><center>OTW</center></a></li>
-                                                                         <li><a href="#"><center>Deliverd</center></a></li>
-                                                                         
+                                                    echo  $result['status'];
+                                                  }
 
-                                                             </ul>
-                                                             </div>
-                                                            </button>
-                                                           <span class="label label-warning">Pending</span>
-                                                            </td>
-                                                       </tr>
-                                                       <tr>
-                                                         <td> 4/19/2019 </td>
-                                                         <td> Manila </td>
-                                                         <td> Juan Dela Cruz</td>
-                                                         <td> A12011853 </td>
-                                                         <td> <div class="dropdown">
-                                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">ACTIONS
-                                                             <span class="caret"></span></button>
-                                                             <ul class="dropdown-menu">
-                                                                         <li><a href="#"><center>Processing</center></a></li>
-                                                                         <li><a href="#"><center>Pending</center></a></li>
-                                                                         <li><a href="#"><center>OTW</center></a></li>
-                                                                         <li><a href="#"><center>Deliverd</center></a></li>
-                                                                         
+                                                    ?>
+                                                         <?php
+                                                    if( $result['status']=="Processing")
+                                                    {
+                                                    ?>
+                                                     <span  class="label label-success">
+                                                  
+                                                  <?php
 
-                                                             </ul>
-                                                             </div>
-                                                            </button>
-                                                            <span class="label label-danger">Delivered</span>
-                                                            </td>
-                                                       </tr>
-                                                    </table>
+                                                    echo  $result['status'];
+                                                  }
 
+                                                    ?>
+                                                      <?php
+                                                    if( $result['status']=="Delivered")
+                                                    {
+                                                    ?>
+                                                     <span  class="label label-primary">
+                                                  
+                                                  <?php
+
+                                                    echo  $result['status'];
+                                                  }
+
+                                                    ?>
+                                                      <?php
+                                                    if( $result['status']=="Pending")
+                                                    {
+                                                    ?>
+                                                     <span  class="label label-danger">
+                                                  
+                                                  <?php
+
+                                                    echo  $result['status'];
+                                                  }
+
+                                                    ?>
+
+                                                     
+
+
+                                                 </span>
+                                                          </td>
+
+                                                        </tr>
+
+                                                        <?php
+                                                        }
+                                                        ?>
+
+
+                                                      </table>
+                                                       
 
                                                 </div>
                                                  
