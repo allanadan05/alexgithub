@@ -13,6 +13,7 @@ require_once("connection.php");
 
         $logacc=$result['firstname'];
      }
+
 ?>
 
 <!DOCTYPE html>
@@ -291,7 +292,7 @@ require_once("connection.php");
               $result = mysqli_query($con, $sql);
               $row = mysqli_fetch_assoc($result);
                ?>
-							<span class="store-qty">Showing <?php echo ['count'] ?> products</span>
+							<span class="store-qty">Showing <?php echo $row['count'] ?> products</span>
 						</div>
 						<!-- /store TOP filter -->
 
