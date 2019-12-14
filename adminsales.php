@@ -9,7 +9,8 @@ include('function2.php');
          $query="SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
          $data=mysqli_query($con, $query);
          $result=mysqli_fetch_assoc($data);  
-         $id=$result['accountid'];    
+         $id=$result['accountid'];  
+           
      }
 
      if($result['usertype']==='user'){
@@ -86,6 +87,61 @@ include('function2.php');
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <script>
+           
+            function getdate(){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) { 
+                    
+                    document.getElementById("response1").innerHTML=this.responseText;
+                     
+                    }
+                    
+            };
+
+                    var getdate=document.getElementById("getdate").value;
+                                      
+                    var palatandaan = "getdate";
+                    xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&getdate="+getdate, true);
+                    xhttp.send(); 
+            
+            }
+            function getweek(){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) { 
+                    document.getElementById("response2").innerHTML=this.responseText;
+                    }
+                    
+            };
+
+                    var getweek=document.getElementById("getweek").value;
+                                      
+                    var palatandaan = "getweek";
+                    xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&getweek="+getweek, true);
+                    xhttp.send(); 
+            
+            }
+
+            function getmonth(){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) { 
+                    document.getElementById("response3").innerHTML=this.responseText;
+                    }
+                    
+            };
+
+                    var getmonth=document.getElementById("getmonth").value;
+                                      
+                    var palatandaan = "getmonth";
+                    xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&getmonth="+getmonth, true);
+                    xhttp.send(); 
+            
+            }
+
+        </script>
 
     </head>
     <body>
@@ -237,9 +293,7 @@ include('function2.php');
 
                                     
 
-                                     <!-- panels for quick access / order requests panel -->
-                                         
-                                     <div class="col-md-9">
+                                    <div class="col-md-9">
                                         
                                         
                                         <div class="panel panel-default">
@@ -270,7 +324,7 @@ include('function2.php');
                                                         <b>
                                                         <div class="pick-date"></div>
                                                         <span><i class="fa fa-calendar"></i></span> 
-                                                        <span> Pick Date: <input type="date" name="datesearch" class="form" value=""> </span>
+                                                        <span> Pick Date: <input type="date" id="getdate" onchange="getdate()" name="datesearch" class="form" value=""> </span>
                                                         </b>
                                                         <span style="float:right;"><a href=""></a></span>
                                                         <div></div>
@@ -280,38 +334,18 @@ include('function2.php');
 
                                                         <p>
                                                             <b>Daily Sales</b> <br />
-                                                            <b>Total Amount:</b> ₱ 600.00
+                                                            <b>Total Amount:<p id="total1"></p></b> 
                                                         </p>
                                                          
                                                      </div>
 
                                                      <div class="panel-body">
-                                                     <table class="table table-responsive table-hover" >
+                                                     <table class="table table-responsive table-hover" id="response1">
                                                          <tr>
                                                              <th style="text-align: left;"> Item </th>
                                                              <th style="text-align: left;"> Quantity </th>
                                                              <th style="text-align: left;"> Amount </th>
-                                                         </tr>
-                                                         <tr>
-                                                             <td style="text-align: left;"> BIP 13mm x 6M </td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 100.00 </td>
-                                                         </tr>  
-                                                         <tr>
-                                                             <td style="text-align: left;"> DFB 8mm x 6M (1.7kl.) Orange 7mm actual</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 250.00 </td>
-                                                         </tr>   
-                                                         <tr>
-                                                             <td style="text-align: left;"> I - Bar 41.2mm (1-5/8) x 6M (Unicorn)</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 150.00 </td>
-                                                         </tr>  
-                                                         <tr>
-                                                             <td style="text-align: left;"> I - Bar 41.2mm (1-5/8) x 6M (Unicorn)</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 150.00 </td>
-                                                         </tr>                                                     
+                                                         </tr>                                                    
                                                      </table>
                                                      </div>
                                                      </div>
@@ -324,7 +358,7 @@ include('function2.php');
                                                         <b>
                                                         <div class="pick-date"></div>
                                                         <span><i class="fa fa-calendar"></i></span> 
-                                                        <span> Pick Date: <input type="week" name="datesearch" class="form" value=""> </span>
+                                                        <span> Pick Date: <input type="week" name="datesearch" id="getweek" onchange="getweek()"  class="form" value=""> </span>
                                                         </b>
                                                         <span style="float:right;"><a href=""></a></span>
                                                         <div></div>
@@ -340,32 +374,13 @@ include('function2.php');
                                                      </div>
 
                                                      <div class="panel-body">
-                                                     <table class="table table-responsive table-hover" >
+                                                     <table class="table table-responsive table-hover" id="response2" >
                                                          <tr>
                                                              <th style="text-align: left;"> Item </th>
                                                              <th style="text-align: left;"> Quantity </th>
                                                              <th style="text-align: left;"> Amount </th>
                                                          </tr>
-                                                         <tr>
-                                                             <td style="text-align: left;"> BIP 13mm x 6M </td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 100.00 </td>
-                                                         </tr>  
-                                                         <tr>
-                                                             <td style="text-align: left;"> DFB 8mm x 6M (1.7kl.) Orange 7mm actual</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 250.00 </td>
-                                                         </tr>   
-                                                         <tr>
-                                                             <td style="text-align: left;"> I - Bar 41.2mm (1-5/8) x 6M (Unicorn)</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 150.00 </td>
-                                                         </tr>  
-                                                         <tr>
-                                                             <td style="text-align: left;"> I - Bar 41.2mm (1-5/8) x 6M (Unicorn)</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 150.00 </td>
-                                                         </tr>                                                     
+                                                                                                              
                                                      </table>
                                                      </div>
                                                      </div>
@@ -378,7 +393,7 @@ include('function2.php');
                                                         <b>
                                                         <div class="pick-date"></div>
                                                         <span><i class="fa fa-calendar"></i></span> 
-                                                        <span> Pick Date: <input type="Month" name="datesearch" class="form" value=""> </span>
+                                                        <span> Pick Date: <input type="Month" name="datesearch" id="getmonth" onchange="getmonth()" class="form" value=""> </span>
                                                         </b>
                                                         <span style="float:right;"><a href=""></a></span>
                                                         <div></div>
@@ -394,7 +409,7 @@ include('function2.php');
                                                      </div>
 
                                                      <div class="panel-body">
-                                                     <table class="table table-responsive table-hover" >
+                                                     <table class="table table-responsive table-hover"  id="response3">
                                                          <tr>
                                                              <th style="text-align: left;"> Item </th>
                                                              <th style="text-align: left;"> Quantity </th>

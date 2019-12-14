@@ -80,11 +80,100 @@ if(isset($_GET['palatandaan'])){
 
 
 
+        if(isset($_GET['palatandaan'])){
+            $palatandaan =  $_GET['palatandaan'];
+            if($palatandaan =="getdate"){
+                   $str="";
+                    $getdate=$_GET['getdate'];
+                    $sql="SELECT * FROM salestbl where date='$getdate'";
+                    $query=mysqli_query($con, $sql);
+                   
+                    $str.='
+                    <tr>
+                                                             <th style="text-align: left;"> Item </th>
+                                                             <th style="text-align: left;"> Quantity </th>
+                                                             <th style="text-align: left;"> Amount </th>
+                                                         </tr>
+                    ';
+
+                    while($result=mysqli_fetch_array($query))
+                    { 
+
+                        $str.='<tr>
+                        <td style="text-align: left;">'.$result['productID'].'</td>
+                        <td style="text-align: left;">'.$result['piecesold'].'</td>
+                        <td style="text-align: left;">'.$result['amount'].'</td>
+                        </tr>';   
+                    }
+                    
+                    echo $str;
+            }
 
 
+        }
 
 
+        if(isset($_GET['palatandaan'])){
+            $palatandaan =  $_GET['palatandaan'];
+            if($palatandaan =="getweek"){
+                   $str="";
+                    $getweek=$_GET['getweek'];
+                    $sql="SELECT * FROM salestbl where date='$getweek'";
+                    $query=mysqli_query($con, $sql);
 
+                    $str.='
+                    <tr>
+                                                             <th style="text-align: left;"> Item </th>
+                                                             <th style="text-align: left;"> Quantity </th>
+                                                             <th style="text-align: left;"> Amount </th>
+                                                         </tr>
+                    ';
+
+                    while($result=mysqli_fetch_array($query))
+                    {
+
+                        $str.='<tr>
+                        <td style="text-align: left;">'.$result['productID'].'</td>
+                        <td style="text-align: left;">'.$result['piecesold'].'</td>
+                        <td style="text-align: left;">'.$result['amount'].'</td>
+                        </tr>';   
+                    }
+                    echo $str;
+            }
+
+
+        }
+
+        if(isset($_GET['palatandaan'])){
+            $palatandaan =  $_GET['palatandaan'];
+            if($palatandaan =="getmonth"){
+                   $str="";
+                    $getmonth=$_GET['getmonth'];
+                    $sql="SELECT * FROM salestbl where date='$getmonth'";
+                    $query=mysqli_query($con, $sql);
+
+                    $str.='
+                    <tr>
+                                                             <th style="text-align: left;"> Item </th>
+                                                             <th style="text-align: left;"> Quantity </th>
+                                                             <th style="text-align: left;"> Amount </th>
+                                                         </tr>
+                    ';
+
+                    while($result=mysqli_fetch_array($query))
+                    {
+
+                        $str.='<tr>
+                        <td style="text-align: left;">'.$result['productID'].'</td>
+                        <td style="text-align: left;">'.$result['piecesold'].'</td>
+                        <td style="text-align: left;">'.$result['amount'].'</td>
+                        </tr>';   
+                    }
+                    echo $str;
+            }
+
+
+        }
 
 
 

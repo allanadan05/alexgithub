@@ -36,6 +36,24 @@
  		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
  		<![endif]-->
 
+ 		<script type="text/javascript">
+ 			function trackorder(){
+ 				 var xhttp = new XMLHttpRequest();
+			      xhttp.onreadystatechange = function() {
+			        if (xhttp.readyState == 4 && xhttp.status == 200) { 
+			          var buongObject = JSON.parse(this.responseText);
+			          ddocument.getElementById('orderresult').innerHTML = buongObject.res;
+			          }
+			        };
+			          var tosearch=document.getElementById('track').value;
+			          var token = "trackorder";
+			          xhttp.open("GET", "process.php?tosearch="+tosearch+"&token="+token, true);
+			          xhttp.send();
+ 				
+ 				
+ 			}
+ 		</script>
+
     </head>
 	<body>
         <?php include('headerandnav.php'); ?>
@@ -57,11 +75,16 @@
                                        
                                         <!--tracking form-->
                                         <form action="" method="" class="trackmyorder">
-                                        <input type="text" name="track" class="form-control"placeholder="Tracking Number"required>                                                    
-                                        <input type="submit" class="form-control-submit" value="Track">
-                                        
+                                        <input type="text" id="track" class="form-control" placeholder="Tracking Number" required>                                                
+                                        <input type="button" class="form-control-submit" onclick="trackorder()" value="Track">
                                         <form>
                                         <!--/tracking form-->
+
+                                        <table border="0" id="orderresult">
+                                        	
+                                        </table>
+
+
 
                             
 				</div>

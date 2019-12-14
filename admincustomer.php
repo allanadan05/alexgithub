@@ -215,14 +215,6 @@ include('function2.php');
                                                     <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;"><?php echo countmessage($id); ?></div>
                                                 </a>
                                                 </div>
-
-                                                <div class="panel-body">
-                                                <a href="admin.php">
-                                                    <span><i class="fa fa-exclamation-circle"></i></span>
-                                                    <span>Order Request</span>
-                                                    <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;">2</div>
-                                                </a>
-                                                </div>
                                                     
                                                 <div class="panel-body">
                                                     <a href="adminproduct.php">

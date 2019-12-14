@@ -15,7 +15,7 @@ include('function2.php');
 		 header('location:login.php');
 	 }
 
-
+$profile=$_SESSION['userid'];
 ?>
 
 
@@ -166,7 +166,7 @@ include('function2.php');
 				                                    </div>
 				                                             <div class="panel-body">
                                                                 
-                                                                <table class="table" border=0>
+                                        <table class="table" border=0>
 						
 						
 
@@ -176,30 +176,30 @@ include('function2.php');
 											<th><center> Action </center> </th>
 											
 										</tr>	
-
+										<?php
+                                 		$sql="select * from notificationstbl where nottomyaccountid='$profile'";
+                                 		$query=mysqli_query($con, $sql);
+                                 		$links=""; $h="";
+                                 		while ($row=mysqli_fetch_array($query)) {
+                                 			$links=$row['notlink']; if(isset($links)){$h="Write a review now";}
+                                 	    ?>
+                              
+							          
 										<!--insert data-->
 										<tr>
-											<td>Apr 02, 2019	<br>08:00 AM</td>
-											<td><p class="notifications-message">Your order request sent last 25 April 2019 was approved! <br> Use this accesscode: 123ecd3 to track your order</p></td>
-											<td><center><button class="btn btn-danger" style="height:auto; width: auto; border-radius: 25px;">Cancel</button></center></td>
+											<td><b><?php echo $row['notdate']; ?></b>	<br><?php echo $row['nottime']; ?></td>
+											<td><p class="notifications-message"><?php echo $row['notmessagetext']; ?></p>
+												<a href="<?php echo $links; ?>" class="primary-btn order-submit" style="color: orange"><?php echo $h; ?></a>
+											</td>
+											<td><center><button class="btn btn-danger" style="height:auto; width: auto; border-radius: 25px;">Close</button></center></td>
 											
-										</tr>
+										</tr>	
+										<!--insert data-->
 
-										<tr>
-											<td>Apr 23, 2019	<br>05:00 PM</td>
-											<td><p class="notifications-message">Your order request sent last 25 April 2019 is pending! <br> Use this accesscode: 123ecd4 to track your order</p></td>
-											<td><center><button class="btn btn-danger" style="height:auto; width: auto; border-radius: 25px;">Cancel</button></center></td>
-											
-										</tr>
-												
-										<tr>
-											<td>Apr 16, 2019	<br>06:00 PM</td>
-											<td><p class="notifications-message">Your order request sent last 25 April 2019 was approved! <br> Use this accesscode: 123ecd5 to track your order</p></td>
-											<td><center><button class="btn btn-danger" style="height:auto; width: auto; border-radius: 25px;">Cancel</button></center></td>
-											
-										</tr>
+										 <?php 
+										}
+									  ?>
 
-										<!--insert data-->									
 							 </table> 
 
                                                              

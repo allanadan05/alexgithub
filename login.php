@@ -17,7 +17,7 @@ require_once('connection.php');
 		 
 
 		 <!-- google sign in meta tag -->
-		 <meta name="google-signin-client_id" content="284149964642-b2rid3g556j1l7p0d6btr1g1spo20d5i.apps.googleusercontent.com">
+		 <meta name="google-signin-client_id" content="246441016241-944plslchmrf6ga8g7vrmmghijl0vu1p.apps.googleusercontent.com">
 
 		<title> Home - Alex Steel Supply</title>
 		<link rel="icon" href="./img/AlexSteelSupplyLogotitlebar.png" type="image">
@@ -174,7 +174,7 @@ require_once('connection.php');
 
 				            <br/>
 				            <div class="form-group"> 
-					            <div class="g-recaptcha" data-sitekey="6Ld0s8YUAAAAAKGN-ykVZdpIFCa5UOcK4ZErq8lr" required> </div>
+					            <div class="g-recaptcha" data-sitekey="6Lc5qccUAAAAAAsMWxKRO7Buq_W1dfnrFRte-yR_" required> </div>
 					               <span id="captcha_error" class"text-danger"></span>
 					        </div>
 

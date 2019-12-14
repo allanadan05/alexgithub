@@ -15,6 +15,7 @@ include('function2.php');
 		 header('location:login.php');
 	 }
 
+$profile=$_SESSION['userid'];
 
 ?>
 
@@ -173,13 +174,6 @@ include('function2.php');
                                                 </a>
                                                 </div>
 
-                                                <div class="panel-body" >
-                                                <a href="admin.php">
-                                                    <span><i class="fa fa-exclamation-circle"></i></span>
-                                                    <span>Order Request</span>
-                                                    <div style=" float: right; top: -10px;  width: 20px;height: 20px; line-height: 20px; text-align: center; border-radius: 50%;font-size: 10px;color: #FFF;background-color: #ff3300;">2</div>
-                                                </a>
-                                                </div>
                                                     
                                                 <div class="panel-body">
                                                     <a href="adminproduct.php">
@@ -246,28 +240,28 @@ include('function2.php');
                                  <div class="panel-body">
 
                                  	
-                                 	
+                                 	<?php
+                                 		$sql="select * from notificationstbl where nottomyaccountid='$profile'";
+                                 		$query=mysqli_query($con, $sql);
+                                 		$links=""; $h="";
+                                 		while ($row=mysqli_fetch_array($query)) {
+                                 			$links=$row['notlink']; if(isset($links)){$h="Write a review now";}
+                                 	?>
                               
 							           <!--insert data-->
                                     <table class="table">
-									  <tr><b>Apr 02, 2019</b></tr>
+									  <tr><b><?php echo $row['notdate']; ?></b></tr>
 										<tr style=" background-color: whitesmoke;">
-											<td><p style="color: blue;">8 mins</p>
-												<a href="#" style="color:black">
-												<p class="notifications-message">Your order request sent last 25 April 2019 was approved!. Use this accesscode: 123ecd3 to track your order</p>
-											    </a>
+											<td><p style="color: blue;"><?php echo $row['nottime']; ?></p>
+												<p class="notifications-message"><?php echo $row['notmessagetext']; ?></p>
+												<a href="<?php echo $links; ?>" class="primary-btn order-submit" style="color: orange"><?php echo $h; ?></a>
 											</td>										
-										</tr>
-										<tr style=" background-color: whitesmoke;">
-											<td><p style="color: blue;">10 mins</p>
-												<a href="#" style="color:black">	
-												<p class="notifications-message">Your order request sent last 25 April 2019 was approved!. Use this accesscode: 123ecd3 to track your order</p>
-											    </a>
-											</td>										
-										</tr>
-															
+										</tr>															
 							         </table>
-							          <!--/insert data-->		
+							          <!--/insert data-->	
+							          <?php 
+										}
+									  ?>	
 							         
 							
 

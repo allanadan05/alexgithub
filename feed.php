@@ -4,14 +4,18 @@ require_once("connection.php");
      $logacc="Log In";
      @$userprofile=@$_SESSION['user_name'];
 
-     $ASK=" SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
+     $ASK=" select reviewmessage,firstname,myaccountID,stars from myaccounttbl inner join feedbacktbl on feedbacktbl.accountid=myaccounttbl.accountid where username='$userprofile' ";
      $INFO=mysqli_query($con, $ASK);
      $result=mysqli_fetch_assoc($INFO);
      $myaccoundID = $result['myaccountID'];
      if($userprofile==true){
+     	$userid=$result['myaccountID'];
 
         $logacc=$result['firstname'];
+        $review=$result['reviewmessage'];
+        $stars=$result['stars'];
      }
+
 
 ?>
 
@@ -19,6 +23,7 @@ require_once("connection.php");
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,8 +58,26 @@ require_once("connection.php");
 		<!--[if lt IE 9]>
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
 
+		<![endif]-->
+		<script>
+			$(document).ready(function(){
+				
+				$("#hide").hide();
+				$("#comments").hide();
+				$("#button").click(function(){
+					$('#comments').slideDown();
+					$("#hide").show();
+					$("#button").hide();
+
+				});
+			$("#hide").click(function(){
+				$("#comments").slideUp();
+				$("#hide").hide();
+				$("#button").show();
+			});
+			});
+		</script>
     </head>
 	<body>
 
@@ -141,37 +164,94 @@ require_once("connection.php");
 							<div class="post">
 
 								<div class="userphoto" style="clear: both">
-									<h4><img src="img/dan.jpg" alt="profile picture" width="80px" height="80px" style="border-radius: 50px; border-color: blue; padding: 10px;"> Dan Astillero </h4> <p> Write a Review</p>
+									<h4><img src="img/dan.jpg" alt="profile picture" width="80px" height="80px" style="border-radius: 50px; border-color: blue; padding: 10px;"> <?php echo $logacc?> </h4> <p> Write a Review</p>
 
-								    <div class="staran">
+								  <!--  <div class="staran">
 										<span style="color: red;"class = "fa fa-star"></span>
                                         <span style="color: red;"class = "fa fa-star"></span>
                                         <span style="color: red;"class = "fa fa-star"></span>
-                                        <span class = "far fa-star"></span>
-                                        <span class = "far fa-star"></span>
+                                        <span style="color: red;"class = "fa fa-star"></span>
+                                        <span style="color: red;"class = "fa fa-star"></span>
                    
 
-									</div>
+									</div>-->
+									<?php if($stars ==1) {?> 
+
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span class = "far fa-star"></span>
+										<span class = "far fa-star"></span>
+										<span class = "far fa-star"></span>
+										<span class = "far fa-star"></span>
+									<?php }?>
+									<?php if($stars ==2) {?> 
+
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span class = "far fa-star"></span>
+										<span class = "far fa-star"></span>
+										<span class = "far fa-star"></span>
+									<?php }?>
+										<?php if($stars ==3) {?> 
+
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span class = "far fa-star"></span>
+										<span class = "far fa-star"></span>
+									<?php }?>
+										<?php if($stars ==4) {?> 
+
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span class = "far fa-star"></span>
+									<?php }?>
+										<?php if($stars ==5) {?> 
+
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+										<span style="color: red;"class = "fa fa-star"></span>
+									<?php }?>
+
+
+
+
+
+
 
 									<p style="color: blue;">01 Jan 2019, 20 mins</p>
 								</div>
 
 								<div class="posttxt">
-									Thank you AlexSteelSupply! high quality products! Nice!<br>
-									Hope that I could give you guys more than 5 stars!
+									<?php echo $review; ?>
 								</div>
 								<br>
 							</div>
 							<div class="image">
 								<img src="img/product09.jpg" width="100%" height="100%">
 							</div>
+								<?php 
+								$sql1="Select count(likeid) as liked from liketbl where accountid=2";
+								$result1=mysqli_query($con,$sql1);
+							$count=mysqli_fetch_assoc($result1);
+
+								
+							?>
+							
+
+
 
 							<div class="row">
 							<div style="height: 30px;">
-								<button style="padding: 2px; width: 32%;"><i class="fa fa-thumbs-up"> Like </i> <span> 10 </span></button>
-								<button style="padding: 2px; width: 32%;"><i class="fa fa-comment"> Comment </i> <span> 5 </span></button>
+								<button style="padding: 2px; width: 32%;"><i class="fa fa-thumbs-up"> Like </i> <span><?php echo $count['liked']; ?> </span></button>
+								<button style="padding: 2px; width: 32%;"><i class="fa fa-comment" id="pcomment"> Comment </i> <span> 5 </span></button>
 								<button style="padding: 2px; width: 33%;"><i class="fa fa-share"> Share </i></button>
-								<input type="text" name="comment" placeholder="write your comment here" style="width: 92%"> <button> <i class="fa fa-send"></i> </button>
+								<form method="post" action="feed.php">
+								<input type="text" id="int" name="comment" placeholder="write your comment here" style="width: 92%"> <button> <i class="fa fa-send" type="submit" name="add" value="add"></i> </button>
+							</form>
 							</div>
 						    </div>
 
@@ -180,101 +260,127 @@ require_once("connection.php");
 							<div class="comments" style="background-color: whitesmoke">
 
 								<div class="userphoto col-md-2">
-									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
-								</div>
-								<div class="userphoto col-md-4">
-									<strong>Dan Astillero </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
-									<p>comment here and there...
-									</p>
-
+									
 								</div>
 							</div>
 							</div>
 
 							<br><br>
+									<?php 
+							$sql="Select commenttbl.comment,myaccounttbl.firstname,feedbacktbl.stars from myaccounttbl JOIN commenttbl on commenttbl.accountid=myaccounttbl.accountid join feedbacktbl on feedbacktbl.accountid=myaccounttbl.accountID LIMIT 1";
+							$result=mysqli_query($con,$sql);
+							if(mysqli_num_rows($result)>0)
+							
+							{
+								while($row = mysqli_fetch_assoc($result))
+								{
+
+							?>
+							
 							<div class="row">
+							
+								
+
+
+							
 							<div class="comments" style="background-color: whitesmoke">
+							
+
 
 								<div class="userphoto col-md-2">
 									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
 								</div>
 								<div class="userphoto col-md-4">
-									<strong>Dan Astillero </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
-									<p>comment here and there...
-									</p>
+									<strong><?php echo $row['firstname']?> </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
+									
+
+
+
+									<p><?php echo $row['comment']?></p>
 
 								</div>
+							
 							</div>
+							
+						
+							
 							</div>
+										<?php
+						}
+						}
+							?>
+							
+							
 
-							<center><a href="#"><b>Show more</b> </a></center>
+
+
+
+
+
+
+
+
+
+
+
+							<div id="comments">
+
+
+
+
+
+									<?php 
+							$sql="Select commenttbl.comment,myaccounttbl.firstname,feedbacktbl.stars from myaccounttbl JOIN commenttbl on commenttbl.accountid=myaccounttbl.accountid join feedbacktbl on feedbacktbl.accountid=myaccounttbl.accountID";
+							$result=mysqli_query($con,$sql);
+							if(mysqli_num_rows($result)>0)
+							
+							{
+								while($row = mysqli_fetch_assoc($result))
+								{
+
+							?>
+							
+							<div class="row">
+							
+								
+
+
+							
+							<div class="comments" style="background-color: whitesmoke">
+							
+
+
+								<div class="userphoto col-md-2">
+									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
+								</div>
+								<div class="userphoto col-md-4">
+									<strong><?php echo $row['firstname']?> </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
+
+
+									<p><?php echo $row['comment']?></p>
+
+								</div>
+							
+							</div>
+							
+						
+							
+							</div>
+										<?php
+						}
+						}
+							?>
+						</div>
+						
+
+							<center><a><b id="button" style="cursor:pointer;">Show more</b> </a></center>
+							<center><a><b id="hide" style="cursor:pointer;">show less</b> </a></center>
 
 					</div>
 
 					<hr>
 
-					<div style="background-color: whitesmoke">
-							<div class="post">
-
-								<div class="userphoto" style="clear: both">
-									<h4><img src="img/dan.jpg" alt="profile picture" width="80px" height="80px" style="border-radius: 50px; border-color: blue; padding: 10px;"> Dan Astillero </h4><p style="color: blue;">01 Jan 2019, 20 mins</p>
-
-								</div>
-
-								<div class="posttxt">
-									Thank you AlexSteelSupply! high quality products! Nice!<br>
-									Hope that I could give you guys more than 5 stars!
-								</div>
-								<br>
-							</div>
-							<div class="image">
-								<img src="img/product09.jpg" width="100%" height="100%">
-							</div>
-
-							<div class="row">
-							<div style="height: 30px;">
-								<button style="padding: 2px; width: 32%;"><i class="fa fa-thumbs-up"> Like </i> <span> 10 </span></button>
-								<button style="padding: 2px; width: 32%;"><i class="fa fa-comment"> Comment </i> <span> 5 </span></button>
-								<button style="padding: 2px; width: 33%;"><i class="fa fa-share"> Share </i></button>
-								<input type="text" name="comment" placeholder="write your comment here" style="width: 92%"> <button> <i class="fa fa-send"></i> </button>
-							</div>
-						    </div>
-
-							<br><br>
-							<div class="row">
-							<div class="comments" style="background-color: whitesmoke">
-
-								<div class="userphoto col-md-2">
-									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
-								</div>
-								<div class="userphoto col-md-4">
-									<strong>Dan Astillero </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
-									<p>comment here and there...
-									</p>
-
-								</div>
-							</div>
-							</div>
-
-							<br><br>
-							<div class="row">
-							<div class="comments" style="background-color: whitesmoke">
-
-								<div class="userphoto col-md-2">
-									<h4><img src="img/dan.jpg" alt="profile picture" width="60px" height="60px" style="border-radius: 50px; border-color: blue; padding: 10px;"> </h4>
-								</div>
-								<div class="userphoto col-md-4">
-									<strong>Dan Astillero </strong><p style="color: blue;">01 Jan 2019, 20 mins</p>
-									<p>comment here and there...
-									</p>
-
-								</div>
-							</div>
-							</div>
-
-							<center><a href="#"><b>Show more</b> </a></center>
-
-					</div>
+					
 
 
 

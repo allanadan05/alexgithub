@@ -2,7 +2,7 @@
 
                     <?php
                     session_start();
-                    require('connection.php');
+                    include('connection.php');
 
                     if(isset($_POST['log'])){
 
@@ -11,9 +11,12 @@
                         
                         $query=" SELECT * FROM myaccounttbl WHERE username='$user' AND password='$pwd' ";
                         $data=mysqli_query($con, $query) or die("data error" .$query);
-                        $res=mysqli_fetch_array($data);                     
-                           if($res){
-                               
+                        $res=mysqli_fetch_array($data);   
+
+
+
+                          if($res){
+                              
                                $_SESSION['user_name']=$user;
                                $_SESSION['pass_word']=$pwd;
                                $_SESSION['userid']=$res['accountid'];
@@ -33,6 +36,8 @@
 
                                 header('location:login.php?loginmsg=Username or Password incorrect!&username='.$user.'&password='.$pwd);
                            }
+
+
                     }
                     
                     ?>
