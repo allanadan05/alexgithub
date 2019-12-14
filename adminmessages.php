@@ -283,7 +283,7 @@ include('function2.php');
 	                                      <div >
 										  <?php 
 										
-										$sql="SELECT messagedate, msgtoaccountid, (SELECT concat(firstname, ', ', lastname) as name FROM myaccounttbl where accountid=messagingtbl.msgfromaccountid ) as fullname, (SELECT accountid FROM myaccounttbl where accountid=messagingtbl.msgfromaccountid ) as acctid, messagetext from messagingtbl WHERE msgtoaccountid='$id'";
+										$sql="SELECT messagedate, msgtoaccountid, (SELECT concat(firstname, ', ', lastname) as name FROM myaccounttbl where accountid=messagingtbl.msgfromaccountid ) as fullname, (SELECT accountid FROM myaccounttbl where accountid=messagingtbl.msgfromaccountid ) as acctid, messagetext from messagingtbl WHERE msgtoaccountid='$id' ORDER BY messagedate Desc " ;
 										$result=mysqli_query($con, $sql);
 										$count=1;
 										while($row=mysqli_fetch_array($result)){
@@ -300,7 +300,7 @@ include('function2.php');
 
 										<tr id="request<?php echo $count++; ?>" class="collapse">
 											<td></td>
-											<td><p class="notifications-message"><?php echo $row['messagetext']; ?><br> Use this accesscode: 123ecd3 to track your order</p></td>
+											<td><p class="notifications-message"><?php echo $row['messagetext']; ?></p></td>
 											<td><center><button style="height:auto; width: auto; border-radius: 25px;" class="btn btn-primary btn-sm " data-toggle="modal" data-target="#sendmessage" onclick="sendmsg(<?php echo $row['acctid']; ?>)"> <span><i class="fa fa-envelope"></i></span> Reply </button></center></td>
 											
 										</tr>

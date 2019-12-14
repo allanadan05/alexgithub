@@ -64,6 +64,9 @@ require_once('connection.php');
 		<script src="ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 		<script src="maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
+		<!-- captcha -->
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
  		<!-- Custom stlylesheet 
  		<link type="text/css" rel="stylesheet" href="css/stevenstyle.css"/>
 		-->
@@ -149,11 +152,6 @@ require_once('connection.php');
 					        }
 				        ?>
 
-				        
-				         
-				         
-				       
-
 				        <form class="form-signin" action="logincheck.php" method="POST">
 				        	<a  href="#" class="btn form-control" style="background-color: #3B5998; color: white; width: 100%; height: 40px;">
 					          <i class="fa fa-facebook fa-fw"></i> Login with Facebook
@@ -173,6 +171,13 @@ require_once('connection.php');
 				                        <input type="checkbox" onclick="show()">Show Password</label>
 				                </div>
 				            </div>
+
+				            <br/>
+				            <div class="form-group"> 
+					            <div class="g-recaptcha" data-sitekey="6Ld0s8YUAAAAAKGN-ykVZdpIFCa5UOcK4ZErq8lr" required> </div>
+					               <span id="captcha_error" class"text-danger"></span>
+					        </div>
+
 				            <button class="primary-btn" type="submit" name="log" >Log in</button>
 				            <a href="">Forgot Password?</a>
 				            <div >

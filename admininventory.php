@@ -88,6 +88,35 @@ include('function2.php');
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
+        <script>
+			
+			
+		function additems(pid, count){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) { 
+                  var buongObject=JSON.parse(this.responseText);
+                    document.getElementById("additemresult").innerHTML=buongObject.alertres;
+                    document.getElementById("instock"+count).value=buongObject.newinstock;
+                   
+                    }
+                    
+            };
+                    console.log(instock);
+                    
+                    var quantity=document.getElementById("quantity"+count).value;
+                    var instock=document.getElementById("instock"+count).value;
+
+                    
+                    var addid=pid;      
+                    var palatandaan = "addstock";
+                   
+                    xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&addid="+addid+"&quantity="+quantity+"&instock="+instock, true);
+                    xhttp.send(); 
+            
+            }
+		</script>
+
     </head>
     <body>
         <!-- Header Fold -->
@@ -276,14 +305,22 @@ include('function2.php');
 
                                                         <!-- List of Products -->
                                                         <div>
+                                                          <div id="additemresult"></div>
                                                           <div class="col-md-12">
 
                                                               <h2>Categories</h2>
-
+                                                              <?php 
+                                                              $sql="SELECT DiSTINCT(category) FROM productstbl";
+                                                              $result=mysqli_query($con, $sql);
+                                                              $counts=1;
+                                                              $count=0;
+                                                              while($row=mysqli_fetch_array($result)){
+                                                              {  
+                                                              ?>
                                                               <!-- Category1 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category1">BI & GI Pipes</button><br>
+                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category<?php echo $counts ?>"><?php echo $row['category'];  ?></button><br>
                                                               <div></div>
-                                                              <div id="category1" class="collapse">
+                                                              <div id="category<?php echo $counts++ ?>" class="collapse">
                                                                 <br>
                                                                 <table class="table table-responsive table-hover">
                                                                   <tr>
@@ -294,21 +331,23 @@ include('function2.php');
                                                                   </tr>
 
                                                                   <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='B.I. & G.I. Pipes' ");
+                                                                  $cat=$row['category'] ;
+                                                                  $ss="SELECT `pid`,`instock`,`productID`, `productname`, `image` from `productstbl` where `category`='$cat' ";
+                                                                  $listq=mysqli_query($con, $ss);
+                                                                 
                                                                   while($listf=mysqli_fetch_assoc($listq)){
-
+                                                                  
                                                                   ?>
 
                                                                   <tr>
                                                                       <td><?php echo $listf['productname']; ?></td>
                                                                       <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
+                                                                      <td><input type="text" id="instock<?php echo ++$count ?>" value="<?php echo $listf['instock']; ?>" style="border:none;" readonly/></td>
                                                                       <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
+                                                                        <input type="number" name="addstock" min="0" value="0" id="quantity<?php echo $count ?>" style="width: 60px;"> 
                                                                       </td>
                                                                       <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
+                                                                       <button type="button" id="addid" class="btn btn-primary"  onclick="additems(<?php echo $listf['pid'] .',' .$count; ?>)">Add Stock</button>
                                                                       </td>
                                                                       
                                                                   </tr>
@@ -321,394 +360,8 @@ include('function2.php');
                                                             </div>
                                                             <!-- /Category1 -->
                                                             <hr>
-                                                            <!-- Category2 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category2">Plain & Deformed Bar</button><br>
-                                                              <div id="category2" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                 <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Plain & Deformed Bar' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                 
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category2 -->
-                                                            <hr>
-                                                            <!-- Category3 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category3">Welding Rod</button><br>
-                                                              <div id="category3" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Welding Rod' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                  
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category3 -->
-                                                            <hr>
-                                                            <!-- Category4 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category4">Plain GI Sheets</button><br>
-                                                              <div id="category4" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Plain GI Sheets' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category4 -->
-                                                            <hr>
-                                                            <!-- Category5 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category5">Handles & Hinges</button><br>
-                                                              <div id="category5" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Handles & Hinges' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                  
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category5 -->
-                                                            <hr>
-                                                            <!-- Category6 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;"data-toggle="collapse" data-target="#category6">Square & Section Bars</button><br>
-                                                              <div id="category6" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Square & Section Bars' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                 
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category6 -->
-                                                            <hr>
-                                                            <!-- Category7 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category7">Channels</button><br>
-                                                              <div id="category7" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Chanels' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category7 -->
-                                                            <hr>
-                                                            <!-- Category8 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category8">Flat & Angle Bars</button><br>
-                                                              <div id="category8" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Flat & Anlge Bars' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                 
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category8 -->
-                                                            <hr>
-                                                            <!-- Category9 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category9">Mild Steel Plates</button><br>
-                                                              <div id="category9" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Mild Steel Plates' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category9 -->
-                                                            <hr>
-                                                            <!-- Category10 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;" data-toggle="collapse" data-target="#category10">Roofing</button><br>
-                                                              <div id="category10" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='Roofing' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                 
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category10 -->
-                                                            <hr>
-                                                            <!-- Category11 -->
-                                                              <button type="button" class="primary-btn" style=" width: 250px; text-align: left;"data-toggle="collapse" data-target="#category11">BI & GI Tubulars</button><br>
-                                                              <div id="category11" class="collapse">
-                                                                <br>
-                                                                <table class="table table-responsive table-hover">
-                                                                  <tr>
-                                                                      <th>ProductName</th>
-                                                                      <th>Image</th>
-                                                                      <th>Remaining Stock</th>
-                                                                      <th colspan="2">ACTION</th>
-                                                                  </tr>
-
-                                                                  <?php 
-
-                                                                  $listq=mysqli_query($con, "SELECT `productID`, `productname`, `image` from `productstbl` where `category`='BI & GI Tubulars' ");
-                                                                  while($listf=mysqli_fetch_assoc($listq)){
-
-                                                                  ?>
-
-                                                                 
-                                                                  <tr>
-                                                                      <td><?php echo $listf['productname']; ?></td>
-                                                                      <td><img src="<?php  echo $listf['image']; ?>" width="50px" alt=""></td>
-                                                                      <td> 4 </td>
-                                                                      <td> 
-                                                                        <input type="number" name="addstock" min="0" value="0" style="width: 60px;"> 
-                                                                      </td>
-                                                                      <td> 
-                                                                       <input type="submit" value="Add Stock" class="btn btn-primary">
-                                                                      </td>
-                                                                      
-                                                                  </tr>
-                                                                  <?php } ?>
-                                                                 
-
-                                                                </table>
-                                                            </div>
-                                                            <!-- /Category11 -->
+                                                                  <?php }
+                                                                }?>
 
 
                                                           </div>

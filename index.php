@@ -13,7 +13,6 @@ require_once("connection.php");
 
         $logacc=$result['firstname'];
      }
-
 ?>
 
 <!DOCTYPE html>
@@ -46,13 +45,21 @@ require_once("connection.php");
 		<!-- Custom stlylesheet -->
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
 
+		<!-- Kong's CDN -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
+
+	<!-- functions -->	
     <script src="function1.js"></script>
+    <script src="search.js"></script>
+  
 
     </head>
 	<body>
@@ -69,7 +76,7 @@ require_once("connection.php");
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="glyphicon-peso">₱</i> PHP</a></li>
-						<li><a href="account.php"><i class="fa fa-user-o"></i> <?php echo $logacc; ?></a></li>
+						<li><a href="account.php"><i class="fa fa-user-o"></i><text id="username"><?php echo $logacc; ?></text></a></li>
 					</ul>
 				</div>
 			</div>
@@ -95,22 +102,18 @@ require_once("connection.php");
 						<div class="col-md-6">
 							<div class="header-search">
 								<form>
-									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">B.I. & G.I. Pipes</option>
-										<option value="2">B.I. & G.I. Tubulars</option>
-										<option value="3">Channels</option>
-										<option value="4">Flat & Angle Bars</option>
-										<option value="5">Handles & Hinges</option>
-										<option value="6">Mild Steel Plates</option>
-										<option value="7">Plain & Deformed Bar</option>
-										<option value="8">Plain G.I. Sheets</option>
-										<option value="9">Roofing</option>
-										<option value="10">Square & Section Bars</option>
-										<option value="11">Welding Rod</option>
+									<select class="input-select" id="selectedcat" onchange="searchselectedcategory()">
+										<option value="0" disabled selected>All Categories</option>
+										<?php 
+										$sqlselect="select distinct(category) from productstbl";
+										$sqlselectexecute=mysqli_query($con, $sqlselect);
+										while($category=mysqli_fetch_array($sqlselectexecute)){
+									    ?>
+										<option value="<?php echo $category['category']; ?>"><?php echo $category['category']; ?></option>
+									    <?php } ?>
 									</select>
-									<input class="input" placeholder="Search here" autofocus>
-									<button class="search-btn">Search</button>
+									<input class="input" onkeyup="searchoninput()"  onchange="searchoninput()" onkeyenter id="search-input" placeholder="Search here"  autofocus="">
+									<button type="button" class="search-btn" onclick="searchoninput();">Search</button>
 								</form>
 							</div>
 						</div>
@@ -124,18 +127,20 @@ require_once("connection.php");
                   <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                     <i class="fa fa-shopping-cart"></i>
                     <span>Your Cart</span>
+
                     <?php
-                    $sql = "SELECT count(ID) as 'id' FROM carttbl where myaccountID = '$myaccoundID'";
-                    $result = mysqli_query($con, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    $qty = 0;
+                    $sql = "SELECT count(pid) as 'items', sum(sellingprice * quantity) as 'total' FROM carttbl where myaccountID ='$myaccoundID'";
+										$result = mysqli_query($con, $sql);
+										$row5 = mysqli_fetch_assoc($result);
+										$qty = 0;
                      ?>
-                    <div id="showQty" class="qty" > <?php echo $qty+$row['id'] ?> </div>
+										 
+                    <div id="showQty" class="qty" > <?php echo ($row5['items']+0) ?> </div>
                   </a>
                   <div class="cart-dropdown">
                     <div class="cart-list" id="cartresponse">
                       <?php
-                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
+                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.pid = productstbl.pid where myaccountID = '$myaccoundID'";
                       $result = mysqli_query($con, $sql);
 
                       if (mysqli_num_rows($result) > 0) {
@@ -147,7 +152,7 @@ require_once("connection.php");
                         </div>
                         <div class="product-body">
                           <h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
-                          <h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
+                          <h4 class="product-price"><span class="qty"> <?php echo $row['quantity']; ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
                         </div>
                         <button onclick="deleteoncart(<?php echo $row['ID'] ?>)" class="delete"><i class="fa fa-close"></i></button>
                       </div>
@@ -155,14 +160,8 @@ require_once("connection.php");
                   } ?>
                     </div>
                     <div class="cart-summary">
-                      <?php
-                      $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
-                      $result = mysqli_query($con, $sql);
-                      $row = mysqli_fetch_assoc($result);
-                      $qty = 0;
-                       ?>
-                        <small id="selectedItem"><?php echo $qty+$row['qty'] ?> Item(s) selected</small>
-                      <h5 id="subtotal">SUBTOTAL: ₱ <?php echo $qty+$row['total'] ?></h5>
+                        <small id="selectedItem"><?php echo ($row5['items']+0) ?> Item(s) selected</small>
+                      <h5 id="subtotal">SUBTOTAL: ₱ <?php echo ($row5['total']+0)  ?></h5>
                     </div>
                     <div class="cart-btns">
                       <a href="cart.php">View Cart</a>
@@ -232,44 +231,41 @@ require_once("connection.php");
 							<h3 class="aside-title">Categories</h3>
 							<div class="checkbox-filter">
 
-								<?php
-								   $categories=array("B.I. & G.I Pipes", "B.I. & G.I. Tubulars", "Flat & Angle Bars", "Handles & Hinges", "Mild Steel Plates", "Plain & Deformed Bar", "Plain G.I. Sheets", "Roofing", "Square & Section Bars", "Welding Rod");
-								   sort($categories);
-
-								   $arrlength = count($categories);
-
-									for($x = 0; $x < $arrlength; $x++) {
-
-
-								?>
+						   <?php 
+							$sqlselect="select distinct(category) as category, count(category) as noofcat from productstbl group by category";
+							$sqlselectexecute=mysqli_query($con, $sqlselect);
+							$x=1;
+							while($category=mysqli_fetch_array($sqlselectexecute)){
+						    ?>
 
 								<div class="input-checkbox">
-									<input type="checkbox" name="category-<?php echo $x; ?>" id="category-<?php echo $x; ?>">
+									<input type="checkbox" onclick="searchtickedbox(<?php echo "'".$category['category']."'"; ?>)" name="category-<?php echo $x; ?>" id="category-<?php echo $x; ?>" value="<?php echo $category['category']; ?>">
 									<label for="category-<?php echo $x; ?>">
 										<span></span>
-										<?php echo $categories[$x]; ?>
-										<small>(120)</small>
+										<?php echo $category['category']; ?>
+										<small>(<?php echo $category['noofcat']; ?>)</small>
 									</label>
 								</div>
 
-								<?php
-								   }
-								?>
+							<?php
+							$x++;
+							   }
+							?>
 						<!-- /aside Widget -->
 
 						<!-- aside Widget -->
 						<div class="aside">
 							<h3 class="aside-title">Price</h3>
 							<div class="price-filter">
-								<div id="price-slider"></div>
+								<div onclick="searchbyprize()" onmouseup="searchbyprize()" onmouseover="searchbyprize()" id="price-slider"></div>
 								<div class="input-number price-min">
-									<input id="price-min" type="number">
+									<input id="price-min" type="number" onkeyup="searchbyprize()" onmouseover="searchbyprize()">
 									<span class="qty-up">+</span>
 									<span class="qty-down">-</span>
 								</div>
 								<span>-</span>
 								<div class="input-number price-max">
-									<input id="price-max" type="number">
+									<input id="price-max" type="number" onkeyup="searchbyprize()" onmouseover="searchbyprize()">
 									<span class="qty-up">+</span>
 									<span class="qty-down">-</span>
 								</div>
@@ -284,58 +280,8 @@ require_once("connection.php");
 
 					<!-- STORE -->
 					<div id="store" class="col-md-9">
-
-						<!-- store TOP filter -->
-						<div class="store-filter clearfix">
-              <?php
-              $sql = "SELECT count(productID) as 'count' FROM productstbl";
-              $result = mysqli_query($con, $sql);
-              $row = mysqli_fetch_assoc($result);
-               ?>
-							<span class="store-qty">Showing <?php echo $row['count'] ?> products</span>
-						</div>
-						<!-- /store TOP filter -->
-
-						<!-- store products -->
-						<div class="row">
-
-              <?php
-              $sql = "SELECT * FROM productstbl";
-              $result = mysqli_query($con, $sql);
-
-              if (mysqli_num_rows($result) > 0) {
-                while($row = mysqli_fetch_assoc($result)) {
-              ?>
-              <!-- product -->
-								<div class="col-md-4 col-xs-6">
-									<div class="product">
-
-										<div class="product-img">
-											<img src="<?php  echo $row['image']; ?>" alt="">
-										</div>
-
-										<div class="product-body">
-											<p class="product-category"><?php  echo $row['category']; ?></p>
-											<h3 class="product-name"><a href="#"><?php  echo $row['productname'] ." " .($x+1); ?></a></h3>
-											<h4 class="product-price"> <?php  echo $row['sellingprice']; ?> <del class="product-old-price"> <?php  echo $row['principalprice']; ?> </del></h4>
-										</div>
-
-										<div class="add-to-cart">
-											<button class="add-to-cart-btn" onclick="addtocart(<?php echo $row['pid'] ?>)"><i class="fa fa-shopping-cart"></i> add to cart</button>
-										</div>
-									</div>
-								</div>
-								<!-- /product -->
-							<?php }
-								}
-							?>
-						</div>
-						<!-- /store products -->
-						<!-- store bottom filter -->
-						<div class="store-filter clearfix">
-							<span class="store-qty">Showing 9 of 9 products</span>
-						</div>
-						<!-- /store bottom filter -->
+					   <div id="showstore2"><script type="text/javascript">searchoninput();</script></div>
+			
 
 					</div>
 					<!-- /STORE -->

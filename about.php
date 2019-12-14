@@ -68,9 +68,7 @@ require_once("connection.php");
 
     </head>
 	<body>
-		<!-- Header Fold -->
-		<!-- HEADER -->
-		<header>
+
 			<!-- TOP HEADER -->
 			<div id="top-header">
 				<div class="container">
@@ -88,122 +86,7 @@ require_once("connection.php");
 			</div>
 			<!-- /TOP HEADER -->
 
-			<!-- MAIN HEADER -->
-			<div id="header">
-				<!-- container -->
-				<div class="container">
-					<!-- row -->
-					<div class="row">
-						<!-- LOGO -->
-						<div class="col-md-3">
-							<div class="header-logo">
-								<a href="index.php" class="logo">
-									<img src="./img/AlexSteelSupplyLogoNew.png" alt="LOGO">
-								</a>
-							</div>
-						</div>
-						<!-- /LOGO -->
-
-						<!-- SEARCH BAR -->
-						<div class="col-md-6">
-							<div class="header-search">
-								<form>
-									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">B.I. & G.I. Pipes</option>
-										<option value="2">B.I. & G.I. Tubulars</option>
-										<option value="3">Channels</option>
-										<option value="4">Flat & Angle Bars</option>
-										<option value="5">Handles & Hinges</option>
-										<option value="6">Mild Steel Plates</option>
-										<option value="7">Plain & Deformed Bar</option>
-										<option value="8">Plain G.I. Sheets</option>
-										<option value="9">Roofing</option>
-										<option value="10">Square & Section Bars</option>
-										<option value="11">Welding Rod</option>
-									</select>
-									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
-								</form>
-							</div>
-						</div>
-						<!-- /SEARCH BAR -->
-
-						<!-- ACCOUNT -->
-						<div class="col-md-3 clearfix">
-							<div class="header-ctn">
-								<!-- Cart -->
-                <div class="dropdown">
-                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                    <i class="fa fa-shopping-cart"></i>
-                    <span>Your Cart</span>
-                    <?php
-                    $sql = "SELECT count(ID) as 'id' FROM carttbl where myaccountID = '$myaccoundID'";
-                    $result = mysqli_query($con, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    $qty = 0;
-                     ?>
-                    <div class="qty"> <?php echo $qty+$row['id'] ?> </div>
-                  </a>
-                  <div class="cart-dropdown">
-                    <div class="cart-list">
-                      <?php
-                      $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
-                      $result = mysqli_query($con, $sql);
-
-                      if (mysqli_num_rows($result) > 0) {
-                        while($row = mysqli_fetch_assoc($result)) {
-                      ?>
-                      <div class="product-widget">
-                        <div class="product-img">
-                          <img src="<?php echo $row['image'] ?>" alt="">
-                        </div>
-                        <div class="product-body">
-                          <h3 class="product-name"><a href="#"><?php echo $row['productname'] ?></a></h3>
-                          <h4 class="product-price"><span class="qty"> <?php echo $row['quantity'] ?>x </span> ₱ <?php echo $row['total'] ?> </h4>
-                        </div>
-                        <button class="delete"><i class="fa fa-close"></i></button>
-                      </div>
-                    <?php }
-                  } ?>
-                    </div>
-                    <div class="cart-summary">
-                      <?php
-                      $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
-                      $result = mysqli_query($con, $sql);
-                      $row = mysqli_fetch_assoc($result);
-                      $qty = 0;
-                       ?>
-                      <small><?php echo $qty+$row['qty'] ?> Item(s) selected</small>
-                      <h5>SUBTOTAL: ₱ <?php echo $qty+$row['total'] ?></h5>
-                    </div>
-                    <div class="cart-btns">
-                      <a href="cart.php">View Cart</a>
-                      <a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                    </div>
-                  </div>
-                </div>
-								<!-- /Cart -->
-
-								<!-- Menu Toogle -->
-								<div class="menu-toggle">
-									<a href="#">
-										<i class="fa fa-bars"></i>
-										<span>Menu</span>
-									</a>
-								</div>
-								<!-- /Menu Toogle -->
-							</div>
-						</div>
-						<!-- /ACCOUNT -->
-					</div>
-					<!-- row -->
-				</div>
-				<!-- container -->
-			</div>
-			<!-- /MAIN HEADER -->
-		</header>
-		<!-- /HEADER -->
+						
 
 		<!-- NAVIGATION -->
     <nav id="navigation">
@@ -212,6 +95,17 @@ require_once("connection.php");
 				<!-- responsive-nav -->
 				<div id="responsive-nav">
 					<!-- NAV -->
+
+					<!-- LOGO -->
+						<div class="col-md-3">
+							<div class="header-logo">
+								<a href="index.php" class="logo">
+									<img src="./img/AlexSteelSupplyLogoNew.png" alt="LOGO" height="50px;">
+								</a>
+							</div>
+						</div>
+						<!-- /LOGO -->
+
 					<ul class="main-nav nav navbar-nav">
 						<li><a href="index.php">Home</a></li>
 						<li><a href="feed.php">Feed</a></li>

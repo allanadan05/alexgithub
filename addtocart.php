@@ -10,44 +10,57 @@ require_once("connection.php");
          $data=mysqli_query($con, $query);
          $result=mysqli_fetch_assoc($data);
          $myaccoundID = $result['myaccountID'];
-
-		 $logacc=$result['firstname'];
-         }
-     else{
+         $logacc=$result['firstname'];
+    }else{
          header('location:login.php');
      }
+
+if(isset($_GET['token'])){
      $token = $_GET['token'];
      //add to cart
      if($token =="addtocart"){
-     	$id=$_GET['forIpinasa'];
-      $query = "SELECT * FROM productstbl where pid = '$id'";
+      $id=$_GET['forIpinasa'];
+      $query = "SELECT * FROM productstbl where pid='$id'";
       $result = mysqli_query($con, $query);
-      $row = mysqli_fetch_assoc($result);
-
-      $pambato = array();
+      $row = mysqli_fetch_array($result);
 
       $sp = $row['sellingprice'];
       $qty = 1;
       $total = $sp*$qty;
-      $productID = $row['productID'];
-      $query2 = "SELECT * FROM carttbl where productID = '$productID'";
-      $newqty = number($row['quantity'])+1;
-      $result2 = mysqli_query($con, $query2);
-      $rows = mysqli_num_rows($result2);
+      $productID = $row['pid'];
 
-      if($rows==0){
-      $insertquery = "INSERT INTO carttbl(myaccountID, productID, sellingprice, quantity, total)
-      VALUES ('$myaccoundID', '$productID', '$sp', '$qty', '$total')";
-      $insert=mysqli_query($con, $insertquery);
-      if($insert){
+      if($row){
 
-            $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
+      //Increment quantity if product found in user's cart
+      $ask="select * from carttbl where pid='$productID' AND myaccountID='$myaccoundID' ";  
+      $askexecute=mysqli_query($con, $ask);
+      $fetch=mysqli_fetch_array($askexecute);
+      if($fetch){
+        $incQty=($fetch['quantity']+1);
+
+        //update the quantity to carttbl 
+        $toquery = "UPDATE carttbl SET quantity='$incQty' WHERE pid='$productID' AND myaccountID='$myaccoundID' ";
+
+      }else{
+        //Insert to cart if product didnt exist 
+        $toquery = "INSERT INTO carttbl(myaccountID, pid, sellingprice, quantity, total)
+        VALUES ('$myaccoundID', '$productID', '$sp', '$qty', '$total')";
+      }
+
+      //execute query after knowing what operation should be made
+      $execute=mysqli_query($con, $toquery);
+
+
+      if($execute){
+            //show
+            $pambato = array();
+            $str="";
+            $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.pid = productstbl.pid where myaccountID = '$myaccoundID'";
             $result = mysqli_query($con, $sql);
 
-            if (mysqli_num_rows($result) > 0) {
               while($row = mysqli_fetch_assoc($result)) {
 
-              $pambato['product'].='<div class="product-widget">
+              $str.='<div class="product-widget">
               <div class="product-img">
                 <img src="'. $row['image'] .'" alt="">
               </div>
@@ -57,53 +70,25 @@ require_once("connection.php");
               </div>
               <button onclick="deleteoncart('.$row['ID'].')" class="delete"><i class="fa fa-close"></i></button>
             </div>';
-           }
-        }
+           } //end while($row = mysqli_fetch_assoc($result))
+           $pambato['product']=$str;
 
-            $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
+
+            $sql = "SELECT count(pid) as 'items', sum(sellingprice * quantity) as 'total' FROM carttbl where myaccountID ='$myaccoundID'";
             $result = mysqli_query($con, $sql);
             $row = mysqli_fetch_assoc($result);
             $qty = 0;
-            $pambato['quantity']=$row['qty'];
-            $pambato['subtotal']="<h5>Subtotal: " .$row['total'] ."</h5>";
-            $pambato['si']="<small>Item(s) selected: " .$row['qty'] ."</small>";
+            $pambato['quantity']=($row['items']+0);
+            $pambato['subtotal']="<h5>SUBTOTAL: ₱ " .($row['total']+0) ."</h5>";
+            $pambato['si']=($row['items']+0) ." Item(s) selected";
+
             echo json_encode($pambato);
-      }
-    } else {
-      $updatequery = "UPDATE carttbl SET quantity='$newqty' WHERE productID = '$productID'";
-      $update=mysqli_query($con, $updatequery);
-      if($update){
+      }// end  if($execute)
+       
+}// end  if($row)
+} // end if($token =="addtocart")
 
-            $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
-            $result = mysqli_query($con, $sql);
 
-            if (mysqli_num_rows($result) > 0) {
-              while($row = mysqli_fetch_assoc($result)) {
-
-              $pambato['product'].='<div class="product-widget">
-              <div class="product-img">
-                <img src="'. $row['image'] .'" alt="">
-              </div>
-              <div class="product-body">
-                <h3 class="product-name"><a href="#">'. $row['productname'] .'</a></h3>
-                <h4 class="product-price"><span class="qty"> '. $row['quantity'] .'x </span> ₱  '.$row['total'].'  </h4>
-              </div>
-              <button onclick="deleteoncart('.$row['ID'].')" class="delete"><i class="fa fa-close"></i></button>
-            </div>';
-           }
-        }
-
-            $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
-            $result = mysqli_query($con, $sql);
-            $row = mysqli_fetch_assoc($result);
-            $qty = 0;
-            $pambato['quantity']=$row['qty'];
-            $pambato['subtotal']="<h5>Subtotal: " .$row['total'] ."</h5>";
-            $pambato['si']="<small>Item(s) selected: " .$row['qty'] ."</small>";
-            echo json_encode($pambato);
-      }
-    }
-}
 
 //delete on cart
 //delete from cart
@@ -111,35 +96,43 @@ if($token =="delete"){
  $id=$_GET['forIpinasa'];
  $deletequery = "DELETE FROM carttbl WHERE ID = '$id'";
  $delete=mysqli_query($con, $deletequery);
+
+  $pambato = array();
+  $str="";
+
  if($delete){
 
-       $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.productID = productstbl.productID where myaccountID = '$myaccoundID'";
-       $result = mysqli_query($con, $sql);
+     $sql = "SELECT * FROM carttbl inner join productstbl on carttbl.pid = productstbl.pid where myaccountID = '$myaccoundID'";
+        $result = mysqli_query($con, $sql);
 
-       if (mysqli_num_rows($result) > 0) {
-         while($row = mysqli_fetch_assoc($result)) {
+          while($row = mysqli_fetch_assoc($result)) {
 
-         $pambato['product'].='<div class="product-widget">
-         <div class="product-img">
-           <img src="'. $row['image'] .'" alt="">
-         </div>
-         <div class="product-body">
-           <h3 class="product-name"><a href="#">'. $row['productname'] .'</a></h3>
-           <h4 class="product-price"><span class="qty"> '. $row['quantity'] .'x </span> ₱  '.$row['total'].'  </h4>
-         </div>
-         <button onclick="deleteoncart('.$row['ID'].')" class="delete"><i class="fa fa-close"></i></button>
-       </div>';
-      }
-   }
+          $str.='<div class="product-widget">
+          <div class="product-img">
+            <img src="'. $row['image'] .'" alt="">
+          </div>
+          <div class="product-body">
+            <h3 class="product-name"><a href="#">'. $row['productname'] .'</a></h3>
+            <h4 class="product-price"><span class="qty"> '. $row['quantity'] .'x </span> ₱  '.$row['total'].'  </h4>
+          </div>
+          <button onclick="deleteoncart('.$row['ID'].')" class="delete"><i class="fa fa-close"></i></button>
+        </div>';
+       }
+       $pambato['product']=$str;
 
-       $sql = "SELECT sum(quantity) as 'qty', sum(total) as 'total' FROM carttbl where myaccountID = '$myaccoundID'";
-       $result = mysqli_query($con, $sql);
-       $row = mysqli_fetch_assoc($result);
-       $qty = 0;
-       $pambato['quantity']=$qty+$row['qty'];
-       $pambato['subtotal']="<h5>Subtotal: " .$row['total'] ."</h5>";
-       $pambato['si']="<small>Item(s) selected: " .$row['qty'] ."</small>";
+        $sql = "SELECT count(pid) as 'items', sum(sellingprice * quantity) as 'total' FROM carttbl where myaccountID ='$myaccoundID'";
+            $result = mysqli_query($con, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $qty = 0;
+            $pambato['quantity']=($row['items']+0);
+            $pambato['subtotal']="<h5>SUBTOTAL: ₱ " .($row['total']+0) ."</h5>";
+            $pambato['si']=($row['items']+0) ." Item(s) selected";
+
        echo json_encode($pambato);
  }
-}
+} // end delete cart
+
+
+} //end if(isset($_GET['token']))
+
 ?>

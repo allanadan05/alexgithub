@@ -16,9 +16,14 @@ require_once("connection.php");
          header('location:login.php');
      }
 	 
-	 
+	 $profile=$_SESSION['userid'];
+	 $sessionmyaccountID=$_SESSION['myaccountID'];
 
 
+	 $ssqqll="SELECT * FROM myaccounttbl WHERE accountid='$profile' ";
+	 $ququery=mysqli_query($con, $ssqqll);
+	 $resultrow=mysqli_fetch_array($ququery);
+	  //print_r($resultrow['email']);
 ?>
 
 <!DOCTYPE html>
@@ -68,238 +73,61 @@ require_once("connection.php");
 
     </head>
 	<body>
-		<!-- Header Fold -->
-		<!-- HEADER -->
-		<header>
-			<!-- TOP HEADER -->
-			<div id="top-header">
-				<div class="container">
-					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i> 0920-960-0849  </a></li>
-						<li><a href="#"><i class="fa fa-phone"></i> 0995-954-1926  </a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i> alexsteelsupply@gmail.com</a></li>
-						<li><a href="#"><i class="fa fa-map-marker"></i> Quirino Highway, Brgy. Kaypian, San Jose Del Monte City, Bulacan</a></li>
-					</ul>
-					<ul class="header-links pull-right">
-						<li><a href="#"><i class="glyphicon-peso"></i> ₱ PHP</a></li>
-						<li><a href="account.php"><i class="fa fa-user-o"></i> <?php echo $logacc; ?></a></li>
-					</ul>
-				</div>
-			</div>
-			<!-- /TOP HEADER -->
+	<!-- TOP HEADER -->
+      <div id="top-header">
+        <div class="container">
+          <ul class="header-links pull-left">
+            <li><a href="#"><i class="fa fa-phone"></i> 0920-960-0849  </a></li>
+            <li><a href="#"><i class="fa fa-phone"></i> 0995-954-1926  </a></li>
+            <li><a href="#"><i class="fa fa-envelope-o"></i> alexsteelsupply@gmail.com</a></li>
+            <li><a href="#"><i class="fa fa-map-marker"></i> Quirino Highway, Brgy. Kaypian, San Jose Del Monte City, Bulacan</a></li>
+          </ul>
+          <ul class="header-links pull-right">
+            <li><a href="#"><i class="glyphicon-peso">₱</i> PHP</a></li>
+            <li><a href="account.php"><i class="fa fa-user-o"></i> <?php echo $logacc; ?></a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /TOP HEADER -->            
 
-			<!-- MAIN HEADER -->
-			<div id="header">
-				<!-- container -->
-				<div class="container">
-					<!-- row -->
-					<div class="row">
-						<!-- LOGO -->
-						<div class="col-md-3">
-							<div class="header-logo">
-								<a href="index.php" class="logo">
-									<img src="./img/AlexSteelSupplyLogoNew.png" alt="LOGO">
-								</a>
-							</div>
-						</div>
-						<!-- /LOGO -->
 
-						<!-- SEARCH BAR -->
-						<div class="col-md-6">
-							<div class="header-search">
-								<form>
-									<select class="input-select">
-										<option value="0">All Categories</option>
-										<option value="1">B.I. & G.I. Pipes</option>
-										<option value="2">B.I. & G.I. Tubulars</option>
-										<option value="3">Channels</option>
-										<option value="4">Flat & Angle Bars</option>
-										<option value="5">Handles & Hinges</option>
-										<option value="6">Mild Steel Plates</option>
-										<option value="7">Plain & Deformed Bar</option>
-										<option value="8">Plain G.I. Sheets</option>
-										<option value="9">Roofing</option>
-										<option value="10">Square & Section Bars</option>
-										<option value="11">Welding Rod</option>
-									</select>
-									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
-								</form>
-							</div>
-						</div>
-						<!-- /SEARCH BAR -->
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+      <!-- container -->
+      <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+          <!-- NAV -->
 
-						<!-- ACCOUNT -->
-						<div class="col-md-3 clearfix">
-							<div class="header-ctn">
-								
-								
-								<!-- Wishlist -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-heart-o"></i>
-										<span>Your Wishlist</span>
-										<div class="qty"> 2 </div>
-									</a>
-									
-									<div class="cart-dropdown">
-										
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty"> 1x </span> ₱ 980.00 </h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
+          <!-- LOGO -->
+            <div class="col-md-3">
+              <div class="header-logo">
+                <a href="#" class="logo">
+                  <img src="./img/AlexSteelSupplyLogoNew.png" alt="LOGO" height="50px;">
+                </a>
+              </div>
+            </div>
+            <!-- /LOGO -->
 
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product02.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>₱ 980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
+          <ul class="main-nav nav navbar-nav">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="feed.php">Feed</a></li>
+            <li><a href="trackorder.php">Track My Order</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li class="active"><a href="checkout.php">Checkout</a></li>
 
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product03.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">2x</span>₱ 980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-										
+          </ul>
+          <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+      </div>
+      <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->
 
-										</div>
-										
-										<div class="cart-summary">
-											<small>3 Item(s) on wishlist</small>
-				
-										</div>
-										
-										<div class="cart-btns">
-											<a href="wishlist.php">View Wishlist</a>
-											<a href="addtocart.php">Add to Cart  <i class="fa fa-shopping-cart"></i></a>
-										</div>
-									
-									</div>
-								</div>
-								<!-- /Wishlist -->
+    <?php //include("issets.php"); ?>
 
-						
-								<!-- Cart -->
-								<div class="dropdown">
-									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-										<i class="fa fa-shopping-cart"></i>
-										<span>Your Cart</span>
-										<div class="qty"> 3 </div>
-									</a>
-
-									<div class="cart-dropdown">
-										
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty"> 1x </span> ₱ 980.00 </h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product02.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>₱ 980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product03.png" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">2x</span>₱ 980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-										
-
-										</div>
-										
-										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: ₱ 2940.00</h5>
-										</div>
-										
-										<div class="cart-btns">
-											<a href="cart.php">View Cart</a>
-											<a href="checkout.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-										</div>
-									
-									</div>
-								</div> 
-								<!-- /Cart -->
-
-								<!-- Menu Toogle -->
-								<div class="menu-toggle">
-									<a href="#">
-										<i class="fa fa-bars"></i>
-										<span>Menu</span>
-									</a>
-								</div>
-								<!-- /Menu Toogle -->
-
-							</div>
-						</div>
-						<!-- /ACCOUNT -->
-					</div>
-					<!-- row -->
-				</div>
-				<!-- container -->
-			</div>
-			<!-- /MAIN HEADER -->
-		</header>
-		<!-- /HEADER -->
-
-		<!-- NAVIGATION -->
-		<nav id="navigation">
-			<!-- container -->
-			<div class="container">
-				<!-- responsive-nav -->
-				<div id="responsive-nav">
-					<!-- NAV -->
-					<ul class="main-nav nav navbar-nav">
-						<li><a href="index.php">Home</a></li>
-						<li class="active"><a href="product.php">Products</a></li>
-						<li><a href="trackorder.php">Track My Order</a></li>
-						<li><a href="about.php">About Us</a></li>
-						<li><a href="contact.php">Contact Us</a></li>
-						
-					</ul>
-					<!-- /NAV -->
-				</div>
-				<!-- /responsive-nav -->
-			</div>
-			<!-- /container -->
-		</nav>
-		<!-- /NAVIGATION -->
 
 		
 
@@ -317,34 +145,34 @@ require_once("connection.php");
 								<h3 class="title">Billing address</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="first-name" value="Steven" style="font-size: 20px;" readonly>
+								<input class="input" type="text" name="first-name" value="<?php echo $resultrow['firstname']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="last-name" value="Francisco" style="font-size: 20px;" readonly>
+								<input class="input" type="text" name="last-name" value="<?php echo $resultrow['lastname']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" value="Steven123francisco@gmail.com" style="font-size: 20px;" readonly>
+								<input class="input" type="email" name="email" value="<?php echo $resultrow['email']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" value="B1 Lot 31" style="font-size: 20px;" readonly>
+								<input class="input" type="text" name="address" value="<?php echo $resultrow['houseno']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" value="Igay Sto. Cristo" style="font-size: 20px;" readonly>
+								<input class="input" type="text" name="address" value="<?php echo $resultrow['barangay']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" value="San Jose Del Monte" style="font-size: 20px;" readonly>
+								<input class="input" type="text" name="address" value="<?php echo $resultrow['municipal']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="city" value="Bulacan" style="font-size: 20px;" readonly>
+								<input class="input" type="text" name="city" value="<?php echo $resultrow['province']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="country" value="Philippines" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="zip-code" value="3023" style="font-size: 20px;" readonly>
+								<input class="input" type="text" name="zip-code" value="<?php echo $resultrow['zipcode']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" name="tel" value="09057904098" style="font-size: 20px;" readonly>
+								<input class="input" type="tel" name="tel" value="<?php echo $resultrow['mobileno']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							
 						</div>
@@ -362,15 +190,6 @@ require_once("connection.php");
 									Ship to a diffrent address?
 								</label>
 								<div class="caption">
-									<div class="form-group">
-										<input class="input" type="text" name="first-name" placeholder="First Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="last-name" placeholder="Last Name">
-									</div>
-									<div class="form-group">
-										<input class="input" type="email" name="email" placeholder="Email">
-									</div>
 									<div class="form-group">
 										<input class="input" type="text" name="address" placeholder="Street">
 									</div>
@@ -415,19 +234,27 @@ require_once("connection.php");
 								<div><strong>TOTAL</strong></div>
 							</div>
 							<div class="order-products">
+								<?php
+								   $sql="select sum(total) as carttotal from carttbl where myaccountID='$sessionmyaccountID' ";
+								   $query=mysqli_query($con, $sql);
+								   $total=mysqli_fetch_array($query);
+
+								   $sql="select ID, myaccountID, (select productname from productstbl where pid=carttbl.pid) as productname, sellingprice, quantity, total from carttbl where myaccountID='$sessionmyaccountID' ";
+								   $query=mysqli_query($con, $sql);
+
+								   while ($row=mysqli_fetch_array($query)) {
+								   	
+								?>
 								<div class="order-col">
-									<div>1x Product Name Goes Here</div>
-									<div>₱ 980.00</div>
+									<div><?php echo $row['quantity'] ."x " .$row['productname']; ?></div>
+									<div>₱ <?php echo " ". $row['total']; ?>.00</div>
 								</div>
-								<div class="order-col">
-									<div>2x Product Name Goes Here</div>
-									<div>₱ 980.00</div>
-								</div>
+								<?php } ?>
 							</div>
 							
 							<div class="order-col">
 								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">₱ 2940.00</strong></div>
+								<div><strong class="order-total">₱ <?php echo " ". $total['carttotal']; ?>.00</strong></div>
 							</div>
 						</div>
 						<div class="payment-method">
@@ -438,7 +265,9 @@ require_once("connection.php");
 									Cash-on-Delivery (COD)
 								</label>
 								<div class="caption">
-									<p>shipping fee may vary due to the location.</p>
+									<p>You chosed to pay Cash-on-delivery 
+									<a href="#" onclick="SendOrder()" class="primary-btn order-submit">Pay Now</a>
+									</p>
 								</div>
 							</div>
 							
@@ -449,7 +278,23 @@ require_once("connection.php");
 									Paypal System
 								</label>
 								<div class="caption">
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+									<p>You chosed to pay through Paypal. You will be ask to sign in your credentials to paypal.
+									<!-- Paypal -->
+									<form target="paypal" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post"> 
+									<input type="hidden" name="cmd" value="_cart">
+									<input type="hidden" name="business" value="greengarden6members@gmail.com">
+									<input type="hidden" name="item_name" value="<?php echo "Product"; ?>">
+									<input type="hidden" name="item_number" value="<?php echo 23; ?>">
+									<input type="hidden" name="amount" value="<?php echo 1.00 ?>">
+									<img alt="" border="0" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
+									<input type="hidden" name="add" value="1">
+									<input type="hidden" name="quantity" value="<?php echo 2; ?>">
+									<input type="hidden" name="currency_code" value="PHP">
+									<!-- <input type="image" src="https://www.paypal.com/images/x-click-but22.gif" border="0" name="submit7" alt="Make payments with PayPal - it's fast, free and secure!"> -->
+									<input type="submit" class="primary-btn order-submit" name="submit7" value="Pay Now" style="width:100%">
+									</form> 
+									<!-- /Paypal -->
+								    </p>
 								</div>
 							</div>
 						</div>
@@ -460,7 +305,10 @@ require_once("connection.php");
 								I've read and accept the <a href="#">terms & conditions</a>
 							</label>
 						</div>
-						<a href="#" onclick="SendOrder()" class="primary-btn order-submit">Send Order Request</a>
+
+						
+
+						
 						<script>
 						function SendOrder()
 						{

@@ -3,12 +3,12 @@ session_start();
 require_once("connection.php");
      $logacc="Log In";
      @$userprofile=@$_SESSION['user_name'];
-
+	@$id=@$_SESSION['userid'];
      $ASK=" SELECT * FROM `myaccounttbl` WHERE username='$userprofile' ";
      $INFO=mysqli_query($con, $ASK);
      $result=mysqli_fetch_assoc($INFO);
      $myaccoundID = $result['myaccountID'];
-
+	
      if($userprofile==true){
 
         $logacc=$result['firstname'];
@@ -44,6 +44,10 @@ require_once("connection.php");
 
 		<!-- Font Awesome Icon -->
 		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 		<!-- Custom stlylesheet -->
 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
@@ -54,6 +58,98 @@ require_once("connection.php");
 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
+	<Style>
+	#briks{
+		text-align: center;
+	}
+	#rate-us{
+		width: 200px;
+		border-radius: 20px;
+		background-color:#EF401A;
+
+	}
+	#submitted{
+		border-radius: 20px;
+		background-color:#EF401A;
+	}
+	.rating{
+	position:absolute;
+	top:50%;
+	left: 50%;
+	transform:translate(-50%,-50%) rotateY(180deg);
+	display:flex; 
+}
+
+.rating input{
+	display:none;
+}
+.rating label{
+display:block;
+cursor: pointer;
+width: 50px;
+
+}
+
+.rating label:before{
+	content:'\f005';
+	font-family: fontAwesome;
+	position:relative;
+	display: block;
+	font-size: 50px;
+	color:gray;
+
+}
+.rating label:after{
+	content:'\f005';
+	font-family:fontAwesome;
+	position:absolute;
+	display:block;
+	font-size:50px;
+	color:#EF401A;	
+	top: 0;
+	opacity: 0;
+	transition:.5s;
+	text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+
+.rating input:checked ~ label:after{
+	opacity: 1;
+}	
+
+		</Style>
+
+		<script>
+
+		function countstar(id){
+
+			document.getElementById("star-no").value=id;
+		}
+		
+
+		function submitpid(pid) {
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+		    if (xhttp.readyState == 4 && xhttp.status == 200) {	
+					document.getElementById("response").innerHTML = this.responseText;
+					document.getElementById("rate-us").style.display ="none";
+		    }
+		  };
+			var feedback = document.getElementById("briks").value;
+			var noofstar = document.getElementById("star-no").value;
+			var ratefrom = document.getElementById("ratefrom").value;
+			var sendpid= pid;
+
+			
+			
+			var palatandaan = "sendstars";
+			xhttp.open("GET", "process4.php?&palatandaan="+palatandaan+"&feedback="+feedback+"&noofstar="+noofstar+"&ratefrom+"+ratefrom,true);
+		    xhttp.send(); 
+		}
+
+		</script>
 
     </head>
 	<body>
@@ -234,7 +330,7 @@ require_once("connection.php");
                 </div>
 								<!-- /Cart -->
 
-								<!-- Menu Toogle -->
+		                   	<!-- Menu Toogle -->
 								<div class="menu-toggle">
 									<a href="#">
 										<i class="fa fa-bars"></i>
@@ -287,31 +383,26 @@ require_once("connection.php");
 				<div class="row">
 
 					<?php
-						// $productdetails=array("Category", "Product Name", "₱ 980.00", "₱ 990.00");
-						// $productimages=array("./img/product01.jpg", "./img/product02.png","./img/product03.png", "./img/product04.png", "./img/product05.png", "./img/product06.png", "./img/product07.jpg", "./img/product08.jpg", "./img/product09.jpg" );
-						// $arrlength = count($productimages);
-					?>
+							 @$idatheader=@$_GET['id'];
+				              $sql = "SELECT * FROM productstbl where pid='$idatheader'";
+				              $result = mysqli_query($con, $sql);
+
+				              if (mysqli_num_rows($result) > 0) {
+				                $row = mysqli_fetch_assoc($result); 
+							?>
+
 
 					<!-- Product main img -->
 					<!-- Big Picture -->
 					<div class="col-md-5 col-md-push-2">
 						<div id="product-main-img">
 
-							<?php
-              $sql = "SELECT * FROM productstbl";
-              $result = mysqli_query($con, $sql);
-
-              if (mysqli_num_rows($result) > 0) {
-                while($row = mysqli_fetch_assoc($result)) {
-							?>
-
+							
 							<div class="product-preview">
 								<img src="<?php echo $row['image']; ?>" alt="">
 							</div>
 
 
-							<?php }
-            } ?>
 
 						</div>
 					</div>
@@ -320,24 +411,7 @@ require_once("connection.php");
 					<!-- Product thumb imgs -->
 					<!-- Small Pictures -->
 					<div class="col-md-2  col-md-pull-5">
-						<div id="product-imgs">
-
-							<?php
-              $sql = "SELECT * FROM productstbl";
-              $result = mysqli_query($con, $sql);
-
-              if (mysqli_num_rows($result) > 0) {
-                while($row = mysqli_fetch_assoc($result)) {
-							?>
-
-							<div class="product-preview">
-								<img src="<?php echo $row['image']; ?>" alt="">
-							</div>
-
-							<?php }
-            } ?>
-
-						</div>
+						
 					</div>
 					<!-- /Product thumb imgs -->
 
@@ -347,15 +421,15 @@ require_once("connection.php");
 
 						<div class="product-details">
 
-							<h2 class="product-name">product name</h2>
+							<h2 class="product-name"><?php echo $row['productname']; ?></h2>
 
 							<div>
-								<h3 class="product-price">₱ 980.00 <del class="product-old-price">₱ 990.00</del></h3>
-								<span class="product-available">10 Remaining Stock</span>
+								<h3 class="product-price">₱ <?php echo $row['sellingprice']; ?>.00</h3>
+								<span class="product-available"><?php echo $row['instock']; ?> Remaining Stock</span>
 							</div>
 
-							<p>Available in 10MM, 12MM, 16MM, 20MM</p>
-							<p>SIZE 13mm wide up to 400mm and 3mm thick to 25mm<br>See details and description Below.</p>
+							<p><?php echo $row['availablein']; ?></p>
+							<p><?php echo $row['additionalinfo']; ?></p>
 
 							<div class="product-options">
 
@@ -373,13 +447,63 @@ require_once("connection.php");
 								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
 							</div>
 
-							<ul class="product-btns">
-								<li><a href="#"><i class="fa fa-heart-o"></i> add to wishlist</a></li>
+							<ul class="product-links">
+								<li><strong>Category:</strong> <?php echo $row['category']; ?></li>
 							</ul>
 
-							<ul class="product-links">
-								<li><strong>Category:</strong> Flat bars</li>
-							</ul>
+						
+							<button style="display: inline" type="button" id="rate-us"class="btn btn-primary" onclick="<?php echo $row['pid']; ?>" data-toggle="modal" data-target="#myModal">
+						    RATE US
+						  </button>
+
+
+						  <!-- The Modal -->
+						  <div class="modal fade" id="myModal">
+						    <div class="modal-dialog">
+						      <div class="modal-content">
+							  
+								<form action="sendfeedback.php" method="POST">
+						        <!-- Modal Header -->
+						        <div class="modal-header">
+						          <h4 class="modal-title">Rate Us</h4>
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						        </div>
+						        
+						        <!-- Modal body -->
+						        <br>
+						        <div class="modal-body">
+									<br><br><br><br><br>
+								<input type="hidden" name="accountid"  value="<?php echo $id ?>">
+						         <input type="hidden" id="star-no" name="star-no" >
+						          <div class="rating">
+
+								<input type="radio" name="star" id="star1" onclick="countstar(5)">
+								<label for="star1"></label>
+								<input type="radio" name="star" id="star2" onclick="countstar(4)">
+								<label for="star2"></label>
+								<input type="radio" name="star" id="star3" onclick="countstar(3)">
+								<label for="star3"></label>
+								<input type="radio" name="star" id="star4" onclick="countstar(2)">
+								<label for="star4"></label>
+								<input type="radio" name="star" id="star5" onclick="countstar(1)">
+								<label for="star5"></label>
+
+						        </div>	
+						        </div>
+						        <div style="padding-bottom: 18px;"><span style="color: red;"></span><br/>
+						<textarea placeholder="Review" id="feedback" name="feedback" false name="data_8" style="width : 595px;" rows="9" class="form-control"></textarea>
+						</div>
+						       
+						        <!-- Modal footer -->
+						        <div class="modal-footer">
+						          <button type="submit" id="submitpidbtn" name="sendfeedback" class="btn btn-danger" value="<?php echo $row['pid']; ?>">Submit</button>
+							  </form>
+						        
+						        </div>
+						        
+						      </div>
+						    </div>
+						  </div>
 
 						</div>
 
@@ -426,6 +550,10 @@ require_once("connection.php");
 						</div>
 					</div>
 					<!-- /product tab -->
+					<?php }else{
+
+					} ?>
+			
 				</div>
 				<!-- /row -->
 			</div>
@@ -643,3 +771,5 @@ require_once("connection.php");
 
 	</body>
 </html>
+
+

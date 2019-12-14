@@ -246,38 +246,10 @@ include('function2.php');
                                  <div class="panel-body">
 
                                  	
-                                 	<?php
-											$sql =$con->query("select * from myaccounttbl Order by accountid DESC");
-											while($data=$sql->fetch_array())
-											{
-											?>
-                                    <!--insert data-->
-                                    <table class="table" border=0>
-									  <tr><b>Apr 02, 2019</b></tr>
-										<tr style=" background-color: whitesmoke;">
-											
-											<td style="border: 1px solid black;"><p style="color: blue;"></p>
-												<p style="color:black">
-												<p class="notifications-message" id="info">New <?php echo $data['usertype']  ?></p>
-												
-												<?php echo "firstname:".$data['firstname']?>
-												<?php echo "<br>Lastname:".$data['lastname']?>
-												<?php echo "<br>province:".$data['province']?>
-												<?php echo "<br>Email:".$data['email']?>
-												
-											    </p>
-											</td>
-											
-																			
-										</tr>				
-							         </table>
-							         	<?php
-										}
-											?>	
-							         
-							          <!--/insert data-->	
+                                 	
+                              
 							           <!--insert data-->
-                                    <table class="table" border=0>
+                                    <table class="table">
 									  <tr><b>Apr 02, 2019</b></tr>
 										<tr style=" background-color: whitesmoke;">
 											<td><p style="color: blue;">8 mins</p>

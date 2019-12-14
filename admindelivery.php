@@ -33,20 +33,22 @@ include('function2.php');
     <head>
 
 <script type="text/javascript">
-          function statusdeliv(val){
+          function statusdeliv(delid, count){
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function(){
               if(xhttp.readyState == 4 && xhttp.status == 200){
-                         }
+                var resp=document.getElementById('deliverresult').innerHTML=this.responseText;
+                //alert(resp);
+                }
             };
-            var forIpinasa=document.getElementById("statusid").value;
+            var forIpinasa=document.getElementById("statusid"+count).value;
             var palatandaan = "statusdeliv";
-            var bval=val;
+            var deliveryid=delid;
             var delstat="";
 
-            if(forIpinasa=1)
+            if(forIpinasa==1)
             {
-            delstat="Process";
+            delstat="Processing";
             }
             else if(forIpinasa==2)
             {
@@ -63,13 +65,9 @@ include('function2.php');
             else{
               delstat="Error";
             }
-
-
-
-            xhttp.open("GET", "deliveryfuntion.php?palatandaan="+palatandaan+"&forIpinasa="+forIpinasa+"&delstat="+delstat+"&bval="+bval, true);
+            //alert("deliveryfunction.php?palatandaan="+palatandaan+"&forIpinasa="+forIpinasa+"&delstat="+delstat+"&deliveryid="+deliveryid);
+            xhttp.open("GET", "deliveryfunction.php?palatandaan="+palatandaan+"&forIpinasa="+forIpinasa+"&delstat="+delstat+"&deliveryid="+deliveryid, true);
             xhttp.send();
-
-
           }
 
 
@@ -311,7 +309,7 @@ include('function2.php');
                                                 <div class="col-md-12" id="deliverytable">
 
                       
-                                                    <table class="table table-responsive table-hover">
+                                                    <table class="table table-responsive table-hover" id="deliverresult">
 
                                                        <tr style="background-color: #B9BABC ">
                                                          <th style="text-align: left;">Date</th>
@@ -320,7 +318,9 @@ include('function2.php');
                                                          <th style="text-align: left;">Invoice no. </th>
                                                          <th style="text-align: left;">Status</th>
                                                        </tr>
+                                                       
                                                        <?php
+                                                       $count=0;
                                                        $sql=$con ->query("Select * from deliverytbl");
                                                        while($result=$sql->fetch_array())
                                                        {
@@ -332,77 +332,22 @@ include('function2.php');
                                                          <td> """</td>
                                                          <td> wako wako</td>
                                                          <td> A12011853 </td>
-                                                      
+                                                    
                                                          <td> 
-                                                             <select  class="btn btn-primary dropdown-toggle" data-toggle="dropdown" onchange="statusdeliv(<?php echo $result['deliveryid']; ?>)" id="statusid">
+                                                             <select  class="btn btn-primary dropdown-toggle" data-toggle="dropdown" onchange="statusdeliv(<?php echo $result['deliveryid'] .", " .++$count; ?>)" id="statusid<?php echo $count; ?>">
 
-                                                               <option disabled type="hidden" hidden><center>Action</center></option>
-                                                              <option value="1" style="cursor:pointer;" id="proc"><center>Processing</center></option>
+                                                             <option  style="cursor:pointer;" disabled selected><center>Select Status</center></option>
+                                                              <option value="1" style="cursor:pointer;" id="processing"><center>Processing</center></option>
                                                               <option value="2" id="pending" style="cursor:pointer;"><center>Pending</center></option>
                                                               <option value="3" id="otw" style="cursor:pointer;"><center>OTW</center></option>
-                                                              <option value="4" id=del style="cursor:pointer;"><center>Deliverd</center></option>
+                                                              <option value="4" id=del style="cursor:pointer;"><center>Delivered</center></option>
                                                            </select>
                                                            <br>
-                                                         
-                                                <!--   <span class="label label-danger"> Delivered</span>
-                                                  <span class="label label-warning"> Delivered</span>
-                                                 <span class="label label-primary"> Delivered</span>-->
-
-                                                
-                                                    <?php
-                                                    if( $result['status']=="OTW")
-                                                    {
-                                                    ?>
-                                                      <span class="label label-warning">
-                                                  
-                                                  <?php
-
-                                                    echo  $result['status'];
-                                                  }
-
-                                                    ?>
-                                                         <?php
-                                                    if( $result['status']=="Processing")
-                                                    {
-                                                    ?>
-                                                     <span  class="label label-success">
-                                                  
-                                                  <?php
-
-                                                    echo  $result['status'];
-                                                  }
-
-                                                    ?>
-                                                      <?php
-                                                    if( $result['status']=="Delivered")
-                                                    {
-                                                    ?>
-                                                     <span  class="label label-primary">
-                                                  
-                                                  <?php
-
-                                                    echo  $result['status'];
-                                                  }
-
-                                                    ?>
-                                                      <?php
-                                                    if( $result['status']=="Pending")
-                                                    {
-                                                    ?>
-                                                     <span  class="label label-danger">
-                                                  
-                                                  <?php
-
-                                                    echo  $result['status'];
-                                                  }
-
-                                                    ?>
-
-                                                     
-
-
-                                                 </span>
-                                                          </td>
+                                                           <?php if($result['status']=="Processing"){ ?>   <span class="label label-primary"><?php echo $result['status']; ?></span>   <?php } ?>
+                                                            <?php if($result['status']=="Pending"){ ?>   <span class="label label-warning"><?php echo $result['status']; ?></span>   <?php } ?>
+                                                            <?php if($result['status']=="OTW"){ ?>   <span class="label label-danger"><?php echo $result['status']; ?></span>   <?php } ?>
+                                                            <?php if($result['status']=="Delivered"){ ?>   <span class="label label-success"><?php echo $result['status']; ?></span>   <?php } ?>
+                                                        </td>
 
                                                         </tr>
 

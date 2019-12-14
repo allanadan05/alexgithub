@@ -17,6 +17,7 @@
                                $_SESSION['user_name']=$user;
                                $_SESSION['pass_word']=$pwd;
                                $_SESSION['userid']=$res['accountid'];
+                               $_SESSION['myaccountID']=$res['myaccountID'];
 
                                if($res['usertype']=="user"){
                                 header("location:account.php?msg=Welcome".$_SESSION['userid']."!");
