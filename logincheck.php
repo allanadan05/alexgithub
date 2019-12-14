@@ -1,10 +1,8 @@
-                    <!-- Login Check -->
+<?php
+session_start();
+include('connection.php');
 
-                    <?php
-                    session_start();
-                    include('connection.php');
-
-                    if(isset($_POST['log'])){
+if(isset($_POST['log'])){
 
                         $user=$_POST['user_name'];
                         $pwd=$_POST['pass_word'];
@@ -23,7 +21,7 @@
                                $_SESSION['myaccountID']=$res['myaccountID'];
 
                                if($res['usertype']=="user"){
-                                header("location:account.php?msg=Welcome".$_SESSION['userid']."!");
+                                error_reporting(E_ALL);header("location:index.php?msg=Welcome".$_SESSION['userid']."!");die();
                               }else if ($res['usertype']=="admin"){
                                 header("location:admin.php?msg=Welcome".$_SESSION['userid']."!");
                               }else{
@@ -40,6 +38,4 @@
 
                     }
                     
-                    ?>
-
-                    <!-- Login Check -->
+?>

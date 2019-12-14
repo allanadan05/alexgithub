@@ -30,6 +30,9 @@ require_once("connection.php");
 <html lang="en">
 	 <!-- Head folded -->
 	<head>
+
+		
+
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,9 +73,11 @@ require_once("connection.php");
  		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
  		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
  		<![endif]-->
+ 		
+ 		<script src="search.js"></script>
 
     </head>
-	<body>
+	<body id="checkoutres">
 	<!-- TOP HEADER -->
       <div id="top-header">
         <div class="container">
@@ -145,76 +150,38 @@ require_once("connection.php");
 								<h3 class="title">Billing address</h3>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="first-name" value="<?php echo $resultrow['firstname']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="text" id="first-name1" value="<?php echo $resultrow['firstname']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="last-name" value="<?php echo $resultrow['lastname']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="text" id="last-name1" value="<?php echo $resultrow['lastname']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" value="<?php echo $resultrow['email']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="email" id="email1" value="<?php echo $resultrow['email']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" value="<?php echo $resultrow['houseno']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="text" id="houseno1" value="<?php echo $resultrow['houseno']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" value="<?php echo $resultrow['barangay']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="text" id="barangay1" value="<?php echo $resultrow['barangay']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="address" value="<?php echo $resultrow['municipal']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="text" id="municipal1" value="<?php echo $resultrow['municipal']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="city" value="<?php echo $resultrow['province']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="text" id="province1" value="<?php echo $resultrow['province']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="country" value="Philippines" style="font-size: 20px;" readonly>
+								<input class="input" type="text" id="country1" value="Philippines" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="text" name="zip-code" value="<?php echo $resultrow['zipcode']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="text" id="zipcode1" value="<?php echo $resultrow['zipcode']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							<div class="form-group">
-								<input class="input" type="tel" name="tel" value="<?php echo $resultrow['mobileno']; ?>" style="font-size: 20px;" readonly>
+								<input class="input" type="tel" id="tel1" value="<?php echo $resultrow['mobileno']; ?>" style="font-size: 20px;" readonly>
 							</div>
 							
 						</div>
 						<!-- /Billing Details -->
-
-						<!-- Shiping Details -->
-						<div class="shiping-details">
-							<div class="section-title">
-								<h3 class="title">Shiping address</h3>
-							</div>
-							<div class="input-checkbox">
-								<input type="checkbox" id="shiping-address">
-								<label for="shiping-address">
-									<span></span>
-									Ship to a diffrent address?
-								</label>
-								<div class="caption">
-									<div class="form-group">
-										<input class="input" type="text" name="address" placeholder="Street">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="address" placeholder="Barangay">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="address" placeholder="municipality">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="city" placeholder="City">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="country" placeholder="Province">
-									</div>
-									<div class="form-group">
-										<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
-									</div>
-									<div class="form-group">
-										<input class="input" type="tel" name="tel" placeholder="Telephone">
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /Shiping Details -->
 
 						<!-- Order notes -->
 						<div class="order-notes">
@@ -257,8 +224,11 @@ require_once("connection.php");
 								<div><strong class="order-total">₱ <?php echo " ". $total['carttotal']; ?>.00</strong></div>
 							</div>
 						</div>
+
+
+
 						<div class="payment-method">
-							<div class="input-radio">
+							<!-- <div class="input-radio">
 								<input type="radio" name="payment" id="payment-1">
 								<label for="payment-1">
 									<span></span>
@@ -266,55 +236,39 @@ require_once("connection.php");
 								</label>
 								<div class="caption">
 									<p>You chosed to pay Cash-on-delivery 
-									<a href="#" onclick="SendOrder()" class="primary-btn order-submit">Pay Now</a>
+									<button type="button" onclick="sendorder(<?php echo $profile; ?>)" class="primary-btn order-submit" style="width: 100%;">Pay Now</button>
 									</p>
 								</div>
-							</div>
+							</div> -->
 							
 							<div class="input-radio">
-								<input type="radio" name="payment" id="payment-3">
+								<input type="radio" name="payment" id="payment-3" checked>
 								<label for="payment-3">
 									<span></span>
 									Paypal System
 								</label>
 								<div class="caption">
-									<p>You chosed to pay through Paypal. You will be ask to sign in your credentials to paypal.
+									<p> You will be ask to sign in your credentials to paypal.
 									<!-- Paypal -->
 									<form target="paypal" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post"> 
 									<input type="hidden" name="cmd" value="_cart">
 									<input type="hidden" name="business" value="greengarden6members@gmail.com">
-									<input type="hidden" name="item_name" value="<?php echo "Product"; ?>">
-									<input type="hidden" name="item_number" value="<?php echo 23; ?>">
-									<input type="hidden" name="amount" value="<?php echo 1.00 ?>">
+									<input type="hidden" name="item_name" value="<?php echo "My Cart"; ?>">
+									<input type="hidden" name="amount" value="<?php echo $total['carttotal']; ?>">
 									<img alt="" border="0" width="1" height="1" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif">
 									<input type="hidden" name="add" value="1">
-									<input type="hidden" name="quantity" value="<?php echo 2; ?>">
+									<input type="hidden" name="quantity" value="<?php echo "1"; ?>">
 									<input type="hidden" name="currency_code" value="PHP">
 									<!-- <input type="image" src="https://www.paypal.com/images/x-click-but22.gif" border="0" name="submit7" alt="Make payments with PayPal - it's fast, free and secure!"> -->
-									<input type="submit" class="primary-btn order-submit" name="submit7" value="Pay Now" style="width:100%">
+									<input type="submit" class="primary-btn order-submit" onclick="checkoutcart(<?php echo $profile; ?>)" name="submit7" value="Pay Now" style="width:100%">
 									</form> 
 									<!-- /Paypal -->
 								    </p>
 								</div>
 							</div>
 						</div>
-						<div class="input-checkbox">
-							<input type="checkbox" id="terms">
-							<label for="terms">
-								<span></span>
-								I've read and accept the <a href="#">terms & conditions</a>
-							</label>
-						</div>
-
 						
 
-						
-						<script>
-						function SendOrder()
-						{
-							alert("Sent Successfully! Order request is now processing. Please check notification order had successfully placed ");
-						}
-						</script>
 					</div>
 					<!-- /Order Details -->
 				</div>

@@ -264,7 +264,6 @@ include('function2.php');
 
                                                         <li class="active"><a data-toggle="tab" href="#menu1">Add New Product</a></li>
                                                         <li><a data-toggle="tab" href="#menu2">List of Products</a></li>
-                                                        <li ><a data-toggle="tab" href="#home">New Transaction</a></li>
                                                       </ul>
 
                                                       <div class="tab-content">
@@ -355,112 +354,6 @@ include('function2.php');
                                                             </table>
                                                         </div>
                                                         <!-- /Add Product Tab -->
-
-
-                                                        <!-- home tab -->
-                                                        <div id="home" class="tab-pane fade">
-
-                                                          <br>
-                                                           <input type="text" name=""  placeholder="Enter Customer ID..." style="width: 250px;">
-                                                          <span><h5>Juan Dela Cruz</h5></span>
-
-                                                          <br><br>
-                                                          <form>
-                                                            <select class="input-select" >
-                                                                <option value="0">All Categories</option>
-                                                                <option value="1">B.I. & G.I. Pipes</option>
-                                            										<option value="2">B.I. & G.I. Tubulars</option>
-                                            										<option value="3">Channels</option>
-                                            										<option value="4">Flat & Angle Bars</option>
-                                            										<option value="5">Handles & Hinges</option>
-                                            										<option value="6">Mild Steel Plates</option>
-                                            										<option value="7">Plain & Deformed Bar</option>
-                                            										<option value="8">Plain G.I. Sheets</option>
-                                            										<option value="9">Roofing</option>
-                                            										<option value="10">Square & Section Bars</option>
-                                            										<option value="11">Welding Rod</option>
-                                                            </select>
-                                                            <span>
-                                                            <select class="input-select">
-                                                                <option value="">Product Name</option>
-                                                                <?php
-                                                                $sql = "SELECT * FROM productstbl";
-                                                                $result = mysqli_query($con, $sql);
-
-                                                                if (mysqli_num_rows($result) > 0) {
-                                                                  while($row = mysqli_fetch_assoc($result)) {
-                                                                 ?>
-                                                                <option value="<?php echo $row['productname'] ?>"><?php echo $row['productname'] ?></option>
-                                                              <?php }
-                                                            } ?>
-                                                            </select>
-                                                            </span>
-
-                                                            <span>
-                                                                Qty:
-                                                                <input type="number" name=""  value="1" min="1" style="width: 50px;">
-                                                            </span>
-                                                            <span>
-                                                                <button class="primary-btn"> ADD </button>
-                                                            </span>
-
-                                                        </form>
-
-                                                        <hr>
-
-                                                        <div class="col-md-12">
-
-
-                                                    <table class="table table-responsive table-hover">
-                                                       <tr style="background-color: #E4E7ED;">
-                                                         <th style="text-align: left;">Product</th>
-                                                         <th style="text-align: left;"> Quantity </th>
-                                                         <th style="text-align: left;"> Unit Price </th>
-                                                         <th style="text-align: left;"> Total </th>
-                                                         <th style="text-align: left;"> Action </th>
-                                                       </tr>
-                                                       <?php
-                                                       $sql = "SELECT productname,instock,sellingprice,sellingprice*instock as 'total' FROM productstbl";
-                                                       $result = mysqli_query($con, $sql);
-                                                        if (mysqli_num_rows($result) > 0) {
-                                                         // output data of each row
-                                                         while($row = mysqli_fetch_assoc($result)) { ?>
-                                                       <tr>
-                                                         <td> <?php echo $row['productname'] ?> </td>
-                                                         <td> <?php echo $row['instock'] ?> </td>
-                                                         <td> <?php echo $row['sellingprice'] ?> </td>
-                                                         <td> <?php echo $row['total'] ?> </td>
-                                                         <td> <button type="submit" value="" class="btn btn-danger"> <span><i class="fa fa-trash"></i></span> Delete </button></td>
-                                                        </tr>
-                                                      <?php }
-                                                      } ?>
-                                                        <tfooter>
-                                                        <tr style="background-color: #E4E7ED;">
-                                                         <th style="text-align: left;"></th>
-                                                         <th style="text-align: left;">  </th>
-                                                         <th style="text-align: right;"> Total Amount Due: </th>
-                                                         <?php
-                                                         $sql = "SELECT sum(sellingprice*instock) as 'total' FROM productstbl";
-                                                         $result = mysqli_query($con, $sql);
-                                                         $row = mysqli_fetch_assoc($result) ?>
-                                                         <th style="text-align: left;"> ₱ <?php echo $row['total'] ?> </th>
-                                                         <th style="text-align: left;">
-                                                            <a href="admininvoicegenerate.php">
-                                                            <button type="submit" value="" class="btn btn-info" style="width: 80px;"> <span><i class="fa fa-buy"></i></span> GO </button>
-                                                            </a>
-                                                        </th>
-
-                                                       </tr>
-                                                       </tfooter>
-
-                                                    </table>
-
-
-                                                </div>
-
-                                                        </div>
-                                                        <!-- /home tab -->
-
                                                        
 
                                                         <!-- List of Products -->

@@ -21,8 +21,19 @@ $token = $_GET['token'];
 if($token =="update"){
  $id=$_GET['forIpinasa'];
  $quantity=$_GET['quantity'];
+
  $updatequery = "UPDATE carttbl SET quantity=quantity+'$quantity' WHERE ID = '$id'";
  $update=mysqli_query($con, $updatequery);
+
+$sql="select total, quantity from carttbl where ID='$id' ";
+$query=mysqli_query($con, $sql);
+$toup=mysqli_fetch_array($query);
+$total=$toup['total'];
+$quantity=$toup['quantity'];
+$newtotal=$total*$quantity;
+
+$updatequery = "UPDATE carttbl SET total='$newtotal' WHERE ID = '$id'";
+$update=mysqli_query($con, $updatequery);
 
   $pambato = array();
   $str="";
@@ -35,6 +46,7 @@ if($token =="update"){
         $row = mysqli_fetch_assoc($result);
 
           $str=(0+$row['quantity']) ." Quantity";
+          //$pambato['total']=$row['total'];
        
        
        $pambato['ucr']=$str;

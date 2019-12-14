@@ -156,12 +156,9 @@ require_once('connection.php');
 				        	<a  href="#" class="btn form-control" style="background-color: #3B5998; color: white; width: 100%; height: 40px;">
 					          <i class="fa fa-facebook fa-fw"></i> Login with Facebook
 					         </a>
-								
-							<!-- Google Sign-in button -->
-					         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-							
-					         <br><br>
 
+					         <br><br>
+								
 				            <input class="form-control inputLogin" type="text" placeholder="Username" name="user_name" autofocus>
 				               
 				            <input class="form-control inputLogin" type="password" id="pw" required="" placeholder="Password" name="pass_word">

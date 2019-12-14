@@ -58,6 +58,8 @@ function updateoncart(ipinasa, count){
     if (xhttp.readyState == 4 && xhttp.status == 200) {
       var buongObject=JSON.parse(this.responseText);
       document.getElementById('updatecartresponse'+count).innerHTML = buongObject.ucr;
+      //document.getElementById('updatecartresponse'+count).innerHTML = buongObject.total;
+      location.reload(true);
     }
   };
   var quantity = document.getElementById('quantity'+count).value;
@@ -74,6 +76,7 @@ function deleteonviewcart(ipinasa, count){
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
+      location.reload(true);
     }
   };
 
@@ -85,7 +88,7 @@ function deleteonviewcart(ipinasa, count){
 
     if (confirmation) {
      // execute ajax
-        window.location.reload(true);
+        location.reload(true);
     }
     else
     {

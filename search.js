@@ -42,3 +42,17 @@ function searchbyprize(){
   xhttp.open("GET", "process.php?token="+token+"&pricemax="+pricemax+"&pricemin="+pricemin, true);
   xhttp.send();
 }
+
+
+
+function checkoutcart(accountid){
+  var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (xhttp.readyState == 4 && xhttp.status == 200) { 
+          }
+        };
+  var userid=accountid;
+  var token = "checkoutcart";
+  xhttp.open("GET", "process.php?token="+token+"&userid="+userid, true);
+  xhttp.send();
+}

@@ -18,6 +18,15 @@ else{
 }
 
 
+$profile=$_SESSION['userid'];
+   $sessionmyaccountID=$_SESSION['myaccountID'];
+
+
+   $ssqqll="SELECT * FROM myaccounttbl WHERE accountid='$profile' ";
+   $ququery=mysqli_query($con, $ssqqll);
+   $resultrow=mysqli_fetch_array($ququery);
+    //print_r($resultrow['email']);
+
 
 
 ?>
@@ -70,115 +79,61 @@ else{
 
       </head>
       <body>
-        <!-- Header Fold -->
-        <!-- HEADER -->
-        <header>
-          <!-- TOP HEADER -->
-          <div id="top-header">
-            <div class="container">
-              <ul class="header-links pull-left">
-                <li><a href="#"><i class="fa fa-phone"></i> 0920-960-0849  </a></li>
-                <li><a href="#"><i class="fa fa-phone"></i> 0995-954-1926  </a></li>
-                <li><a href="#"><i class="fa fa-envelope-o"></i> alexsteelsupply@gmail.com</a></li>
-                <li><a href="#"><i class="fa fa-map-marker"></i> Quirino Highway, Brgy. Kaypian, San Jose Del Monte City, Bulacan</a></li>
-              </ul>
-              <ul class="header-links pull-right">
-                <li><a href="#"><i class="glyphicon-peso"></i> ₱ PHP</a></li>
-                <li><a href="account.php"><i class="fa fa-user-o"></i> <?php echo $logacc; ?></a></li>
-              </ul>
-            </div>
-          </div>
-          <!-- /TOP HEADER -->
+        
+      <!-- TOP HEADER -->
+      <div id="top-header">
+        <div class="container">
+          <ul class="header-links pull-left">
+            <li><a href="#"><i class="fa fa-phone"></i> 0920-960-0849  </a></li>
+            <li><a href="#"><i class="fa fa-phone"></i> 0995-954-1926  </a></li>
+            <li><a href="#"><i class="fa fa-envelope-o"></i> alexsteelsupply@gmail.com</a></li>
+            <li><a href="#"><i class="fa fa-map-marker"></i> Quirino Highway, Brgy. Kaypian, San Jose Del Monte City, Bulacan</a></li>
+          </ul>
+          <ul class="header-links pull-right">
+            <li><a href="#"><i class="glyphicon-peso">₱</i> PHP</a></li>
+            <li><a href="account.php"><i class="fa fa-user-o"></i> <?php echo $logacc; ?></a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- /TOP HEADER -->            
 
-          <!-- MAIN HEADER -->
-          <div id="header">
-            <!-- container -->
-            <div class="container">
-              <!-- row -->
-              <div class="row">
-                <!-- LOGO -->
-                <div class="col-md-3">
-                  <div class="header-logo">
-                    <a href="index.php" class="logo">
-                      <img src="./img/AlexSteelSupplyLogoNew.png" alt="LOGO">
-                    </a>
-                  </div>
-                </div>
-                <!-- /LOGO -->
 
-                <!-- SEARCH BAR -->
-                <div class="col-md-6">
-                  <div class="header-search">
-                    <form>
-                      <select class="input-select">
-                        <option value="0">All Categories</option>
-                        <option value="1">B.I. & G.I. Pipes</option>
-                        <option value="2">B.I. & G.I. Tubulars</option>
-                        <option value="3">Channels</option>
-                        <option value="4">Flat & Angle Bars</option>
-                        <option value="5">Handles & Hinges</option>
-                        <option value="6">Mild Steel Plates</option>
-                        <option value="7">Plain & Deformed Bar</option>
-                        <option value="8">Plain G.I. Sheets</option>
-                        <option value="9">Roofing</option>
-                        <option value="10">Square & Section Bars</option>
-                        <option value="11">Welding Rod</option>
-                      </select>
-                      <input class="input" placeholder="Search here">
-                      <button class="search-btn">Search</button>
-                    </form>
-                  </div>
-                </div>
-                <!-- /SEARCH BAR -->
+    <!-- NAVIGATION -->
+    <nav id="navigation">
+      <!-- container -->
+      <div class="container">
+        <!-- responsive-nav -->
+        <div id="responsive-nav">
+          <!-- NAV -->
 
-                <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix">
-                  <div class="header-ctn">
-
-                    <!-- Menu Toogle -->
-                    <div class="menu-toggle">
-                      <a href="#">
-                        <i class="fa fa-bars"></i>
-                        <span>Menu</span>
-                      </a>
-                    </div>
-                    <!-- /Menu Toogle -->
-
-                  </div>
-                </div>
-                <!-- /ACCOUNT -->
+          <!-- LOGO -->
+            <div class="col-md-3">
+              <div class="header-logo">
+                <a href="#" class="logo">
+                  <img src="./img/AlexSteelSupplyLogoNew.png" alt="LOGO" height="50px;">
+                </a>
               </div>
-              <!-- row -->
             </div>
-            <!-- container -->
-          </div>
-          <!-- /MAIN HEADER -->
-        </header>
-        <!-- /HEADER -->
+            <!-- /LOGO -->
 
-        <!-- NAVIGATION -->
-        <nav id="navigation">
-          <!-- container -->
-          <div class="container">
-            <!-- responsive-nav -->
-            <div id="responsive-nav">
-              <!-- NAV -->
-              <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="index.php">Home</a></li>
-                <li><a href="product.php">Products</a></li>
-                <li><a href="trackorder.php">Track My Order</a></li>
-                <li><a href="about.php">About Us</a></li>
-                <li><a href="contact.php">Contact Us</a></li>
+          <ul class="main-nav nav navbar-nav">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="feed.php">Feed</a></li>
+            <li><a href="trackorder.php">Track My Order</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
+            <li class="active"><a href="feed.php">Cart</a></li>
 
-              </ul>
-              <!-- /NAV -->
-            </div>
-            <!-- /responsive-nav -->
-          </div>
-          <!-- /container -->
-        </nav>
-        <!-- /NAVIGATION -->
+          </ul>
+          <!-- /NAV -->
+        </div>
+        <!-- /responsive-nav -->
+      </div>
+      <!-- /container -->
+    </nav>
+    <!-- /NAVIGATION -->
 
+    <?php //include("issets.php"); ?>
 
 
         <!-- SECTION -->
@@ -315,75 +270,61 @@ else{
 
 </div>
 <!--panel /default-->
+
+
+<!-- Order Details -->
+<div class="row">
+          <div class="col-md-5 order-details">
+            <div class="section-title text-center">
+              <h3 class="title">Your Order</h3>
+            </div>
+            <div class="order-summary">
+              <div class="order-col">
+                <div><strong>PRODUCT</strong></div>
+                <div><strong>TOTAL</strong></div>
+              </div>
+              <div class="order-products">
+                <?php
+                   $sql="select sum(total) as carttotal from carttbl where myaccountID='$sessionmyaccountID' ";
+                   $query=mysqli_query($con, $sql);
+                   $total=mysqli_fetch_array($query);
+
+                   $sql="select ID, myaccountID, (select productname from productstbl where pid=carttbl.pid) as productname, sellingprice, quantity, total from carttbl where myaccountID='$sessionmyaccountID' ";
+                   $query=mysqli_query($con, $sql);
+
+                   while ($row=mysqli_fetch_array($query)) {
+                    
+                ?>
+                <div class="order-col">
+                  <div><?php echo $row['quantity'] ."x " .$row['productname']; ?></div>
+                  <div>₱ <?php echo " ". $row['total']; ?>.00</div>
+                </div>
+                <?php } ?>
+              </div>
+              
+              <div class="order-col">
+                <div><strong>TOTAL</strong></div>
+                <div><strong class="order-total">₱ <?php echo " ". $total['carttotal']; ?>.00</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+      <div class="cart-btns">
+        <button class="btn btn-info" style="height: 50px; width: auto; color: white ;  "><a href="checkout.php">Proceed to Checkout  <i class="fa fa-arrow-circle-right"></i></a></button>
+      </div>
 </div>
+
+
+</div>
+<!--/container-->
+
 </div>
 <!--/product panel-->
 
 
 
-
-
-<!--Location-->
-
-<div class="container">
-  <?php
-  $sql = "SELECT * FROM myaccounttbl where myaccountID = '$myaccoundID'";
-  $result = mysqli_query($con, $sql);
-  $row = mysqli_fetch_assoc($result);
-  ?>
-  <div class="panel panel-default">
-
-    <div class="panel-heading"><b>Location</b>
-    </div>
-    <div class="panel-body">
-      <div class="location-img">
-        <img src="<?php echo $row['image'] ?>" alt="" >
-      </div>
-
-
-
-
-      <p class="location">	<?php echo $row['barangay'] ?>, <?php echo $row['municipal'] ?></p>
-      <a href="" class="btn btn-info change-btn">Change</a>
-      <hr>
-
-
-      <!--/Location-->
-      <!--mode of payment-->
-      <hr>
-      <h5 div class="modeofpayment">Order Summary</h5>
-      <br>
-      <p class="subtotal-item">Subtotal item(s)</p>
-
-
-      <div class="price">
-        <p>₱980.00</p>
-      </div>
-      <br>
-
-      <p>Shipping fee</p>
-      <div class="price">
-        <p>₱50.00</p>
-      </div>
-
-
-      <!--total-->
-      <hr>
-      <p><b>Total Item(s)</b></p>
-      <div class="price">₱5550.00</div>
-
-
-
-
-
-
-
-
-      <hr><hr>
-
-      <div class="cart-btns">
-        <button class="btn btn-info" style="height: 50px; width: auto; color: white ;  "><a href="checkout.php">Proceed to Checkout  <i class="fa fa-arrow-circle-right"></i></a></button>
-      </div>
 
 
 
