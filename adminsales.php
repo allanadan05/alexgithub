@@ -93,14 +93,16 @@ include('function2.php');
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                 if (xhttp.readyState == 4 && xhttp.status == 200) { 
-                    
-                    document.getElementById("response1").innerHTML=this.responseText;
+                     var buongObject = JSON.parse(this.responseText); 
+                     document.getElementById("response1").innerHTML= buongObject.response1; 
+                    document.getElementById("totalamount").innerHTML= buongObject.totalamount;
                      
                     }
                     
             };
 
                     var getdate=document.getElementById("getdate").value;
+                    console.log(getdate);
                                       
                     var palatandaan = "getdate";
                     xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&getdate="+getdate, true);
@@ -111,13 +113,15 @@ include('function2.php');
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                 if (xhttp.readyState == 4 && xhttp.status == 200) { 
-                    document.getElementById("response2").innerHTML=this.responseText;
-                    }
+                    var buongObject = JSON.parse(this.responseText); 
+                     document.getElementById("response2").innerHTML= buongObject.response2; 
+                    document.getElementById("totalamount2").innerHTML= buongObject.totalamount2;
+                }
                     
             };
 
                     var getweek=document.getElementById("getweek").value;
-                                      
+                    console.log(getweek);              
                     var palatandaan = "getweek";
                     xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&getweek="+getweek, true);
                     xhttp.send(); 
@@ -128,13 +132,15 @@ include('function2.php');
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                 if (xhttp.readyState == 4 && xhttp.status == 200) { 
-                    document.getElementById("response3").innerHTML=this.responseText;
+                    var buongObject = JSON.parse(this.responseText); 
+                     document.getElementById("response3").innerHTML= buongObject.response3; 
+                    document.getElementById("totalamount3").innerHTML= buongObject.totalamount3;
                     }
                     
             };
 
                     var getmonth=document.getElementById("getmonth").value;
-                                      
+                    console.log(getmonth);       
                     var palatandaan = "getmonth";
                     xhttp.open("GET", "process2.php?palatandaan="+palatandaan+"&getmonth="+getmonth, true);
                     xhttp.send(); 
@@ -334,7 +340,7 @@ include('function2.php');
 
                                                         <p>
                                                             <b>Daily Sales</b> <br />
-                                                            <b>Total Amount:<p id="total1"></p></b> 
+                                                            <b id="totalamount">Total Amount:</b> 
                                                         </p>
                                                          
                                                      </div>
@@ -368,7 +374,7 @@ include('function2.php');
 
                                                         <p>
                                                             <b>Weekly Sales</b> <br />
-                                                            <b>Total Amount:</b> ₱ 600.00
+                                                            <b id="totalamount2">Total Amount:</b> 
                                                         </p>
                                                          
                                                      </div>
@@ -403,7 +409,7 @@ include('function2.php');
 
                                                         <p>
                                                             <b>Mothl Sales</b> <br />
-                                                            <b>Total Amount:</b> ₱ 600.00
+                                                            <b id="totalamount3">Total Amount:</b>
                                                         </p>
                                                          
                                                      </div>
@@ -415,26 +421,7 @@ include('function2.php');
                                                              <th style="text-align: left;"> Quantity </th>
                                                              <th style="text-align: left;"> Amount </th>
                                                          </tr>
-                                                         <tr>
-                                                             <td style="text-align: left;"> BIP 13mm x 6M </td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 100.00 </td>
-                                                         </tr>  
-                                                         <tr>
-                                                             <td style="text-align: left;"> DFB 8mm x 6M (1.7kl.) Orange 7mm actual</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 250.00 </td>
-                                                         </tr>   
-                                                         <tr>
-                                                             <td style="text-align: left;"> I - Bar 41.2mm (1-5/8) x 6M (Unicorn)</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 150.00 </td>
-                                                         </tr>  
-                                                         <tr>
-                                                             <td style="text-align: left;"> I - Bar 41.2mm (1-5/8) x 6M (Unicorn)</td>
-                                                             <td style="text-align: left;"> 1 </td>
-                                                             <td style="text-align: left;"> ₱ 150.00 </td>
-                                                         </tr>                                                     
+                                                                                                            
                                                      </table>
                                                      </div>
                                                      </div>

@@ -127,23 +127,6 @@ if(isset($_GET['token'])){
      }
      //end trackorder
 
-     //checkoutcart
-     if(($token =="checkoutcart")){
-      $accountid=$_GET['userid'];
-
-      $d=getdate();
-
-      $sql="select ID, myaccountID, (select productname from productstbl where pid=carttbl.pid) as productname, sellingprice, quantity, total from carttbl where myaccountID='$accountid' ";
-                   $query=mysqli_query($con, $sql);
-                   while ($row=mysqli_fetch_array($query)) {
-                    $b=$row['ID'];
-                      $q="INSERT INTO salestbl (accesscode, cartid, accountid, salesdate) VALUES ('$b'."".'$d'."".'$accountid', '$b', '$accountid', '$d'  )";
-                      $q2=mysqli_query($con, $q);
-                      echo"<script>console.log(". $q2 .")</script>";
-                   }
-
-     }
-     //end checkoutcart
 
 
 

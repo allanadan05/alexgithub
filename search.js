@@ -53,6 +53,6 @@ function checkoutcart(accountid){
         };
   var userid=accountid;
   var token = "checkoutcart";
-  xhttp.open("GET", "process.php?token="+token+"&userid="+userid, true);
+  xhttp.open("GET", "process10.php?&userid="+userid, true);
   xhttp.send();
 }
